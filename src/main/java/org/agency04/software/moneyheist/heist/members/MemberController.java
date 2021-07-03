@@ -1,6 +1,5 @@
 package org.agency04.software.moneyheist.heist.members;
 
-import liquibase.pro.packaged.T;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,9 +27,14 @@ public class MemberController {
 
     @PostMapping
     public ResponseEntity<?> saveNewMember(@Valid @RequestBody final MemberCommand member){
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Location", this.memberService.saveMember(member).toString());
+        Integer id = this.memberService.saveMember(member);
 
-        return new ResponseEntity(headers, HttpStatus.CREATED);
+        if(id == null)
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Location", "/member/" + id.toString());
+
+        return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
 }

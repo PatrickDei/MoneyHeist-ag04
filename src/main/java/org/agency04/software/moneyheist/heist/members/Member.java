@@ -21,7 +21,7 @@ public class Member {
     @Column(name = "sex")
     private String sex;
 
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     private String email;
 
     @JoinColumn(name = "main_Skill")

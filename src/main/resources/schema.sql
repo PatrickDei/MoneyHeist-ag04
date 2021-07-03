@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS Heist_Member(
     id IDENTITY,
     name VARCHAR(255) NOT NULL,
     sex CHAR NOT NULL,
-    email VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
     main_Skill VARCHAR(255),
     status VARCHAR(255),
     PRIMARY KEY (id)

@@ -11,9 +11,11 @@ import java.util.Objects;
 public class Skill {
 
     @Id
+    @Column(unique = true)
     private String name;
 
     @Id
+    @Column(unique = true)
     private Integer level;
 
     Skill(){}

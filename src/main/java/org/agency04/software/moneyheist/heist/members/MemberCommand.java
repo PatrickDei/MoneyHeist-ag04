@@ -10,8 +10,8 @@ import java.util.List;
 public class MemberCommand {
 
     @AssertTrue(message = "Make sure the list of skills contains the mainSkill!")
-    private boolean isOk(){
-        return skills.stream().anyMatch( s -> s.getName().equals(mainSkill));
+    private boolean isValidMainSkill(){
+        return mainSkill == null || skills.stream().anyMatch( s -> s.getName().equals(mainSkill));
     }
 
     @NotEmpty
@@ -29,8 +29,7 @@ public class MemberCommand {
 
     private List<@Valid SkillCommand> skills;
 
-    @NotNull
-    @NotEmpty
+
     private String mainSkill;
 
     @StatusPattern(anyOf = {Status.AVAILABLE, Status.EXPIRED, Status.INCARCERATED, Status.RETIRED})

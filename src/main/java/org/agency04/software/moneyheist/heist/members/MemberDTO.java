@@ -12,10 +12,13 @@ public class MemberDTO {
 
     private String mainSkill;
 
-    public MemberDTO(String name, Set<SkillDTO> skills, String mainSkill) {
+    private String email;
+
+    public MemberDTO(String name, Set<SkillDTO> skills, String mainSkill, String email) {
         this.name = name;
         this.skills = skills;
         this.mainSkill = mainSkill;
+        this.email = email;
     }
 
     public String getName() {
@@ -40,5 +43,13 @@ public class MemberDTO {
 
     public void setMainSkill(String mainSkill) {
         this.mainSkill = mainSkill;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

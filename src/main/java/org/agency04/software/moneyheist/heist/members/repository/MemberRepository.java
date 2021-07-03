@@ -1,6 +1,6 @@
-package org.agency04.software.moneyheist.heist.members;
+package org.agency04.software.moneyheist.heist.members.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.agency04.software.moneyheist.heist.members.Member;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -10,6 +10,4 @@ import java.util.List;
 public interface MemberRepository extends CrudRepository<Member, Integer> {
 
     List<Member> findAll();
-
-    //Integer insertMember(Member member);
 }

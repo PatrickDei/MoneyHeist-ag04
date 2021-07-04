@@ -3,6 +3,7 @@ package org.agency04.software.moneyheist.heist.members;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -26,7 +27,7 @@ public class MemberController {
     }
 
     @PostMapping
-    public ResponseEntity<?> saveNewMember(@Valid @RequestBody final MemberCommand member){
+    public ResponseEntity<?> saveNewMember(@Validated({MemberCommand.WholeMemberRequired.class}) @RequestBody final MemberCommand member){
         Integer id = this.memberService.saveMember(member);
 
         if(id == null)
@@ -36,5 +37,21 @@ public class MemberController {
         headers.add("Location", "/member/" + id.toString());
 
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{memberId}/skills")
+    public ResponseEntity<?> updateMembersSkills(@Validated({MemberCommand.OnlySkillsRequired.class}) @RequestBody MemberCommand member, @PathVariable Integer memberId){
+        Integer id = this.memberService.updateMemberSkills(memberId, member);
+
+        if(id == null)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        if(id == 0)
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Location", "/member/" + id.toString() + "/skills");
+
+        return new ResponseEntity<>(headers, HttpStatus.NO_CONTENT);
     }
 }

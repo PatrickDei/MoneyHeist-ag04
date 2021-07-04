@@ -8,5 +8,6 @@ import java.util.List;
 
 public interface CustomMemberRepository{
 
-    Member customMemberInsert(Member member, List<Skill> existingSkills);
+    Member saveMember(Member member, List<Skill> existingSkills);
+
 }

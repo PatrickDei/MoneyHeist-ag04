@@ -18,19 +18,19 @@ public interface Transformable {
                 memberCommand.getSex(),
                 memberCommand.getEmail(),
                 memberCommand.getSkills().stream().map(this::CommandToSkill).collect(Collectors.toSet()),
-                memberCommand.getMainSkill(),
+                normalizeString(memberCommand.getMainSkill()),
                 memberCommand.getStatus()
         );
     }
 
     default MemberDTO MemberToDTO(Member member){
-        return new MemberDTO(member.getName(), member.getSkills().stream().map(this::SkillToDTO).collect(Collectors.toSet()), member.getMainSkill(), member.getEmail());
+        return new MemberDTO(member.getId(), member.getName(), member.getSkills().stream().map(this::SkillToDTO).collect(Collectors.toSet()), member.getMainSkill(), member.getEmail());
     }
 
 
     // Skills
     default Skill CommandToSkill(SkillCommand skillCommand) {
-        return new Skill(skillCommand.getName(), skillCommand.getLevel().length());
+        return new Skill(normalizeString(skillCommand.getName()), skillCommand.getLevel().length());
     }
 
     default SkillDTO SkillToDTO(Skill skill){
@@ -39,5 +39,12 @@ public interface Transformable {
 
     default String SkillLevelToString(Integer count){
         return "*".repeat(count);
+    }
+
+    default String normalizeString(String text){
+        // capitalise first letter only
+        if(text != null)
+            return text.substring(0, 1).toUpperCase() + text.substring(1).toLowerCase();
+        return null;
     }
 }

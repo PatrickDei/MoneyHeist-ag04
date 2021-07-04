@@ -3,8 +3,10 @@ package org.agency04.software.moneyheist.heist.members;
 import org.agency04.software.moneyheist.heist.skills.Skill;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "Heist_Member")
@@ -88,7 +90,7 @@ public class Member {
     }
 
     public void setMainSkill(String mainSkill) {
-        this.mainSkill = mainSkill;
+            this.mainSkill = mainSkill;
     }
 
     public Set<Skill> getSkills() {
@@ -118,5 +120,21 @@ public class Member {
     @Override
     public int hashCode() {
         return Objects.hash(email);
+    }
+
+    public void updateSkills(List<Skill> newSkills){
+        for(Skill s : newSkills){
+            if(skills.stream()
+                    .map(Skill::getName).collect(Collectors.toList())
+                    .contains(s.getName()))
+            {
+                skills.remove(
+                        skills.stream()
+                                .filter(skill -> skill.getName().equals(s.getName()))
+                                .findFirst()
+                                .orElse(null));
+            }
+            skills.add(s);
+        }
     }
 }

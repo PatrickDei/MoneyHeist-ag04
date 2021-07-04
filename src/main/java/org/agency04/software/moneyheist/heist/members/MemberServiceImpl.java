@@ -5,14 +5,11 @@ import org.agency04.software.moneyheist.heist.members.repository.CustomMemberRep
 import org.agency04.software.moneyheist.heist.members.repository.MemberRepository;
 import org.agency04.software.moneyheist.heist.skills.Skill;
 import org.agency04.software.moneyheist.heist.skills.SkillRepository;
-import org.agency04.software.moneyheist.heist.skills.exceptions.SameNameException;
 import org.agency04.software.moneyheist.heist.skills.exceptions.SkillAlreadyExistsException;
 import org.agency04.software.moneyheist.heist.transformations.Transformable;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,34 +25,57 @@ public class MemberServiceImpl implements MemberService, Transformable {
     }
 
     @Override
-    public Integer saveMember(MemberCommand member){
-        Member m = CommandToMember(member);
-        try {
-            performChecks(m);
-        }
-        catch(SameEmailException | SameNameException e) {
-            return null;
-        }
-        catch(SkillAlreadyExistsException e){
-            return this.customMemberRepository.customMemberInsert(m, e.getExistingSkills()).getId();
-        }
-
-        return this.memberRepository.save(m).getId();
-    }
-
-    @Override
     public List<MemberDTO> findAll(){
         return this.memberRepository.findAll().stream().map(this::MemberToDTO).collect(Collectors.toList());
     }
 
     @Override
-    public void performChecks(Member member) {
-        if(memberRepository.findAll().stream().map(Member::getEmail).anyMatch(m -> m.equals(member.getEmail())))
-            throw new SameEmailException();
+    public Integer saveMember(MemberCommand member){
+        return validateAndReturnMemberId(this.CommandToMember(member), true);
+    }
 
-        Set<String> setOfSkills = member.getSkills().stream().map(Skill::getName).collect(Collectors.toSet());
-        if(setOfSkills.size() < member.getSkills().size())
-            throw new SameNameException();
+    @Override
+    public Integer updateMemberSkills(Integer id, MemberCommand updatedMember){
+        Member member = memberRepository.findById(id).orElse(null);
+        if(member == null)
+            return null;
+
+        // update the objects skills and email and validation will take care of the rest
+        if(updatedMember.getSkills() != null)
+            member.updateSkills(updatedMember.getSkills().stream().map(this::CommandToSkill).collect(Collectors.toList()));
+
+        String suggestedMainSkill = this.normalizeString(updatedMember.getMainSkill());
+        if(updatedMember.getMainSkill() != null){
+            if(!member.getSkills().stream().map(Skill::getName).collect(Collectors.toList()).contains(suggestedMainSkill))
+                return 0;
+            member.setMainSkill(suggestedMainSkill);
+        }
+        //
+
+        return validateAndReturnMemberId(member, false);
+    }
+
+
+    // helper methods
+    @Override
+    public Integer validateAndReturnMemberId(Member member, boolean newMember){
+        try {
+            performChecks(member, newMember);
+        }
+        catch(SameEmailException e) {
+            return null;
+        }
+        catch(SkillAlreadyExistsException e){
+            return this.customMemberRepository.saveMember(member, e.getExistingSkills()).getId();
+        }
+
+        return this.memberRepository.save(member).getId();
+    }
+
+    @Override
+    public void performChecks(Member member, boolean newMember) {
+        if(newMember && memberRepository.findAll().stream().map(Member::getEmail).anyMatch(m -> m.equals(member.getEmail())))
+            throw new SameEmailException();
 
         List<Skill> existingSkills = skillRepository.findAll()
                 .stream()
@@ -68,9 +88,13 @@ public class MemberServiceImpl implements MemberService, Transformable {
 }
 
 interface MemberService{
-    Integer saveMember(MemberCommand member);
-
     List<MemberDTO> findAll();
 
-    void performChecks(Member member);
+    Integer saveMember(MemberCommand member);
+
+    Integer updateMemberSkills(Integer id, MemberCommand updatedMember);
+
+    void performChecks(Member member, boolean newMember);
+
+    Integer validateAndReturnMemberId(Member member, boolean newMember);
 }

@@ -1,13 +1,11 @@
-package org.agency04.software.moneyheist.validation.enumeration;
+package org.agency04.software.moneyheist.heist.members.validation;
 
-import jdk.jshell.Snippet;
 import org.agency04.software.moneyheist.heist.members.Status;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import static java.lang.annotation.ElementType.*;

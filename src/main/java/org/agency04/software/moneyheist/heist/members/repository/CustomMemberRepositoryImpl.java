@@ -13,9 +13,9 @@ public class CustomMemberRepositoryImpl implements CustomMemberRepository{
 
 
     private final MemberRepository memberRepository;
-    private final RelationshipInserter relationshipInserter;
+    private final MemberSkillRelationshipInserter relationshipInserter;
 
-    protected CustomMemberRepositoryImpl(MemberRepository memberRepository, RelationshipInserter relationshipInserter) {
+    protected CustomMemberRepositoryImpl(MemberRepository memberRepository, MemberSkillRelationshipInserter relationshipInserter) {
         this.memberRepository = memberRepository;
         this.relationshipInserter = relationshipInserter;
     }

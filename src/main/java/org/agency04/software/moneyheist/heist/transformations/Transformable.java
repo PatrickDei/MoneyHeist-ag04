@@ -1,7 +1,7 @@
 package org.agency04.software.moneyheist.heist.transformations;
 
 import org.agency04.software.moneyheist.heist.members.Member;
-import org.agency04.software.moneyheist.heist.members.MemberCommand;
+import org.agency04.software.moneyheist.heist.members.validation.MemberCommand;
 import org.agency04.software.moneyheist.heist.members.MemberDTO;
 import org.agency04.software.moneyheist.heist.skills.Skill;
 import org.agency04.software.moneyheist.heist.skills.SkillCommand;

@@ -1,11 +1,9 @@
 package org.agency04.software.moneyheist.heist.members;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.agency04.software.moneyheist.heist.members.repository.MemberRepository;
-import org.agency04.software.moneyheist.heist.skills.Skill;
+import org.agency04.software.moneyheist.heist.members.validation.MemberCommand;
 import org.agency04.software.moneyheist.heist.skills.SkillCommand;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -15,10 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 

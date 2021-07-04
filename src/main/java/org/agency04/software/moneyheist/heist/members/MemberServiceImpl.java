@@ -3,6 +3,7 @@ package org.agency04.software.moneyheist.heist.members;
 import org.agency04.software.moneyheist.heist.members.exceptions.SameEmailException;
 import org.agency04.software.moneyheist.heist.members.repository.CustomMemberRepository;
 import org.agency04.software.moneyheist.heist.members.repository.MemberRepository;
+import org.agency04.software.moneyheist.heist.members.validation.MemberCommand;
 import org.agency04.software.moneyheist.heist.skills.Skill;
 import org.agency04.software.moneyheist.heist.skills.SkillRepository;
 import org.agency04.software.moneyheist.heist.skills.exceptions.SkillAlreadyExistsException;

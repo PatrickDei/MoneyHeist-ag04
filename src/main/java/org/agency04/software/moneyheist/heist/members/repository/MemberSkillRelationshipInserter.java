@@ -10,12 +10,12 @@ import javax.persistence.Query;
 import java.util.List;
 
 @Component
-public class RelationshipInserter {
+public class MemberSkillRelationshipInserter {
 
     @PersistenceContext
     private final EntityManager entityManager;
 
-    public RelationshipInserter(EntityManager entityManager) {
+    public MemberSkillRelationshipInserter(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 

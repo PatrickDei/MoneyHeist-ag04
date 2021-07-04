@@ -1,6 +1,7 @@
 package org.agency04.software.moneyheist.heist.members;
 
 import org.agency04.software.moneyheist.heist.members.repository.MemberRepository;
+import org.agency04.software.moneyheist.heist.members.validation.MemberCommand;
 import org.agency04.software.moneyheist.heist.skills.SkillCommand;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -10,9 +11,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.Arrays;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
 
 @SpringBootTest
 class MemberServiceImplTest {

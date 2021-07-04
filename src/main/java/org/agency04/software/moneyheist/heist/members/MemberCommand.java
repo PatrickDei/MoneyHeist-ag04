@@ -29,7 +29,8 @@ public class MemberCommand {
     @Email(groups = {WholeMemberRequired.class})
     private String email;
 
-    @StatusPattern(anyOf = {Status.AVAILABLE, Status.EXPIRED, Status.INCARCERATED, Status.RETIRED}, groups = {WholeMemberRequired.class})
+    @StatusPattern(anyOf = {Status.AVAILABLE, Status.EXPIRED, Status.INCARCERATED, Status.RETIRED},
+            groups = {WholeMemberRequired.class})
     private Status status;
 
 

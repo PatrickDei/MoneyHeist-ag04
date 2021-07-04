@@ -55,6 +55,11 @@ public class MemberServiceImpl implements MemberService, Transformable {
         return validateAndReturnMemberId(member, false);
     }
 
+    @Override
+    public Integer removeSkillFromMember(Integer memberId, String skill){
+        return memberRepository.removeSkillFromMember(memberId, this.normalizeString(skill));
+    }
+
 
     // helper methods
     @Override
@@ -93,6 +98,8 @@ interface MemberService{
     Integer saveMember(MemberCommand member);
 
     Integer updateMemberSkills(Integer id, MemberCommand updatedMember);
+
+    Integer removeSkillFromMember(Integer memberId, String skill);
 
     void performChecks(Member member, boolean newMember);
 

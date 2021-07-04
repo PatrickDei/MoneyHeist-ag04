@@ -54,4 +54,14 @@ public class MemberController {
 
         return new ResponseEntity<>(headers, HttpStatus.NO_CONTENT);
     }
+
+    @DeleteMapping("{memberId}/skills/{skillName}")
+    public ResponseEntity<?> removeSkillFromMember(@PathVariable Integer memberId, @PathVariable String skillName){
+
+        if(memberService.removeSkillFromMember(memberId, skillName) == 0){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }

@@ -17,6 +17,7 @@ public class MemberCommand {
 
     @NotEmpty(groups = {WholeMemberRequired.class})
     @NotBlank(groups = {WholeMemberRequired.class})
+    @Null(groups = {OnlySkillsRequired.class})
     private String name;
 
     @NotNull(groups = {WholeMemberRequired.class})
@@ -24,18 +25,28 @@ public class MemberCommand {
             groups = {WholeMemberRequired.class})
     @Pattern(message = "Sex can either be M or F", regexp = "M|F",
             groups = {WholeMemberRequired.class})
+    @Null(groups = {OnlySkillsRequired.class})
     private String sex;
 
     @NotNull(groups = {WholeMemberRequired.class})
     @Email(groups = {WholeMemberRequired.class})
+    @Null(groups = {OnlySkillsRequired.class})
     private String email;
 
     @StatusPattern(anyOf = {Status.AVAILABLE, Status.EXPIRED, Status.INCARCERATED, Status.RETIRED},
             groups = {WholeMemberRequired.class})
+    @Null(groups = {OnlySkillsRequired.class})
     private Status status;
 
 
     // skill section
+    @NotEmpty(groups = {WholeMemberRequired.class},
+            message = "There must be a list of skills")
+    private List<@Valid SkillCommand> skills;
+
+    private String mainSkill;
+
+
     @AssertTrue(groups = {OnlySkillsRequired.class})
     private boolean isAtLeastOneFieldEntered(){
         return !(skills == null) || !mainSkill.isEmpty();
@@ -56,12 +67,6 @@ public class MemberCommand {
         }
         return true;
     }
-
-    @NotEmpty(groups = {WholeMemberRequired.class},
-            message = "There must be a list of skills")
-    private List<@Valid SkillCommand> skills;
-
-    private String mainSkill;
 
     public MemberCommand(String name, String sex, String email, Status status, List<@Valid SkillCommand> skills, String mainSkill) {
         this.name = name;

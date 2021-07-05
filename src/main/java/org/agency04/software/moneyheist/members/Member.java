@@ -1,6 +1,8 @@
 package org.agency04.software.moneyheist.members;
 
+import org.agency04.software.moneyheist.members.exceptions.SameEmailException;
 import org.agency04.software.moneyheist.skills.Skill;
+import org.agency04.software.moneyheist.skills.exceptions.SkillAlreadyExistsException;
 
 import javax.persistence.*;
 import java.util.List;
@@ -136,5 +138,24 @@ public class Member {
             }
             skills.add(s);
         }
+    }
+
+    public void validateEmail(List<Member> allMembersFromDb){
+        // if its null that means we are adding a new member, so check email
+        if(this.id == null
+                && allMembersFromDb.stream()
+                .map(Member::getEmail)
+                .anyMatch(m -> m.equals(this.email))
+        )
+            throw new SameEmailException();
+    }
+
+    public void validateSkills(List<Skill> allSkillsFromDb){
+        List<Skill> alreadyExistingSkills = allSkillsFromDb.stream()
+                .distinct()
+                .filter(this.getSkills()::contains)
+                .collect(Collectors.toList());
+        if(!alreadyExistingSkills.isEmpty())
+            throw new SkillAlreadyExistsException(alreadyExistingSkills);
     }
 }

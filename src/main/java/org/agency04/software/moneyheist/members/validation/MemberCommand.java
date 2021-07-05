@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+
+// members are validated upon entry into the API but some extra checks need to be performed later (the ones that require data from db)
 public class MemberCommand {
 
     public interface WholeMemberRequired{};

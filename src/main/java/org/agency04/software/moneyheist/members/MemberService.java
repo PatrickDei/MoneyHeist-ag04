@@ -13,7 +13,5 @@ public interface MemberService{
 
     Integer removeSkillFromMember(Integer memberId, String skill);
 
-    void performChecks(Member member, boolean newMember);
-
-    Integer validateAndReturnMemberId(Member member, boolean newMember);
+    Integer validateAndReturnMemberId(Member member);
 }

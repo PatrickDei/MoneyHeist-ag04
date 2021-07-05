@@ -4,6 +4,7 @@ import org.agency04.software.moneyheist.skills.Skill;
 
 import java.util.List;
 
+// this exception exists to stop jpa from entering duplicates in db
 public class SkillAlreadyExistsException extends RuntimeException{
     private List<Skill> existingSkills;
 

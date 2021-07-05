@@ -1,6 +1,7 @@
 package org.agency04.software.moneyheist.members;
 
 
+import org.agency04.software.moneyheist.interfaces.ITransform;
 import org.agency04.software.moneyheist.members.exceptions.SameEmailException;
 import org.agency04.software.moneyheist.members.repository.CustomMemberRepository;
 import org.agency04.software.moneyheist.members.repository.MemberRepository;
@@ -8,14 +9,13 @@ import org.agency04.software.moneyheist.members.validation.MemberCommand;
 import org.agency04.software.moneyheist.skills.Skill;
 import org.agency04.software.moneyheist.skills.SkillRepository;
 import org.agency04.software.moneyheist.skills.exceptions.SkillAlreadyExistsException;
-import org.agency04.software.moneyheist.transformations.Transformable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class MemberServiceImpl implements MemberService, Transformable {
+public class MemberServiceImpl implements MemberService, ITransform {
     private final MemberRepository memberRepository;
     private final CustomMemberRepository customMemberRepository;
     private final SkillRepository skillRepository;
@@ -33,7 +33,7 @@ public class MemberServiceImpl implements MemberService, Transformable {
 
     @Override
     public Integer saveMember(MemberCommand member){
-        return validateAndReturnMemberId(this.CommandToMember(member), true);
+        return validateAndReturnMemberId(this.CommandToMember(member));
     }
 
     @Override
@@ -42,19 +42,19 @@ public class MemberServiceImpl implements MemberService, Transformable {
         if(member == null)
             return null;
 
-        // update the objects skills and email and validation will take care of the rest
+        // update the objects skills and validation will take care of the rest
         if(updatedMember.getSkills() != null)
             member.updateSkills(updatedMember.getSkills().stream().map(this::CommandToSkill).collect(Collectors.toList()));
 
         String suggestedMainSkill = this.normalizeString(updatedMember.getMainSkill());
-        if(updatedMember.getMainSkill() != null){
+        if(suggestedMainSkill != null){
             if(!member.getSkills().stream().map(Skill::getName).collect(Collectors.toList()).contains(suggestedMainSkill))
                 return 0;
             member.setMainSkill(suggestedMainSkill);
         }
         //
 
-        return validateAndReturnMemberId(member, false);
+        return validateAndReturnMemberId(member);
     }
 
     @Override
@@ -63,11 +63,11 @@ public class MemberServiceImpl implements MemberService, Transformable {
     }
 
 
-    // helper methods
     @Override
-    public Integer validateAndReturnMemberId(Member member, boolean newMember){
+    public Integer validateAndReturnMemberId(Member member){
         try {
-            performChecks(member, newMember);
+            member.validateEmail(memberRepository.findAll());
+            member.validateSkills(skillRepository.findAll());
         }
         catch(SameEmailException e) {
             return null;
@@ -77,19 +77,5 @@ public class MemberServiceImpl implements MemberService, Transformable {
         }
 
         return this.memberRepository.save(member).getId();
-    }
-
-    @Override
-    public void performChecks(Member member, boolean newMember) {
-        if(newMember && memberRepository.findAll().stream().map(Member::getEmail).anyMatch(m -> m.equals(member.getEmail())))
-            throw new SameEmailException();
-
-        List<Skill> existingSkills = skillRepository.findAll()
-                .stream()
-                .distinct()
-                .filter(member.getSkills()::contains)
-                .collect(Collectors.toList());
-        if(!existingSkills.isEmpty())
-            throw new SkillAlreadyExistsException(existingSkills);
     }
 }

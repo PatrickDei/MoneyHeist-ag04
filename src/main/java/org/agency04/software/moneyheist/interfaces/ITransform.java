@@ -1,4 +1,4 @@
-package org.agency04.software.moneyheist.transformations;
+package org.agency04.software.moneyheist.interfaces;
 
 
 import org.agency04.software.moneyheist.members.Member;
@@ -10,7 +10,7 @@ import org.agency04.software.moneyheist.skills.SkillDTO;
 
 import java.util.stream.Collectors;
 
-public interface Transformable {
+public interface ITransform {
 
     // Members
     default Member CommandToMember(MemberCommand memberCommand){

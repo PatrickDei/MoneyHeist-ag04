@@ -1,6 +1,6 @@
-package org.agency04.software.moneyheist.heist.members.repository;
+package org.agency04.software.moneyheist.members.repository;
 
-import org.agency04.software.moneyheist.heist.members.Member;
+import org.agency04.software.moneyheist.members.Member;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;

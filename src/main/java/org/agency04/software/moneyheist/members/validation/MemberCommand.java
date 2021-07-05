@@ -1,8 +1,7 @@
-package org.agency04.software.moneyheist.heist.members.validation;
+package org.agency04.software.moneyheist.members.validation;
 
-import org.agency04.software.moneyheist.heist.members.Status;
-import org.agency04.software.moneyheist.heist.members.validation.StatusPattern;
-import org.agency04.software.moneyheist.heist.skills.SkillCommand;
+import org.agency04.software.moneyheist.members.Status;
+import org.agency04.software.moneyheist.skills.SkillCommand;
 
 import javax.validation.Valid;
 import javax.validation.constraints.*;

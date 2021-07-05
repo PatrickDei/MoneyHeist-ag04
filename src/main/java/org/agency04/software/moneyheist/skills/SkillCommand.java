@@ -1,4 +1,4 @@
-package org.agency04.software.moneyheist.heist.skills;
+package org.agency04.software.moneyheist.skills;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;

@@ -1,4 +1,4 @@
-package org.agency04.software.moneyheist.heist.members;
+package org.agency04.software.moneyheist.members;
 
 public enum Status {
     AVAILABLE,

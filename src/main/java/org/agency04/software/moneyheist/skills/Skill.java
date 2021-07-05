@@ -1,4 +1,4 @@
-package org.agency04.software.moneyheist.heist.skills;
+package org.agency04.software.moneyheist.skills;
 
 import javax.persistence.*;
 import java.io.Serializable;

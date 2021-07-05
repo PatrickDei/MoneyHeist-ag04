@@ -1,8 +1,11 @@
 package org.agency04.software.moneyheist.heist.members;
 
-import org.agency04.software.moneyheist.heist.members.repository.MemberRepository;
-import org.agency04.software.moneyheist.heist.members.validation.MemberCommand;
-import org.agency04.software.moneyheist.heist.skills.SkillCommand;
+import org.agency04.software.moneyheist.members.repository.MemberRepository;
+import org.agency04.software.moneyheist.members.validation.MemberCommand;
+import org.agency04.software.moneyheist.skills.SkillCommand;
+import org.agency04.software.moneyheist.members.MemberDTO;
+import org.agency04.software.moneyheist.members.MemberService;
+import org.agency04.software.moneyheist.members.Status;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

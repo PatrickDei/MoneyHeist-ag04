@@ -1,6 +1,6 @@
-package org.agency04.software.moneyheist.heist.members;
+package org.agency04.software.moneyheist.members;
 
-import org.agency04.software.moneyheist.heist.members.validation.MemberCommand;
+import org.agency04.software.moneyheist.members.validation.MemberCommand;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

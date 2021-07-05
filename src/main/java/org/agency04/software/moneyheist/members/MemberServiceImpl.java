@@ -1,13 +1,14 @@
-package org.agency04.software.moneyheist.heist.members;
+package org.agency04.software.moneyheist.members;
 
-import org.agency04.software.moneyheist.heist.members.exceptions.SameEmailException;
-import org.agency04.software.moneyheist.heist.members.repository.CustomMemberRepository;
-import org.agency04.software.moneyheist.heist.members.repository.MemberRepository;
-import org.agency04.software.moneyheist.heist.members.validation.MemberCommand;
-import org.agency04.software.moneyheist.heist.skills.Skill;
-import org.agency04.software.moneyheist.heist.skills.SkillRepository;
-import org.agency04.software.moneyheist.heist.skills.exceptions.SkillAlreadyExistsException;
-import org.agency04.software.moneyheist.heist.transformations.Transformable;
+
+import org.agency04.software.moneyheist.members.exceptions.SameEmailException;
+import org.agency04.software.moneyheist.members.repository.CustomMemberRepository;
+import org.agency04.software.moneyheist.members.repository.MemberRepository;
+import org.agency04.software.moneyheist.members.validation.MemberCommand;
+import org.agency04.software.moneyheist.skills.Skill;
+import org.agency04.software.moneyheist.skills.SkillRepository;
+import org.agency04.software.moneyheist.skills.exceptions.SkillAlreadyExistsException;
+import org.agency04.software.moneyheist.transformations.Transformable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -91,18 +92,4 @@ public class MemberServiceImpl implements MemberService, Transformable {
         if(!existingSkills.isEmpty())
             throw new SkillAlreadyExistsException(existingSkills);
     }
-}
-
-interface MemberService{
-    List<MemberDTO> findAll();
-
-    Integer saveMember(MemberCommand member);
-
-    Integer updateMemberSkills(Integer id, MemberCommand updatedMember);
-
-    Integer removeSkillFromMember(Integer memberId, String skill);
-
-    void performChecks(Member member, boolean newMember);
-
-    Integer validateAndReturnMemberId(Member member, boolean newMember);
 }

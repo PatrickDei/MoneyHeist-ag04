@@ -1,7 +1,7 @@
-package org.agency04.software.moneyheist.heist.members.repository;
+package org.agency04.software.moneyheist.members.repository;
 
-import org.agency04.software.moneyheist.heist.members.Member;
-import org.agency04.software.moneyheist.heist.skills.Skill;
+import org.agency04.software.moneyheist.members.Member;
+import org.agency04.software.moneyheist.skills.Skill;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;

@@ -1,6 +1,6 @@
-package org.agency04.software.moneyheist.heist.members.validation;
+package org.agency04.software.moneyheist.members.validation;
 
-import org.agency04.software.moneyheist.heist.members.Status;
+import org.agency04.software.moneyheist.members.Status;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;

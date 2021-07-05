@@ -1,6 +1,6 @@
-package org.agency04.software.moneyheist.heist.skills.exceptions;
+package org.agency04.software.moneyheist.skills.exceptions;
 
-import org.agency04.software.moneyheist.heist.skills.Skill;
+import org.agency04.software.moneyheist.skills.Skill;
 
 import java.util.List;
 

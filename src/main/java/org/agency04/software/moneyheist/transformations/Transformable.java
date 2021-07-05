@@ -1,11 +1,12 @@
-package org.agency04.software.moneyheist.heist.transformations;
+package org.agency04.software.moneyheist.transformations;
 
-import org.agency04.software.moneyheist.heist.members.Member;
-import org.agency04.software.moneyheist.heist.members.validation.MemberCommand;
-import org.agency04.software.moneyheist.heist.members.MemberDTO;
-import org.agency04.software.moneyheist.heist.skills.Skill;
-import org.agency04.software.moneyheist.heist.skills.SkillCommand;
-import org.agency04.software.moneyheist.heist.skills.SkillDTO;
+
+import org.agency04.software.moneyheist.members.Member;
+import org.agency04.software.moneyheist.members.MemberDTO;
+import org.agency04.software.moneyheist.members.validation.MemberCommand;
+import org.agency04.software.moneyheist.skills.Skill;
+import org.agency04.software.moneyheist.skills.SkillCommand;
+import org.agency04.software.moneyheist.skills.SkillDTO;
 
 import java.util.stream.Collectors;
 

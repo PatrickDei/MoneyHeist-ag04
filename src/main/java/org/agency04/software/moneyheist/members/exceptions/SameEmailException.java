@@ -1,4 +1,4 @@
-package org.agency04.software.moneyheist.heist.members.exceptions;
+package org.agency04.software.moneyheist.members.exceptions;
 
 public class SameEmailException extends RuntimeException{
 

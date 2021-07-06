@@ -1,8 +1,9 @@
-package org.agency04.software.moneyheist.skills;
+package org.agency04.software.moneyheist.skills.validation;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
+import java.util.Objects;
 
 public class SkillCommand {
 
@@ -34,5 +35,18 @@ public class SkillCommand {
 
     public void setLevel(String level) {
         this.level = level;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SkillCommand that = (SkillCommand) o;
+        return name.equals(that.name) && level.equals(that.level);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, level);
     }
 }

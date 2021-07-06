@@ -1,47 +1,45 @@
 package org.agency04.software.moneyheist.members.validation;
 
+import org.agency04.software.moneyheist.interfaces.OnlySkillsRequired;
+import org.agency04.software.moneyheist.interfaces.WholeObjectRequired;
 import org.agency04.software.moneyheist.members.Status;
-import org.agency04.software.moneyheist.skills.SkillCommand;
+import org.agency04.software.moneyheist.skills.validation.SkillCommand;
 
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 
 // members are validated upon entry into the API but some extra checks need to be performed later (the ones that require data from db)
 public class MemberCommand {
 
-    public interface WholeMemberRequired{};
-    public interface OnlySkillsRequired{};
-
-    @NotEmpty(groups = {WholeMemberRequired.class})
-    @NotBlank(groups = {WholeMemberRequired.class})
+    @NotEmpty(groups = {WholeObjectRequired.class})
+    @NotBlank(groups = {WholeObjectRequired.class})
     @Null(groups = {OnlySkillsRequired.class})
     private String name;
 
-    @NotNull(groups = {WholeMemberRequired.class})
+    @NotNull(groups = {WholeObjectRequired.class})
     @Size(min = 1, max = 1,
-            groups = {WholeMemberRequired.class})
+            groups = {WholeObjectRequired.class})
     @Pattern(message = "Sex can either be M or F", regexp = "M|F",
-            groups = {WholeMemberRequired.class})
+            groups = {WholeObjectRequired.class})
     @Null(groups = {OnlySkillsRequired.class})
     private String sex;
 
-    @NotNull(groups = {WholeMemberRequired.class})
-    @Email(groups = {WholeMemberRequired.class})
+    @NotNull(groups = {WholeObjectRequired.class})
+    @Email(groups = {WholeObjectRequired.class})
     @Null(groups = {OnlySkillsRequired.class})
     private String email;
 
     @StatusPattern(anyOf = {Status.AVAILABLE, Status.EXPIRED, Status.INCARCERATED, Status.RETIRED},
-            groups = {WholeMemberRequired.class})
+            groups = {WholeObjectRequired.class})
     @Null(groups = {OnlySkillsRequired.class})
     private Status status;
 
 
     // skill section
-    @NotEmpty(groups = {WholeMemberRequired.class},
+    @NotEmpty(groups = {WholeObjectRequired.class},
             message = "There must be a list of skills")
     private List<@Valid SkillCommand> skills;
 
@@ -50,23 +48,19 @@ public class MemberCommand {
 
     @AssertTrue(groups = {OnlySkillsRequired.class})
     private boolean isAtLeastOneFieldEntered(){
-        return !(skills == null) || !mainSkill.isEmpty();
+        return skills != null || !mainSkill.isEmpty();
     }
 
     @AssertTrue(message = "Make sure the list of skills contains the mainSkill!",
-            groups = {WholeMemberRequired.class})
+            groups = {WholeObjectRequired.class})
     private boolean isValidMainSkill(){
         return mainSkill == null || skills.stream().anyMatch( s -> s.getName().equals(mainSkill));
     }
 
     @AssertTrue(message = "There shouldn't be duplicated skill names",
-            groups = {OnlySkillsRequired.class, WholeMemberRequired.class})
+            groups = {OnlySkillsRequired.class, WholeObjectRequired.class})
     private boolean isSkillRepeated(){
-        if(!(skills == null)) {
-            Set<String> setOfSkills = skills.stream().map(SkillCommand::getName).collect(Collectors.toSet());
-            return setOfSkills.size() == skills.size();
-        }
-        return true;
+        return skills == null || skills.stream().map(SkillCommand::getName).collect(Collectors.toSet()).size() == skills.size();
     }
 
     public MemberCommand(String name, String sex, String email, Status status, List<@Valid SkillCommand> skills, String mainSkill) {

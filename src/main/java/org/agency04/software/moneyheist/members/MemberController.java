@@ -1,5 +1,7 @@
 package org.agency04.software.moneyheist.members;
 
+import org.agency04.software.moneyheist.interfaces.OnlySkillsRequired;
+import org.agency04.software.moneyheist.interfaces.WholeObjectRequired;
 import org.agency04.software.moneyheist.members.validation.MemberCommand;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -27,7 +29,7 @@ public class MemberController {
     }
 
     @PostMapping
-    public ResponseEntity<?> saveNewMember(@Validated({MemberCommand.WholeMemberRequired.class}) @RequestBody final MemberCommand member){
+    public ResponseEntity<?> saveNewMember(@Validated({WholeObjectRequired.class}) @RequestBody final MemberCommand member){
         Integer id = this.memberService.saveMember(member);
 
         if(id == null)
@@ -40,7 +42,7 @@ public class MemberController {
     }
 
     @PutMapping("/{memberId}/skills")
-    public ResponseEntity<?> updateMembersSkills(@Validated({MemberCommand.OnlySkillsRequired.class}) @RequestBody MemberCommand member, @PathVariable Integer memberId){
+    public ResponseEntity<?> updateMembersSkills(@Validated({OnlySkillsRequired.class}) @RequestBody MemberCommand member, @PathVariable Integer memberId){
         Integer id = this.memberService.updateMemberSkills(memberId, member);
 
         if(id == null)

@@ -1,0 +1,20 @@
+package org.agency04.software.moneyheist.services.member;
+
+import org.agency04.software.moneyheist.dto.member.MemberDTO;
+import org.agency04.software.moneyheist.entities.member.Member;
+import org.agency04.software.moneyheist.validation.member.MemberCommand;
+import org.agency04.software.moneyheist.validation.uniquefield.FieldValueExists;
+
+import java.util.List;
+
+public interface MemberService extends FieldValueExists {
+    List<MemberDTO> findAll();
+
+    Integer saveMember(MemberCommand member);
+
+    Integer updateMemberSkills(Integer id, MemberCommand updatedMember);
+
+    Integer removeSkillFromMember(Integer memberId, String skill);
+
+    Integer validateAndReturnMemberId(Member member);
+}

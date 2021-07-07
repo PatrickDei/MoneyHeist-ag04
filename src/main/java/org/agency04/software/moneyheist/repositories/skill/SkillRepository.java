@@ -10,6 +10,4 @@ import java.util.List;
 public interface SkillRepository extends CrudRepository<Skill, Integer> {
 
     List<Skill> findAll();
-
-    Skill findFirstByName(String name);
 }

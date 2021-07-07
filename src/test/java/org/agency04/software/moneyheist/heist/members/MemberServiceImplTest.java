@@ -2,8 +2,8 @@ package org.agency04.software.moneyheist.heist.members;
 
 import org.agency04.software.moneyheist.exceptions.member.InvalidMainSkill;
 import org.agency04.software.moneyheist.repositories.member.MemberRepository;
-import org.agency04.software.moneyheist.validation.member.MemberCommand;
-import org.agency04.software.moneyheist.validation.skill.SkillCommand;
+import org.agency04.software.moneyheist.validation.requestEntity.member.MemberCommand;
+import org.agency04.software.moneyheist.validation.requestEntity.skill.SkillCommand;
 import org.agency04.software.moneyheist.dto.member.MemberDTO;
 import org.agency04.software.moneyheist.services.member.MemberService;
 import org.agency04.software.moneyheist.entities.member.Status;

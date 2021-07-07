@@ -1,11 +1,11 @@
-package org.agency04.software.moneyheist.validation.heist;
+package org.agency04.software.moneyheist.validation.requestEntity.heist;
 
 import org.agency04.software.moneyheist.groups.OnlySkillsRequired;
 import org.agency04.software.moneyheist.groups.WholeObjectRequired;
 import org.agency04.software.moneyheist.services.heist.HeistService;
-import org.agency04.software.moneyheist.validation.heist.requirement.HeistRequirementCommand;
-import org.agency04.software.moneyheist.validation.skill.SkillCommand;
-import org.agency04.software.moneyheist.validation.uniquefield.Unique;
+import org.agency04.software.moneyheist.validation.requestEntity.heist.requirement.HeistRequirementCommand;
+import org.agency04.software.moneyheist.validation.requestEntity.skill.SkillCommand;
+import org.agency04.software.moneyheist.validation.uniqueField.Unique;
 
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -31,13 +31,11 @@ public class HeistCommand {
     @Null(groups = {OnlySkillsRequired.class})
     private String location;
 
-    @NotEmpty(groups = {WholeObjectRequired.class})
-    @NotBlank(groups = {WholeObjectRequired.class})
+    @NotNull(groups = {WholeObjectRequired.class})
     @Null(groups = {OnlySkillsRequired.class})
     private Date startTime;
 
-    @NotEmpty(groups = {WholeObjectRequired.class})
-    @NotBlank(groups = {WholeObjectRequired.class})
+    @NotNull(groups = {WholeObjectRequired.class})
     @Future(groups = {WholeObjectRequired.class})
     @Null(groups = {OnlySkillsRequired.class})
     private Date endTime;

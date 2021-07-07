@@ -9,7 +9,7 @@ import org.agency04.software.moneyheist.repositories.member.CustomMemberReposito
 import org.agency04.software.moneyheist.repositories.member.MemberRepository;
 import org.agency04.software.moneyheist.repositories.skill.SkillRepository;
 import org.agency04.software.moneyheist.transformation.Transformation;
-import org.agency04.software.moneyheist.validation.member.MemberCommand;
+import org.agency04.software.moneyheist.validation.requestEntity.member.MemberCommand;
 import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,15 +41,7 @@ public class MemberServiceImpl implements MemberService {
     public Integer saveMember(MemberCommand member){
         Member memberToAdd = Transformation.commandToMember(member);
 
-        List<Skill> alreadyExistingSkills = this.skillRepository.findAll().stream()
-                .distinct()
-                .filter(memberToAdd.getSkills()::contains)
-                .collect(Collectors.toList());
-
-        if(alreadyExistingSkills.isEmpty())
-            return this.memberRepository.save(memberToAdd).getId();
-
-        return this.customMemberRepository.saveMember(memberToAdd, alreadyExistingSkills).getId();
+        return saveMemberAndReturnId(memberToAdd);
     }
 
     @Override
@@ -58,22 +50,24 @@ public class MemberServiceImpl implements MemberService {
         if(member == null)
             return null;
 
-        if(member.getSkills().stream().noneMatch(s -> s.getName().equals(Transformation.normalizeString(updatedMember.getMainSkill())))
-            && updatedMember.getSkills().stream().noneMatch(s -> s.getName().equals(Transformation.normalizeString(updatedMember.getMainSkill()))))
-            throw new InvalidMainSkill();
-
-        // update the objects skills and validation will take care of the rest
+        // update the objects skills
         if(updatedMember.getSkills() != null)
             member.updateSkills(updatedMember.getSkills().stream().map(Transformation::commandToSkill).collect(Collectors.toList()));
 
         String suggestedMainSkill = Transformation.normalizeString(updatedMember.getMainSkill());
-        if(suggestedMainSkill != null){
-            if(!member.getSkills().stream().map(Skill::getName).collect(Collectors.toList()).contains(suggestedMainSkill))
-                return 0;
+        if(suggestedMainSkill != null)
             member.setMainSkill(suggestedMainSkill);
-        }
-        //
 
+        return saveMemberAndReturnId(member);
+    }
+
+    @Override
+    public Integer removeSkillFromMember(Integer memberId, String skill){
+        return memberRepository.removeSkillFromMember(memberId, Transformation.normalizeString(skill));
+    }
+
+    @Override
+    public Integer saveMemberAndReturnId(Member member){
         List<Skill> alreadyExistingSkills = this.skillRepository.findAll().stream()
                 .distinct()
                 .filter(member.getSkills()::contains)
@@ -83,11 +77,6 @@ public class MemberServiceImpl implements MemberService {
             return this.memberRepository.save(member).getId();
 
         return this.customMemberRepository.saveMember(member, alreadyExistingSkills).getId();
-    }
-
-    @Override
-    public Integer removeSkillFromMember(Integer memberId, String skill){
-        return memberRepository.removeSkillFromMember(memberId, Transformation.normalizeString(skill));
     }
 
     @Override

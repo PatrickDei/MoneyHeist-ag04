@@ -1,14 +1,14 @@
-package org.agency04.software.moneyheist.validation.heist.requirement;
+package org.agency04.software.moneyheist.validation.requestEntity.skill;
 
 import org.agency04.software.moneyheist.groups.OnlySkillsRequired;
 import org.agency04.software.moneyheist.groups.WholeObjectRequired;
-import org.agency04.software.moneyheist.validation.skill.SkillCommand;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
+import java.util.Objects;
 
-public class HeistRequirementCommand {
+public class SkillCommand {
 
     @NotEmpty(groups = {WholeObjectRequired.class, OnlySkillsRequired.class})
     @NotBlank(groups = {WholeObjectRequired.class, OnlySkillsRequired.class})
@@ -19,14 +19,9 @@ public class HeistRequirementCommand {
     @Pattern(message = "Level must be expressed though stars and be between 1 and 10", regexp = "[*]{1,10}", groups = {WholeObjectRequired.class, OnlySkillsRequired.class})
     private String level;
 
-    @NotEmpty(groups = {WholeObjectRequired.class, OnlySkillsRequired.class})
-    @NotBlank(groups = {WholeObjectRequired.class, OnlySkillsRequired.class})
-    private Integer members;
-
-    public HeistRequirementCommand(SkillCommand skill, Integer members) {
-        this.name = skill.getName();
-        this.level = skill.getLevel();
-        this.members = members;
+    public SkillCommand(String name, String level) {
+        this.name = name;
+        this.level = level;
     }
 
     public String getName() {
@@ -45,20 +40,16 @@ public class HeistRequirementCommand {
         this.level = level;
     }
 
-    public Integer getMembers() {
-        return members;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SkillCommand that = (SkillCommand) o;
+        return name.equals(that.name) && level.equals(that.level);
     }
 
-    public void setMembers(Integer members) {
-        this.members = members;
-    }
-
-    public SkillCommand getSkill(){
-        return new SkillCommand(this.name, this.level);
-    }
-
-    public void setSkill(SkillCommand skill){
-        this.name = skill.getName();
-        this.level = skill.getLevel();
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, level);
     }
 }

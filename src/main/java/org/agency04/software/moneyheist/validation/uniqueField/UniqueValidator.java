@@ -1,4 +1,4 @@
-package org.agency04.software.moneyheist.validation.uniquefield;
+package org.agency04.software.moneyheist.validation.uniqueField;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;

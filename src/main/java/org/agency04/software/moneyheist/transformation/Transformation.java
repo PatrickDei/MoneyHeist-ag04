@@ -7,12 +7,15 @@ import org.agency04.software.moneyheist.entities.heist.requirement.HeistRequirem
 import org.agency04.software.moneyheist.dto.heist.requirement.HeistRequirementDTO;
 import org.agency04.software.moneyheist.entities.member.Member;
 import org.agency04.software.moneyheist.dto.member.MemberDTO;
-import org.agency04.software.moneyheist.validation.member.MemberCommand;
+import org.agency04.software.moneyheist.validation.requestEntity.heist.HeistCommand;
+import org.agency04.software.moneyheist.validation.requestEntity.heist.requirement.HeistRequirementCommand;
+import org.agency04.software.moneyheist.validation.requestEntity.member.MemberCommand;
 import org.agency04.software.moneyheist.entities.skill.Skill;
-import org.agency04.software.moneyheist.validation.skill.SkillCommand;
+import org.agency04.software.moneyheist.validation.requestEntity.skill.SkillCommand;
 import org.agency04.software.moneyheist.dto.skill.SkillDTO;
 import org.springframework.stereotype.Component;
 
+import java.text.ParseException;
 import java.util.stream.Collectors;
 
 @Component
@@ -64,6 +67,23 @@ public final class Transformation {
         return new HeistRequirementDTO(
                 Transformation.skillToDTO(requirement.getSkill()),
                 requirement.getNumberOfMembers()
+        );
+    }
+
+    public static Heist commandToHeist(HeistCommand heist) throws ParseException {
+        return new Heist(
+                heist.getName(),
+                heist.getLocation(),
+                heist.getStartTime(),
+                heist.getEndTime(),
+                heist.getSkills().stream().map(Transformation::commandToRequirement).collect(Collectors.toSet())
+        );
+    }
+
+    public static HeistRequirement commandToRequirement(HeistRequirementCommand requirement){
+        return new HeistRequirement(
+                Transformation.commandToSkill(requirement.getSkill()),
+                requirement.getMembers()
         );
     }
 

@@ -29,8 +29,7 @@ public class HeistRequirement {
 
     public HeistRequirement(){}
 
-    public HeistRequirement(Integer id, Skill skill, Integer numberOfMembers) {
-        this.id = id;
+    public HeistRequirement(Skill skill, Integer numberOfMembers) {
         this.skill = skill;
         this.numberOfMembers = numberOfMembers;
     }

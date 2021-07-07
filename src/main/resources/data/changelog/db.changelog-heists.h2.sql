@@ -40,3 +40,16 @@ INSERT INTO Heist (name, location, start_Time, end_Time) VALUES
     ('Third heist', 'Belgium', NOW() + INTERVAL 5 MINUTE, NOW() + INTERVAL 1 DAY),
     ('Fourth heist', 'United Kingdom', NOW() + INTERVAL 5 MINUTE, NOW() + INTERVAL 1 DAY),
     ('Fifth heist', 'USA', NOW() + INTERVAL 5 MINUTE, NOW() + INTERVAL 1 DAY);
+
+INSERT INTO Heist_requirement (number_of_members, name, level) VALUES
+    (3, 'Hacking', 1),
+    (2, 'Deception', 2),
+    (1, 'Stealing', 3),
+    (4, 'Looting', 3);
+
+INSERT INTO Heist_Heist_requirement (Heist_id, Heist_requirement_id) VALUES
+    (1, 1),
+    (2, 2),
+    (3, 3),
+    (4, 4),
+    (5, 2);

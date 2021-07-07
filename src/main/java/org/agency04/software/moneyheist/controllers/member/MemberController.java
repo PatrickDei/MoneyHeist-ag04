@@ -5,7 +5,7 @@ import org.agency04.software.moneyheist.exceptions.member.InvalidMainSkill;
 import org.agency04.software.moneyheist.groups.OnlySkillsRequired;
 import org.agency04.software.moneyheist.groups.WholeObjectRequired;
 import org.agency04.software.moneyheist.services.member.MemberService;
-import org.agency04.software.moneyheist.validation.member.MemberCommand;
+import org.agency04.software.moneyheist.validation.requestEntity.member.MemberCommand;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

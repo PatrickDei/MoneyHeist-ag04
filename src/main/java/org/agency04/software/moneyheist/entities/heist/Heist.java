@@ -43,8 +43,7 @@ public class Heist {
 
     public Heist(){}
 
-    public Heist(Integer id, String name, String location, Date startTime, Date endTime, Set<HeistRequirement> requirements) {
-        this.id = id;
+    public Heist(String name, String location, Date startTime, Date endTime, Set<HeistRequirement> requirements) {
         this.name = name;
         this.location = location;
         this.startTime = startTime;

@@ -1,4 +1,4 @@
-package org.agency04.software.moneyheist.validation.member;
+package org.agency04.software.moneyheist.validation.enumeration.status;
 
 import org.agency04.software.moneyheist.entities.member.Status;
 

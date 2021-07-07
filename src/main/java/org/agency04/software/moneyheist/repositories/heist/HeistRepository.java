@@ -8,4 +8,6 @@ import java.util.List;
 public interface HeistRepository extends CrudRepository<Heist, Integer> {
 
     List<Heist> findAll();
+
+    boolean existsByName(String name);
 }

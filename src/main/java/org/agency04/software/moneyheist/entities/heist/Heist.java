@@ -41,6 +41,8 @@ public class Heist {
     )
     private Set<HeistRequirement> requirements;
 
+    public Heist(){}
+
     public Heist(Integer id, String name, String location, Date startTime, Date endTime, Set<HeistRequirement> requirements) {
         this.id = id;
         this.name = name;

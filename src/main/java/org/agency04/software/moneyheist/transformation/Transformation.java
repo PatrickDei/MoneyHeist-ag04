@@ -19,50 +19,50 @@ import java.util.stream.Collectors;
 public final class Transformation {
 
     // Members
-    public static Member CommandToMember(MemberCommand memberCommand){
+    public static Member commandToMember(MemberCommand memberCommand){
         return new Member(
                 memberCommand.getName(),
                 memberCommand.getSex(),
                 memberCommand.getEmail(),
-                memberCommand.getSkills().stream().map(Transformation::CommandToSkill).collect(Collectors.toSet()),
+                memberCommand.getSkills().stream().map(Transformation::commandToSkill).collect(Collectors.toSet()),
                 normalizeString(memberCommand.getMainSkill()),
                 memberCommand.getStatus()
         );
     }
 
-    public static MemberDTO MemberToDTO(Member member){
-        return new MemberDTO(member.getId(), member.getName(), member.getSkills().stream().map(Transformation::SkillToDTO).collect(Collectors.toSet()), member.getMainSkill(), member.getEmail());
+    public static MemberDTO memberToDTO(Member member){
+        return new MemberDTO(member.getId(), member.getName(), member.getSkills().stream().map(Transformation::skillToDTO).collect(Collectors.toSet()), member.getMainSkill(), member.getEmail());
     }
 
 
     // Skills
-    public static Skill CommandToSkill(SkillCommand skillCommand) {
+    public static Skill commandToSkill(SkillCommand skillCommand) {
         return new Skill(normalizeString(skillCommand.getName()), skillCommand.getLevel().length());
     }
 
-    public static SkillDTO SkillToDTO(Skill skill){
-        return new SkillDTO(skill.getName(), Transformation.SkillLevelToString(skill.getSkillLevel()));
+    public static SkillDTO skillToDTO(Skill skill){
+        return new SkillDTO(skill.getName(), Transformation.skillLevelToString(skill.getSkillLevel()));
     }
 
-    public static String SkillLevelToString(Integer count){
+    public static String skillLevelToString(Integer count){
         return "*".repeat(count);
     }
 
 
-    // heists
-    public static HeistDTO HeistToDTO(Heist heist){
+    // Heists
+    public static HeistDTO heistToDTO(Heist heist){
         return new HeistDTO(heist.getId(),
                 heist.getName(),
                 heist.getLocation(),
                 heist.getStartTime(),
                 heist.getEndTime(),
-                heist.getRequirements().stream().map(Transformation::RequirementToDTO).collect(Collectors.toList())
+                heist.getRequirements().stream().map(Transformation::requirementToDTO).collect(Collectors.toList())
         );
     }
 
-    public static HeistRequirementDTO RequirementToDTO(HeistRequirement requirement){
+    public static HeistRequirementDTO requirementToDTO(HeistRequirement requirement){
         return new HeistRequirementDTO(
-                Transformation.SkillToDTO(requirement.getSkill()),
+                Transformation.skillToDTO(requirement.getSkill()),
                 requirement.getNumberOfMembers()
         );
     }

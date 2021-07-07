@@ -2,6 +2,7 @@ package org.agency04.software.moneyheist.repositories.member;
 
 import org.agency04.software.moneyheist.entities.member.Member;
 import org.agency04.software.moneyheist.entities.skill.Skill;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
@@ -11,13 +12,12 @@ import java.util.stream.Collectors;
 @Repository
 public class CustomMemberRepositoryImpl implements CustomMemberRepository{
 
-
+    @Autowired
+    private MemberSkillRelationshipInserter relationshipInserter;
     private final MemberRepository memberRepository;
-    private final MemberSkillRelationshipInserter relationshipInserter;
 
-    protected CustomMemberRepositoryImpl(MemberRepository memberRepository, MemberSkillRelationshipInserter relationshipInserter) {
+    protected CustomMemberRepositoryImpl(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
-        this.relationshipInserter = relationshipInserter;
     }
 
     @Override

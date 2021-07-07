@@ -6,4 +6,5 @@
              http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
     <include file="data/changelog/db.changelog-initial-schema.h2.sql" />
     <include file="data/changelog/db.changelog-initial-data.h2.sql" />
+    <include file="data/changelog/db.changelog-heists.h2.sql" />
 </databaseChangeLog>

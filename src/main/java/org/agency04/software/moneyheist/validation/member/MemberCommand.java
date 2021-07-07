@@ -1,11 +1,14 @@
 package org.agency04.software.moneyheist.validation.member;
 
+import org.agency04.software.moneyheist.entities.member.Status;
 import org.agency04.software.moneyheist.groups.OnlySkillsRequired;
 import org.agency04.software.moneyheist.groups.WholeObjectRequired;
-import org.agency04.software.moneyheist.entities.member.Status;
+import org.agency04.software.moneyheist.repositories.member.MemberRepository;
 import org.agency04.software.moneyheist.services.member.MemberService;
+import org.agency04.software.moneyheist.validation.enumeration.status.StatusPattern;
 import org.agency04.software.moneyheist.validation.skill.SkillCommand;
 import org.agency04.software.moneyheist.validation.uniquefield.Unique;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -13,8 +16,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 
-// members are validated upon entry into the API but some extra checks need to be performed later (the ones that require data from db)
+// members are validated upon entry into the API
 public class MemberCommand {
+    @Autowired
+    private MemberRepository memberRepository;
 
     @NotEmpty(groups = {WholeObjectRequired.class})
     @NotBlank(groups = {WholeObjectRequired.class})
@@ -32,7 +37,10 @@ public class MemberCommand {
     @NotNull(groups = {WholeObjectRequired.class})
     @Email(groups = {WholeObjectRequired.class})
     @Null(groups = {OnlySkillsRequired.class})
-    @Unique(service = MemberService.class, fieldName = "email", message = "Email already exists")
+    @Unique(service = MemberService.class,
+            fieldName = "email",
+            message = "Email already exists",
+            groups = {WholeObjectRequired.class})
     private String email;
 
     @StatusPattern(anyOf = {Status.AVAILABLE, Status.EXPIRED, Status.INCARCERATED, Status.RETIRED},
@@ -61,7 +69,8 @@ public class MemberCommand {
     }
 
     @AssertTrue(message = "There shouldn't be duplicated skill names",
-            groups = {OnlySkillsRequired.class, WholeObjectRequired.class})
+            groups = {OnlySkillsRequired.class,
+                    WholeObjectRequired.class})
     private boolean isSkillRepeated(){
         return skills == null || skills.stream().map(SkillCommand::getName).collect(Collectors.toSet()).size() == skills.size();
     }

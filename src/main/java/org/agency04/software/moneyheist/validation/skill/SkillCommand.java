@@ -1,5 +1,8 @@
 package org.agency04.software.moneyheist.validation.skill;
 
+import org.agency04.software.moneyheist.groups.OnlySkillsRequired;
+import org.agency04.software.moneyheist.groups.WholeObjectRequired;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
@@ -7,13 +10,13 @@ import java.util.Objects;
 
 public class SkillCommand {
 
-    @NotEmpty
-    @NotBlank
+    @NotEmpty(groups = {WholeObjectRequired.class, OnlySkillsRequired.class})
+    @NotBlank(groups = {WholeObjectRequired.class, OnlySkillsRequired.class})
     private String name;
 
-    @NotEmpty
-    @NotBlank
-    @Pattern(message = "Level must be expressed though stars and be between 1 and 10", regexp = "^[*]{1,10}$")
+    @NotEmpty(groups = {WholeObjectRequired.class, OnlySkillsRequired.class})
+    @NotBlank(groups = {WholeObjectRequired.class, OnlySkillsRequired.class})
+    @Pattern(message = "Level must be expressed though stars and be between 1 and 10", regexp = "[*]{1,10}", groups = {WholeObjectRequired.class, OnlySkillsRequired.class})
     private String level;
 
     public SkillCommand(String name, String level) {

@@ -27,6 +27,8 @@ public class HeistRequirement {
     @Column(name = "number_of_members")
     private Integer numberOfMembers;
 
+    public HeistRequirement(){}
+
     public HeistRequirement(Integer id, Skill skill, Integer numberOfMembers) {
         this.id = id;
         this.skill = skill;

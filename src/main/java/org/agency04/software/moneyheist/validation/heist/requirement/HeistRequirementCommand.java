@@ -1,22 +1,26 @@
 package org.agency04.software.moneyheist.validation.heist.requirement;
 
+import org.agency04.software.moneyheist.groups.OnlySkillsRequired;
+import org.agency04.software.moneyheist.groups.WholeObjectRequired;
 import org.agency04.software.moneyheist.validation.skill.SkillCommand;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 
 public class HeistRequirementCommand {
 
-    @NotEmpty
-    @NotBlank
+    @NotEmpty(groups = {WholeObjectRequired.class, OnlySkillsRequired.class})
+    @NotBlank(groups = {WholeObjectRequired.class, OnlySkillsRequired.class})
     private String name;
 
-    @NotEmpty
-    @NotBlank
+    @NotEmpty(groups = {WholeObjectRequired.class, OnlySkillsRequired.class})
+    @NotBlank(groups = {WholeObjectRequired.class, OnlySkillsRequired.class})
+    @Pattern(message = "Level must be expressed though stars and be between 1 and 10", regexp = "[*]{1,10}", groups = {WholeObjectRequired.class, OnlySkillsRequired.class})
     private String level;
 
-    @NotEmpty
-    @NotBlank
+    @NotEmpty(groups = {WholeObjectRequired.class, OnlySkillsRequired.class})
+    @NotBlank(groups = {WholeObjectRequired.class, OnlySkillsRequired.class})
     private Integer members;
 
     public HeistRequirementCommand(SkillCommand skill, Integer members) {

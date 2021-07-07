@@ -1,5 +1,6 @@
 package org.agency04.software.moneyheist.heist.members;
 
+import org.agency04.software.moneyheist.exceptions.member.InvalidMainSkill;
 import org.agency04.software.moneyheist.repositories.member.MemberRepository;
 import org.agency04.software.moneyheist.validation.member.MemberCommand;
 import org.agency04.software.moneyheist.validation.skill.SkillCommand;
@@ -42,7 +43,7 @@ class MemberServiceImplTest {
     }
 
     @Test
-    void updateMemberSkills() {
+    void updateMemberSkills() throws InvalidMainSkill {
         MemberCommand member = new MemberCommand(null, null, null, null, Arrays.asList(new SkillCommand("counting", "****"), new SkillCommand("hacking", "**")), "counting");
 
         final Integer assignedId = 1;

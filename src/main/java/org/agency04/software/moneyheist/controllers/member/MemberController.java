@@ -1,6 +1,7 @@
 package org.agency04.software.moneyheist.controllers.member;
 
 import org.agency04.software.moneyheist.dto.member.MemberDTO;
+import org.agency04.software.moneyheist.exceptions.member.InvalidMainSkill;
 import org.agency04.software.moneyheist.groups.OnlySkillsRequired;
 import org.agency04.software.moneyheist.groups.WholeObjectRequired;
 import org.agency04.software.moneyheist.services.member.MemberService;
@@ -45,18 +46,20 @@ public class MemberController {
 
     @PutMapping("/{memberId}/skills")
     public ResponseEntity<?> updateMembersSkills(@Validated({OnlySkillsRequired.class}) @RequestBody MemberCommand member, @PathVariable Integer memberId){
-        Integer id = this.memberService.updateMemberSkills(memberId, member);
+        try {
+            Integer id = this.memberService.updateMemberSkills(memberId, member);
 
-        if(id == null)
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            if(id == null)
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
-        if(id == 0)
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Location", "/member/" + id.toString() + "/skills");
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Location", "/member/" + id.toString() + "/skills");
-
-        return new ResponseEntity<>(headers, HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(headers, HttpStatus.NO_CONTENT);
+        }
+        catch(InvalidMainSkill e){
+            return new ResponseEntity<>((HttpStatus.BAD_REQUEST));
+        }
     }
 
     @DeleteMapping("{memberId}/skills/{skillName}")

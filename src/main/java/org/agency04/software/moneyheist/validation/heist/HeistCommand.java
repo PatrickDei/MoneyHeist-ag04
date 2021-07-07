@@ -1,9 +1,11 @@
 package org.agency04.software.moneyheist.validation.heist;
 
-import org.agency04.software.moneyheist.validation.heist.requirement.HeistRequirementCommand;
 import org.agency04.software.moneyheist.groups.OnlySkillsRequired;
 import org.agency04.software.moneyheist.groups.WholeObjectRequired;
+import org.agency04.software.moneyheist.services.heist.HeistService;
+import org.agency04.software.moneyheist.validation.heist.requirement.HeistRequirementCommand;
 import org.agency04.software.moneyheist.validation.skill.SkillCommand;
+import org.agency04.software.moneyheist.validation.uniquefield.Unique;
 
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -18,6 +20,10 @@ public class HeistCommand {
     @NotEmpty(groups = {WholeObjectRequired.class})
     @NotBlank(groups = {WholeObjectRequired.class})
     @Null(groups = {OnlySkillsRequired.class})
+    @Unique(service = HeistService.class,
+            fieldName = "name",
+            message = "Heist name already exists",
+            groups = WholeObjectRequired.class)
     private String name;
 
     @NotEmpty(groups = {WholeObjectRequired.class})

@@ -1,9 +1,10 @@
-package org.agency04.software.moneyheist.entities.heist.requirement;
+package org.agency04.software.moneyheist.entities.requirement;
 
 
 import org.agency04.software.moneyheist.entities.skill.Skill;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "Heist_requirement")
@@ -14,14 +15,8 @@ public class HeistRequirement {
     @Column(name = "id")
     private Integer id;
 
-    @ManyToOne(
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-            }
-    )
-    @JoinColumn(name = "level")
-    @JoinColumn(name = "name")
+    @ManyToOne( cascade = CascadeType.ALL)
+    @JoinColumn(name = "skill_id")
     private Skill skill;
 
     @Column(name = "number_of_members")
@@ -56,5 +51,18 @@ public class HeistRequirement {
 
     public void setNumberOfMembers(Integer numberOfMembers) {
         this.numberOfMembers = numberOfMembers;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        HeistRequirement that = (HeistRequirement) o;
+        return skill.equals(that.skill) && numberOfMembers.equals(that.numberOfMembers);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(skill, numberOfMembers);
     }
 }

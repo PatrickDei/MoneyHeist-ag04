@@ -2,7 +2,7 @@ package org.agency04.software.moneyheist.validation.validMainSkill;
 
 import org.agency04.software.moneyheist.interceptors.CustomInterceptor;
 import org.agency04.software.moneyheist.repositories.member.MemberRepository;
-import org.agency04.software.moneyheist.validation.requestEntity.member.MemberCommand;
+import org.agency04.software.moneyheist.validation.requestEntities.member.MemberCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.validation.ConstraintValidator;
@@ -33,8 +33,11 @@ public class ValidMainSkillValidator implements ConstraintValidator<ValidMainSki
                     )
                 ).orElse(false)
                 ||
-                memberCommand
+                (
+                    memberCommand.getSkills() != null
+                    &&
+                    memberCommand
                         .getSkills().stream()
-                        .anyMatch( s -> s.getName().equalsIgnoreCase(memberCommand.getMainSkill()));
+                        .anyMatch( s -> s.getName().equalsIgnoreCase(memberCommand.getMainSkill())));
     }
 }

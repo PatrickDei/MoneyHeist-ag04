@@ -11,13 +11,13 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 @Target({ METHOD, FIELD, ANNOTATION_TYPE })
 @Retention(RUNTIME)
-@Constraint(validatedBy = UniqueValidator.class)
+@Constraint(validatedBy = org.agency04.software.moneyheist.validation.uniqueField.UniqueValidator.class)
 @Documented
 public @interface Unique {
     String message() default "{unique.value.violation}";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
-    Class<? extends FieldValueExists> service();
+    Class<? extends org.agency04.software.moneyheist.validation.uniqueField.FieldValueExists> service();
     String serviceQualifier() default "";
     String fieldName();
 }

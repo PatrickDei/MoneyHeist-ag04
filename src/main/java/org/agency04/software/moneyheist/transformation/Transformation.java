@@ -3,15 +3,15 @@ package org.agency04.software.moneyheist.transformation;
 
 import org.agency04.software.moneyheist.entities.heist.Heist;
 import org.agency04.software.moneyheist.dto.heist.HeistDTO;
-import org.agency04.software.moneyheist.entities.heist.requirement.HeistRequirement;
+import org.agency04.software.moneyheist.entities.requirement.HeistRequirement;
 import org.agency04.software.moneyheist.dto.heist.requirement.HeistRequirementDTO;
 import org.agency04.software.moneyheist.entities.member.Member;
 import org.agency04.software.moneyheist.dto.member.MemberDTO;
-import org.agency04.software.moneyheist.validation.requestEntity.heist.HeistCommand;
-import org.agency04.software.moneyheist.validation.requestEntity.heist.requirement.HeistRequirementCommand;
-import org.agency04.software.moneyheist.validation.requestEntity.member.MemberCommand;
+import org.agency04.software.moneyheist.validation.requestEntities.heist.HeistCommand;
+import org.agency04.software.moneyheist.validation.requestEntities.heist.requirement.HeistRequirementCommand;
+import org.agency04.software.moneyheist.validation.requestEntities.member.MemberCommand;
 import org.agency04.software.moneyheist.entities.skill.Skill;
-import org.agency04.software.moneyheist.validation.requestEntity.skill.SkillCommand;
+import org.agency04.software.moneyheist.validation.requestEntities.skill.SkillCommand;
 import org.agency04.software.moneyheist.dto.skill.SkillDTO;
 import org.springframework.stereotype.Component;
 
@@ -26,7 +26,7 @@ public final class Transformation {
         return new Member(
                 memberCommand.getName(),
                 memberCommand.getSex(),
-                memberCommand.getEmail(),
+                memberCommand.getEmail().toLowerCase(),
                 memberCommand.getSkills().stream().map(Transformation::commandToSkill).collect(Collectors.toSet()),
                 normalizeString(memberCommand.getMainSkill()),
                 memberCommand.getStatus()

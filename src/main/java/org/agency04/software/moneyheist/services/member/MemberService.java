@@ -1,9 +1,7 @@
 package org.agency04.software.moneyheist.services.member;
 
 import org.agency04.software.moneyheist.dto.member.MemberDTO;
-import org.agency04.software.moneyheist.entities.member.Member;
-import org.agency04.software.moneyheist.exceptions.member.InvalidMainSkill;
-import org.agency04.software.moneyheist.validation.requestEntity.member.MemberCommand;
+import org.agency04.software.moneyheist.validation.requestEntities.member.MemberCommand;
 import org.agency04.software.moneyheist.validation.uniqueField.FieldValueExists;
 
 import java.util.List;
@@ -13,9 +11,7 @@ public interface MemberService extends FieldValueExists {
 
     Integer saveMember(MemberCommand member);
 
-    Integer updateMemberSkills(Integer id, MemberCommand updatedMember) throws InvalidMainSkill;
+    Integer updateMemberSkills(Integer id, MemberCommand updatedMember);
 
     Integer removeSkillFromMember(Integer memberId, String skill);
-
-    Integer saveMemberAndReturnId(Member member);
 }

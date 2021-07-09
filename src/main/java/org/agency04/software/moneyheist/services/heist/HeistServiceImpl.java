@@ -3,7 +3,7 @@ package org.agency04.software.moneyheist.services.heist;
 import org.agency04.software.moneyheist.dto.heist.HeistDTO;
 import org.agency04.software.moneyheist.repositories.heist.HeistRepository;
 import org.agency04.software.moneyheist.transformation.Transformation;
-import org.agency04.software.moneyheist.validation.requestEntity.heist.HeistCommand;
+import org.agency04.software.moneyheist.validation.requestEntities.heist.HeistCommand;
 import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,11 +17,8 @@ public class HeistServiceImpl implements HeistService {
 
     @Autowired
     private Transformation transformation;
-    private final HeistRepository heistRepository;
-
-    public HeistServiceImpl(HeistRepository heistRepository) {
-        this.heistRepository = heistRepository;
-    }
+    @Autowired
+    private HeistRepository heistRepository;
 
     @Override
     public List<HeistDTO> findAll() {
@@ -30,8 +27,9 @@ public class HeistServiceImpl implements HeistService {
 
     @Override
     public Integer saveHeist(HeistCommand heist) throws ParseException {
-        return this.heistRepository.save(Transformation.commandToHeist(heist)).getId();
+        return heistRepository.save(Transformation.commandToHeist(heist)).getId();
     }
+
 
     @Override
     public boolean fieldValueExists(Object value, String fieldName) throws UnsupportedOperationException {

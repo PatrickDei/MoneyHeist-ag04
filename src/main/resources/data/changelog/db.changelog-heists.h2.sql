@@ -12,12 +12,11 @@ CREATE TABLE IF NOT EXISTS Heist (
 CREATE TABLE IF NOT EXISTS Heist_requirement (
   id BIGINT NOT NULL AUTO_INCREMENT,
   number_of_members INT NOT NULL,
-  name VARCHAR(255) NOT NULL,
-  level VARCHAR(255) NOT NULL,
+  skill_id INT NOT NULL,
   PRIMARY KEY (id),
   CONSTRAINT fk_Heist_requirement_Skill1
-    FOREIGN KEY (name , level)
-    REFERENCES Skill (name , level)
+    FOREIGN KEY (skill_id)
+    REFERENCES Skill (id)
 );
 
 
@@ -41,11 +40,11 @@ INSERT INTO Heist (name, location, start_Time, end_Time) VALUES
     ('Fourth heist', 'United Kingdom', NOW() + INTERVAL 5 MINUTE, NOW() + INTERVAL 1 DAY),
     ('Fifth heist', 'USA', NOW() + INTERVAL 5 MINUTE, NOW() + INTERVAL 1 DAY);
 
-INSERT INTO Heist_requirement (number_of_members, name, level) VALUES
-    (3, 'Hacking', 1),
-    (2, 'Deception', 2),
-    (1, 'Stealing', 3),
-    (4, 'Looting', 3);
+INSERT INTO Heist_requirement (number_of_members, skill_id) VALUES
+    (3, 1),
+    (2, 2),
+    (1, 3),
+    (4, 3);
 
 INSERT INTO Heist_Heist_requirement (Heist_id, Heist_requirement_id) VALUES
     (1, 1),

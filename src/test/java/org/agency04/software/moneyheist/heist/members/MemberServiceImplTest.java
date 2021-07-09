@@ -1,12 +1,11 @@
 package org.agency04.software.moneyheist.heist.members;
 
-import org.agency04.software.moneyheist.exceptions.member.InvalidMainSkill;
-import org.agency04.software.moneyheist.repositories.member.MemberRepository;
-import org.agency04.software.moneyheist.validation.requestEntity.member.MemberCommand;
-import org.agency04.software.moneyheist.validation.requestEntity.skill.SkillCommand;
 import org.agency04.software.moneyheist.dto.member.MemberDTO;
-import org.agency04.software.moneyheist.services.member.MemberService;
 import org.agency04.software.moneyheist.entities.member.Status;
+import org.agency04.software.moneyheist.repositories.member.MemberRepository;
+import org.agency04.software.moneyheist.services.member.MemberService;
+import org.agency04.software.moneyheist.validation.requestEntities.member.MemberCommand;
+import org.agency04.software.moneyheist.validation.requestEntities.skill.SkillCommand;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +42,7 @@ class MemberServiceImplTest {
     }
 
     @Test
-    void updateMemberSkills() throws InvalidMainSkill {
+    void updateMemberSkills(){
         MemberCommand member = new MemberCommand(null, null, null, null, Arrays.asList(new SkillCommand("counting", "****"), new SkillCommand("hacking", "**")), "counting");
 
         final Integer assignedId = 1;

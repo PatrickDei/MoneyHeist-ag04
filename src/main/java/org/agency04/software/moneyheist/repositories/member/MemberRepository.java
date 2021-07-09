@@ -12,12 +12,11 @@ import java.util.List;
 
 @Repository
 public interface MemberRepository extends CrudRepository<Member, Integer> {
-
     List<Member> findAll();
 
     @Modifying
     @Transactional
-    @Query(value = "DELETE FROM Heist_Member_Skill WHERE Heist_Member_Id = :id AND name = :name", nativeQuery = true)
+    @Query(value = "DELETE FROM Heist_Member_Skill WHERE Heist_Member_Id = :id AND Skill_id IN (SELECT id FROM Skill WHERE name = :name)", nativeQuery = true)
     Integer removeSkillFromMember(@Param("id") Integer id, @Param("name") String name);
 
     boolean existsByEmail(String email);

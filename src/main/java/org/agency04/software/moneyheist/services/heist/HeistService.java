@@ -1,7 +1,7 @@
 package org.agency04.software.moneyheist.services.heist;
 
 import org.agency04.software.moneyheist.dto.heist.HeistDTO;
-import org.agency04.software.moneyheist.validation.requestEntity.heist.HeistCommand;
+import org.agency04.software.moneyheist.validation.requestEntities.heist.HeistCommand;
 import org.agency04.software.moneyheist.validation.uniqueField.FieldValueExists;
 
 import java.text.ParseException;

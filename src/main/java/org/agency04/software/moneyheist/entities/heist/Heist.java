@@ -1,7 +1,7 @@
 package org.agency04.software.moneyheist.entities.heist;
 
 
-import org.agency04.software.moneyheist.entities.heist.requirement.HeistRequirement;
+import org.agency04.software.moneyheist.entities.requirement.HeistRequirement;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -28,12 +28,7 @@ public class Heist {
     @Column(name = "end_time")
     private Date endTime;
 
-    @ManyToMany(
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-            }
-    )
+    @ManyToMany( cascade = {CascadeType.ALL})
     @JoinTable(
             name = "Heist_Heist_requirement",
             joinColumns = @JoinColumn(name = "heist_id"),

@@ -10,7 +10,7 @@ INSERT INTO Heist_Member (name, sex, email, main_Skill, status) VALUES ('Michael
 INSERT INTO Heist_Member (name, sex, email, main_Skill, status) VALUES ('Bono', 'M', 'bono@ag04.com', 'Stealth', 'RETIRED');
 INSERT INTO Heist_Member (name, sex, email, main_Skill, status) VALUES ('Christian', 'M', 'christian@ag04.com', 'Sneak', 'INCARCERATED');
 
-INSERT INTO Heist_Member_Skill (Heist_Member_Id, name, level) VALUES (1, 'Hacking', 1);
-INSERT INTO Heist_Member_Skill (Heist_Member_Id, name, level) VALUES (1, 'Deception', 2);
-INSERT INTO Heist_Member_Skill (Heist_Member_Id, name, level) VALUES (2, 'Stealing', 3);
-INSERT INTO Heist_Member_Skill (Heist_Member_Id, name, level) VALUES (3, 'Looting', 3);
+INSERT INTO Heist_Member_Skill (Heist_Member_Id, skill_id) VALUES (1, 1);
+INSERT INTO Heist_Member_Skill (Heist_Member_Id, skill_id) VALUES (1, 2);
+INSERT INTO Heist_Member_Skill (Heist_Member_Id, skill_id) VALUES (2, 3);
+INSERT INTO Heist_Member_Skill (Heist_Member_Id, skill_id) VALUES (3, 3);

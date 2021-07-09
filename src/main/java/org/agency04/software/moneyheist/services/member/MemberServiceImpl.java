@@ -3,13 +3,10 @@ package org.agency04.software.moneyheist.services.member;
 
 import org.agency04.software.moneyheist.dto.member.MemberDTO;
 import org.agency04.software.moneyheist.entities.member.Member;
-import org.agency04.software.moneyheist.entities.skill.Skill;
-import org.agency04.software.moneyheist.exceptions.member.InvalidMainSkill;
-import org.agency04.software.moneyheist.repositories.member.CustomMemberRepository;
 import org.agency04.software.moneyheist.repositories.member.MemberRepository;
-import org.agency04.software.moneyheist.repositories.skill.SkillRepository;
+import org.agency04.software.moneyheist.services.skill.SkillService;
 import org.agency04.software.moneyheist.transformation.Transformation;
-import org.agency04.software.moneyheist.validation.requestEntity.member.MemberCommand;
+import org.agency04.software.moneyheist.validation.requestEntities.member.MemberCommand;
 import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,15 +19,11 @@ public class MemberServiceImpl implements MemberService {
 
     @Autowired
     private Transformation transformation;
-    private final MemberRepository memberRepository;
-    private final CustomMemberRepository customMemberRepository;
-    private final SkillRepository skillRepository;
+    @Autowired
+    private SkillService skillService;
+    @Autowired
+    private MemberRepository memberRepository;
 
-    public MemberServiceImpl(MemberRepository memberRepository, CustomMemberRepository customMemberRepository, SkillRepository skillRepository) {
-        this.memberRepository = memberRepository;
-        this.customMemberRepository = customMemberRepository;
-        this.skillRepository = skillRepository;
-    }
 
     @Override
     public List<MemberDTO> findAll(){
@@ -41,11 +34,11 @@ public class MemberServiceImpl implements MemberService {
     public Integer saveMember(MemberCommand member){
         Member memberToAdd = Transformation.commandToMember(member);
 
-        return saveMemberAndReturnId(memberToAdd);
+        return memberRepository.save(memberToAdd).getId();
     }
 
     @Override
-    public Integer updateMemberSkills(Integer id, MemberCommand updatedMember) throws InvalidMainSkill {
+    public Integer updateMemberSkills(Integer id, MemberCommand updatedMember){
         Member member = memberRepository.findById(id).orElse(null);
         if(member == null)
             return null;
@@ -57,26 +50,14 @@ public class MemberServiceImpl implements MemberService {
         String suggestedMainSkill = Transformation.normalizeString(updatedMember.getMainSkill());
         if(suggestedMainSkill != null)
             member.setMainSkill(suggestedMainSkill);
+        //
 
-        return saveMemberAndReturnId(member);
+        return memberRepository.save(member).getId();
     }
 
     @Override
     public Integer removeSkillFromMember(Integer memberId, String skill){
         return memberRepository.removeSkillFromMember(memberId, Transformation.normalizeString(skill));
-    }
-
-    @Override
-    public Integer saveMemberAndReturnId(Member member){
-        List<Skill> alreadyExistingSkills = this.skillRepository.findAll().stream()
-                .distinct()
-                .filter(member.getSkills()::contains)
-                .collect(Collectors.toList());
-
-        if(alreadyExistingSkills.isEmpty())
-            return this.memberRepository.save(member).getId();
-
-        return this.customMemberRepository.saveMember(member, alreadyExistingSkills).getId();
     }
 
     @Override
@@ -89,6 +70,6 @@ public class MemberServiceImpl implements MemberService {
         if(value == null)
             return false;
 
-        return this.memberRepository.existsByEmail(value.toString());
+        return this.memberRepository.existsByEmail(value.toString().toLowerCase());
     }
 }

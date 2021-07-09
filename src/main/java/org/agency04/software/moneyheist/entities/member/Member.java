@@ -29,16 +29,11 @@ public class Member {
     @JoinColumn(name = "main_Skill")
     private String mainSkill;
 
-    @ManyToMany(
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-            }
-    )
+    @ManyToMany( cascade = {CascadeType.ALL})
     @JoinTable(
             name = "Heist_Member_Skill",
             joinColumns = @JoinColumn(name = "heist_Member_Id"),
-            inverseJoinColumns = {@JoinColumn(name = "level"), @JoinColumn(name = "name")}
+            inverseJoinColumns = @JoinColumn(name = "skill_id")
     )
     private Set<Skill> skills;
 

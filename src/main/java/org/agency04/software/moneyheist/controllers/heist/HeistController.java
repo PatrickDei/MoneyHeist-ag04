@@ -2,7 +2,7 @@ package org.agency04.software.moneyheist.controllers.heist;
 
 import org.agency04.software.moneyheist.dto.heist.HeistDTO;
 import org.agency04.software.moneyheist.services.heist.HeistService;
-import org.agency04.software.moneyheist.validation.requestEntity.heist.HeistCommand;
+import org.agency04.software.moneyheist.validation.requestEntities.heist.HeistCommand;
 import org.agency04.software.moneyheist.groups.WholeObjectRequired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

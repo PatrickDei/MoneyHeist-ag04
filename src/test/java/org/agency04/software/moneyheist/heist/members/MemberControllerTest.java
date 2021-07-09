@@ -1,11 +1,11 @@
 package org.agency04.software.moneyheist.heist.members;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.agency04.software.moneyheist.repositories.member.MemberRepository;
-import org.agency04.software.moneyheist.validation.requestEntity.member.MemberCommand;
-import org.agency04.software.moneyheist.validation.requestEntity.skill.SkillCommand;
-import org.agency04.software.moneyheist.services.member.MemberService;
 import org.agency04.software.moneyheist.entities.member.Status;
+import org.agency04.software.moneyheist.repositories.member.MemberRepository;
+import org.agency04.software.moneyheist.services.member.MemberService;
+import org.agency04.software.moneyheist.validation.requestEntities.member.MemberCommand;
+import org.agency04.software.moneyheist.validation.requestEntities.skill.SkillCommand;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;

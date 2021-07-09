@@ -1,11 +1,10 @@
 package org.agency04.software.moneyheist.controllers.member;
 
 import org.agency04.software.moneyheist.dto.member.MemberDTO;
-import org.agency04.software.moneyheist.exceptions.member.InvalidMainSkill;
 import org.agency04.software.moneyheist.groups.OnlySkillsRequired;
 import org.agency04.software.moneyheist.groups.WholeObjectRequired;
 import org.agency04.software.moneyheist.services.member.MemberService;
-import org.agency04.software.moneyheist.validation.requestEntity.member.MemberCommand;
+import org.agency04.software.moneyheist.validation.requestEntities.member.MemberCommand;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,20 +45,15 @@ public class MemberController {
 
     @PutMapping("/{memberId}/skills")
     public ResponseEntity<?> updateMembersSkills(@Validated({OnlySkillsRequired.class}) @RequestBody MemberCommand member, @PathVariable Integer memberId){
-        try {
-            Integer id = this.memberService.updateMemberSkills(memberId, member);
+        Integer id = this.memberService.updateMemberSkills(memberId, member);
 
-            if(id == null)
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if(id == null)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
-            HttpHeaders headers = new HttpHeaders();
-            headers.add("Location", "/member/" + id.toString() + "/skills");
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Location", "/member/" + id.toString() + "/skills");
 
-            return new ResponseEntity<>(headers, HttpStatus.NO_CONTENT);
-        }
-        catch(InvalidMainSkill e){
-            return new ResponseEntity<>((HttpStatus.BAD_REQUEST));
-        }
+        return new ResponseEntity<>(headers, HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping("{memberId}/skills/{skillName}")

@@ -1,10 +1,10 @@
-package org.agency04.software.moneyheist.validation.requestEntity.heist;
+package org.agency04.software.moneyheist.validation.requestEntities.heist;
 
 import org.agency04.software.moneyheist.groups.OnlySkillsRequired;
 import org.agency04.software.moneyheist.groups.WholeObjectRequired;
 import org.agency04.software.moneyheist.services.heist.HeistService;
-import org.agency04.software.moneyheist.validation.requestEntity.heist.requirement.HeistRequirementCommand;
-import org.agency04.software.moneyheist.validation.requestEntity.skill.SkillCommand;
+import org.agency04.software.moneyheist.validation.requestEntities.heist.requirement.HeistRequirementCommand;
+import org.agency04.software.moneyheist.validation.requestEntities.skill.SkillCommand;
 import org.agency04.software.moneyheist.validation.uniqueField.Unique;
 
 import javax.validation.Valid;

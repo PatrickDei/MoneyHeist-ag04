@@ -1,4 +1,4 @@
-package org.agency04.software.moneyheist.validation.requestEntity.member;
+package org.agency04.software.moneyheist.validation.requestEntities.member;
 
 import org.agency04.software.moneyheist.entities.member.Status;
 import org.agency04.software.moneyheist.groups.OnlySkillsRequired;
@@ -6,7 +6,7 @@ import org.agency04.software.moneyheist.groups.WholeObjectRequired;
 import org.agency04.software.moneyheist.repositories.member.MemberRepository;
 import org.agency04.software.moneyheist.services.member.MemberService;
 import org.agency04.software.moneyheist.validation.enumeration.status.StatusPattern;
-import org.agency04.software.moneyheist.validation.requestEntity.skill.SkillCommand;
+import org.agency04.software.moneyheist.validation.requestEntities.skill.SkillCommand;
 import org.agency04.software.moneyheist.validation.uniqueField.Unique;
 import org.agency04.software.moneyheist.validation.validMainSkill.ValidMainSkill;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,14 +67,14 @@ public class MemberCommand {
     @AssertTrue(message = "Make sure the list of skills contains the mainSkill!",
             groups = {WholeObjectRequired.class})
     private boolean isValidMainSkill(){
-        return mainSkill == null || skills.stream().anyMatch( s -> s.getName().equalsIgnoreCase(mainSkill));
+        return mainSkill == null || skills == null || skills.stream().anyMatch( s -> s.getName().equalsIgnoreCase(mainSkill));
     }
 
     @AssertTrue(message = "There shouldn't be duplicated skill names",
             groups = {OnlySkillsRequired.class,
                     WholeObjectRequired.class})
     private boolean isSkillRepeated(){
-        return skills == null || skills.stream().map(s -> s.getName().toLowerCase()).collect(Collectors.toSet()).size() == skills.size();
+        return skills == null || skills.stream().map(s -> (s.getName() != null) ? s.getName().toLowerCase() : null).collect(Collectors.toSet()).size() == skills.size();
     }
 
     public MemberCommand(String name, String sex, String email, Status status, List<@Valid SkillCommand> skills, String mainSkill) {

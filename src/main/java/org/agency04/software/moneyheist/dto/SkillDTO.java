@@ -1,4 +1,4 @@
-package org.agency04.software.moneyheist.dto.skill;
+package org.agency04.software.moneyheist.dto;
 
 public class SkillDTO {
 

@@ -1,6 +1,7 @@
 package org.agency04.software.moneyheist.services.heist;
 
-import org.agency04.software.moneyheist.dto.heist.HeistDTO;
+import org.agency04.software.moneyheist.dto.EligibleHeistMembersDTO;
+import org.agency04.software.moneyheist.dto.HeistDTO;
 import org.agency04.software.moneyheist.validation.requestEntities.HeistCommand;
 import org.agency04.software.moneyheist.validation.uniqueField.FieldValueExists;
 
@@ -14,4 +15,6 @@ public interface HeistService extends FieldValueExists {
     Integer saveHeist(HeistCommand heist) throws ParseException;
 
     Integer updateHeistSkills(HeistCommand heist, Integer heistId);
+
+    EligibleHeistMembersDTO getEligibleHeistMembers(Integer heistId);
 }

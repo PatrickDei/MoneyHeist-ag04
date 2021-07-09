@@ -1,6 +1,6 @@
 package org.agency04.software.moneyheist.controllers.member;
 
-import org.agency04.software.moneyheist.dto.member.MemberDTO;
+import org.agency04.software.moneyheist.dto.MemberDTO;
 import org.agency04.software.moneyheist.groups.OnlySkillsRequired;
 import org.agency04.software.moneyheist.groups.WholeObjectRequired;
 import org.agency04.software.moneyheist.services.member.MemberService;

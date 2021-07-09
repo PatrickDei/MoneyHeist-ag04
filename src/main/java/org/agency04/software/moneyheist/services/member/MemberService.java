@@ -1,6 +1,6 @@
 package org.agency04.software.moneyheist.services.member;
 
-import org.agency04.software.moneyheist.dto.member.MemberDTO;
+import org.agency04.software.moneyheist.dto.MemberDTO;
 import org.agency04.software.moneyheist.validation.requestEntities.MemberCommand;
 import org.agency04.software.moneyheist.validation.uniqueField.FieldValueExists;
 

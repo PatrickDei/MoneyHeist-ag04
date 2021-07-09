@@ -1,6 +1,6 @@
 package org.agency04.software.moneyheist.heist.members;
 
-import org.agency04.software.moneyheist.dto.member.MemberDTO;
+import org.agency04.software.moneyheist.dto.MemberDTO;
 import org.agency04.software.moneyheist.entities.member.Status;
 import org.agency04.software.moneyheist.repositories.member.MemberRepository;
 import org.agency04.software.moneyheist.services.member.MemberService;

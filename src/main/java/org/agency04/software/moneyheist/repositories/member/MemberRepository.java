@@ -20,4 +20,10 @@ public interface MemberRepository extends CrudRepository<Member, Integer> {
     Integer removeSkillFromMember(@Param("id") Integer id, @Param("name") String name);
 
     boolean existsByEmail(String email);
+
+    @Query(value = "SELECT * FROM Heist_Member WHERE id IN " +
+            "(SELECT Heist_Member_id FROM Heist_Member_skill WHERE Skill_id IN " +
+            "(SELECT id FROM Skill WHERE name LIKE :name AND level >= :level))" +
+            "AND status IN ('AVAILABLE', 'RETIRED')", nativeQuery = true)
+    List<Member> findEligibleMembers(@Param("name") String name, @Param("level") Integer level);
 }

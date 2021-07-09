@@ -1,6 +1,4 @@
-package org.agency04.software.moneyheist.dto.member;
-
-import org.agency04.software.moneyheist.dto.skill.SkillDTO;
+package org.agency04.software.moneyheist.dto;
 
 import java.util.Set;
 

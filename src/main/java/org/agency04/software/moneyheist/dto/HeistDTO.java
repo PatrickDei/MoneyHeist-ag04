@@ -1,6 +1,4 @@
-package org.agency04.software.moneyheist.dto.heist;
-
-import org.agency04.software.moneyheist.dto.heist.requirement.HeistRequirementDTO;
+package org.agency04.software.moneyheist.dto;
 
 import java.util.Date;
 import java.util.List;

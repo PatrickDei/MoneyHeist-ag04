@@ -1,6 +1,4 @@
-package org.agency04.software.moneyheist.dto.heist.requirement;
-
-import org.agency04.software.moneyheist.dto.skill.SkillDTO;
+package org.agency04.software.moneyheist.dto;
 
 public class HeistRequirementDTO {
 

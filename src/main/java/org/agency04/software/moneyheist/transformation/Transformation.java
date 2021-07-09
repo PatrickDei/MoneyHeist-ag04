@@ -1,10 +1,7 @@
 package org.agency04.software.moneyheist.transformation;
 
 
-import org.agency04.software.moneyheist.dto.heist.HeistDTO;
-import org.agency04.software.moneyheist.dto.heist.requirement.HeistRequirementDTO;
-import org.agency04.software.moneyheist.dto.member.MemberDTO;
-import org.agency04.software.moneyheist.dto.skill.SkillDTO;
+import org.agency04.software.moneyheist.dto.*;
 import org.agency04.software.moneyheist.entities.heist.Heist;
 import org.agency04.software.moneyheist.entities.member.Member;
 import org.agency04.software.moneyheist.entities.requirement.HeistRequirement;
@@ -15,6 +12,8 @@ import org.agency04.software.moneyheist.validation.requestEntities.MemberCommand
 import org.agency04.software.moneyheist.validation.requestEntities.SkillCommand;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
@@ -34,6 +33,17 @@ public final class Transformation {
 
     public static MemberDTO memberToDTO(Member member){
         return new MemberDTO(member.getId(), member.getName(), member.getSkills().stream().map(Transformation::skillToDTO).collect(Collectors.toSet()), member.getMainSkill(), member.getEmail());
+    }
+
+    public static EligibleMemberDTO memberToEligibleMemberDTO(Member member){
+        return new EligibleMemberDTO(member.getName(),
+                member.getSkills().stream()
+                        .map(Transformation::skillToDTO)
+                        .collect(Collectors.toSet()));
+    }
+
+    public static List<EligibleMemberDTO> membersToEligibleMembersDTO(List<Member> members){
+        return members.stream().map(Transformation::memberToEligibleMemberDTO).collect(Collectors.toList());
     }
 
 
@@ -67,6 +77,10 @@ public final class Transformation {
                 Transformation.skillToDTO(requirement.getSkill()),
                 requirement.getNumberOfMembers()
         );
+    }
+
+    public static List<HeistRequirementDTO> requirementsToDTO(Set<HeistRequirement> requirements){
+        return requirements.stream().map(Transformation::requirementToDTO).collect(Collectors.toList());
     }
 
     public static Heist commandToHeist(HeistCommand heist){

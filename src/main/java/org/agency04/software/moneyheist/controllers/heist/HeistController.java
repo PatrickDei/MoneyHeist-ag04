@@ -1,6 +1,7 @@
 package org.agency04.software.moneyheist.controllers.heist;
 
-import org.agency04.software.moneyheist.dto.heist.HeistDTO;
+import org.agency04.software.moneyheist.dto.EligibleHeistMembersDTO;
+import org.agency04.software.moneyheist.dto.HeistDTO;
 import org.agency04.software.moneyheist.groups.OnlySkillsRequired;
 import org.agency04.software.moneyheist.groups.WholeObjectRequired;
 import org.agency04.software.moneyheist.services.heist.HeistService;
@@ -52,5 +53,16 @@ public class HeistController {
         headers.add("Content-Location", "/heist/" + id.toString() + "/skills");
 
         return new ResponseEntity<>(headers, HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/{heistId}/eligible_members")
+    public ResponseEntity<EligibleHeistMembersDTO> getEligibleHeistMembers(@PathVariable Integer heistId){
+
+        EligibleHeistMembersDTO returnValue = heistService.getEligibleHeistMembers(heistId);
+
+        if(returnValue == null)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        return ResponseEntity.ok(returnValue);
     }
 }

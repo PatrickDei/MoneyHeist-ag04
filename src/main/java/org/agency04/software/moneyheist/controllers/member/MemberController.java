@@ -4,7 +4,7 @@ import org.agency04.software.moneyheist.dto.member.MemberDTO;
 import org.agency04.software.moneyheist.groups.OnlySkillsRequired;
 import org.agency04.software.moneyheist.groups.WholeObjectRequired;
 import org.agency04.software.moneyheist.services.member.MemberService;
-import org.agency04.software.moneyheist.validation.requestEntities.member.MemberCommand;
+import org.agency04.software.moneyheist.validation.requestEntities.MemberCommand;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

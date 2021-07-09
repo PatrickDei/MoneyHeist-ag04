@@ -6,6 +6,7 @@ import org.agency04.software.moneyheist.entities.requirement.HeistRequirement;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "heist")
@@ -92,5 +93,22 @@ public class Heist {
 
     public void setRequirements(Set<HeistRequirement> requirements) {
         this.requirements = requirements;
+    }
+
+    public void updateRequirements(Set<HeistRequirement> newRequirements){
+        for(HeistRequirement r : newRequirements){
+            if(requirements.stream()
+                    .map(req -> req.getSkill().getName()).collect(Collectors.toList())
+                    .contains(r.getSkill().getName()))
+            {
+                requirements.remove(
+                        requirements.stream()
+                                .filter(skill -> skill.getSkill().getName().equals(r.getSkill().getName()))
+                                .findFirst()
+                                .orElse(null));
+            }
+
+            requirements.add(r);
+        }
     }
 }

@@ -1,21 +1,20 @@
 package org.agency04.software.moneyheist.transformation;
 
 
-import org.agency04.software.moneyheist.entities.heist.Heist;
 import org.agency04.software.moneyheist.dto.heist.HeistDTO;
-import org.agency04.software.moneyheist.entities.requirement.HeistRequirement;
 import org.agency04.software.moneyheist.dto.heist.requirement.HeistRequirementDTO;
-import org.agency04.software.moneyheist.entities.member.Member;
 import org.agency04.software.moneyheist.dto.member.MemberDTO;
-import org.agency04.software.moneyheist.validation.requestEntities.heist.HeistCommand;
-import org.agency04.software.moneyheist.validation.requestEntities.heist.requirement.HeistRequirementCommand;
-import org.agency04.software.moneyheist.validation.requestEntities.member.MemberCommand;
-import org.agency04.software.moneyheist.entities.skill.Skill;
-import org.agency04.software.moneyheist.validation.requestEntities.skill.SkillCommand;
 import org.agency04.software.moneyheist.dto.skill.SkillDTO;
+import org.agency04.software.moneyheist.entities.heist.Heist;
+import org.agency04.software.moneyheist.entities.member.Member;
+import org.agency04.software.moneyheist.entities.requirement.HeistRequirement;
+import org.agency04.software.moneyheist.entities.skill.Skill;
+import org.agency04.software.moneyheist.validation.requestEntities.HeistCommand;
+import org.agency04.software.moneyheist.validation.requestEntities.HeistRequirementCommand;
+import org.agency04.software.moneyheist.validation.requestEntities.MemberCommand;
+import org.agency04.software.moneyheist.validation.requestEntities.SkillCommand;
 import org.springframework.stereotype.Component;
 
-import java.text.ParseException;
 import java.util.stream.Collectors;
 
 @Component
@@ -70,7 +69,7 @@ public final class Transformation {
         );
     }
 
-    public static Heist commandToHeist(HeistCommand heist) throws ParseException {
+    public static Heist commandToHeist(HeistCommand heist){
         return new Heist(
                 heist.getName(),
                 heist.getLocation(),

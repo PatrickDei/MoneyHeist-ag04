@@ -1,4 +1,4 @@
-package org.agency04.software.moneyheist.validation.requestEntities.member;
+package org.agency04.software.moneyheist.validation.requestEntities;
 
 import org.agency04.software.moneyheist.entities.member.Status;
 import org.agency04.software.moneyheist.groups.OnlySkillsRequired;
@@ -6,7 +6,6 @@ import org.agency04.software.moneyheist.groups.WholeObjectRequired;
 import org.agency04.software.moneyheist.repositories.member.MemberRepository;
 import org.agency04.software.moneyheist.services.member.MemberService;
 import org.agency04.software.moneyheist.validation.enumeration.status.StatusPattern;
-import org.agency04.software.moneyheist.validation.requestEntities.skill.SkillCommand;
 import org.agency04.software.moneyheist.validation.uniqueField.Unique;
 import org.agency04.software.moneyheist.validation.validMainSkill.ValidMainSkill;
 import org.springframework.beans.factory.annotation.Autowired;

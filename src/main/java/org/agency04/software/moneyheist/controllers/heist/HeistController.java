@@ -1,9 +1,10 @@
 package org.agency04.software.moneyheist.controllers.heist;
 
 import org.agency04.software.moneyheist.dto.heist.HeistDTO;
-import org.agency04.software.moneyheist.services.heist.HeistService;
-import org.agency04.software.moneyheist.validation.requestEntities.heist.HeistCommand;
+import org.agency04.software.moneyheist.groups.OnlySkillsRequired;
 import org.agency04.software.moneyheist.groups.WholeObjectRequired;
+import org.agency04.software.moneyheist.services.heist.HeistService;
+import org.agency04.software.moneyheist.validation.requestEntities.HeistCommand;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,5 +38,19 @@ public class HeistController {
         headers.add("Location", "/heist/" + id.toString());
 
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
+    }
+
+    @PatchMapping("/{heistId}/skills")
+    public ResponseEntity<?> updateHeistSkills(@Validated({OnlySkillsRequired.class}) @RequestBody HeistCommand heist,
+                                               @PathVariable Integer heistId){
+        Integer id = heistService.updateHeistSkills(heist, heistId);
+
+        if(id == null)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Location", "/heist/" + id.toString() + "/skills");
+
+        return new ResponseEntity<>(headers, HttpStatus.NO_CONTENT);
     }
 }

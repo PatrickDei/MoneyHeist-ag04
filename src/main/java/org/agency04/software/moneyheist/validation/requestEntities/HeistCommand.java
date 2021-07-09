@@ -1,17 +1,14 @@
-package org.agency04.software.moneyheist.validation.requestEntities.heist;
+package org.agency04.software.moneyheist.validation.requestEntities;
 
 import org.agency04.software.moneyheist.groups.OnlySkillsRequired;
 import org.agency04.software.moneyheist.groups.WholeObjectRequired;
 import org.agency04.software.moneyheist.services.heist.HeistService;
-import org.agency04.software.moneyheist.validation.requestEntities.heist.requirement.HeistRequirementCommand;
-import org.agency04.software.moneyheist.validation.requestEntities.skill.SkillCommand;
 import org.agency04.software.moneyheist.validation.uniqueField.Unique;
 
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 // heists are validated upon entry into the API but some extra checks need to be performed later (the ones that require data from db)
@@ -42,17 +39,18 @@ public class HeistCommand {
 
     @AssertTrue(message = "startTime must be before endTime",
             groups = {WholeObjectRequired.class})
-    private boolean isValidTimeDifference(){
+    public boolean isValidTimeDifference(){
         return startTime.before(endTime);
     }
 
-    @NotNull(message = "There must exist a list of requirements")
+    @NotNull(message = "There must exist a list of requirements",
+            groups = {WholeObjectRequired.class, OnlySkillsRequired.class})
     private List<@Valid HeistRequirementCommand> skills;
 
-    @AssertTrue(message = "There shouldn't be duplicated skill names and levels simultaneously")
-    private boolean isValidSkillList(){
-        Set<SkillCommand> requirement = skills.stream().map(HeistRequirementCommand::getSkill).collect(Collectors.toSet());
-        return requirement.size() == skills.size();
+    @AssertTrue(message = "There shouldn't be duplicated skill names and levels simultaneously",
+            groups = {WholeObjectRequired.class, OnlySkillsRequired.class})
+    public boolean isValidSkillList(){
+        return skills != null && skills.stream().map(HeistRequirementCommand::getSkill).collect(Collectors.toSet()).size() == skills.size();
     }
 
     public HeistCommand(String name, String location, Date startTime, Date endTime, List<@Valid HeistRequirementCommand> skills) {

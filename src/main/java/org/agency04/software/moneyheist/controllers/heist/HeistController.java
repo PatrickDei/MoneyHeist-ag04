@@ -73,6 +73,19 @@ public class HeistController {
         return ResponseEntity.ok(heistService.getHeistRequirements(heistId));
     }
 
+    @GetMapping("/{heistId}/status")
+    @JsonView(View.HeistStatus.class)
+    public ResponseEntity<HeistDTO> getHeistStatus(@PathVariable Integer heistId){
+        return heistService.findHeist(heistId)
+                .map( h -> ResponseEntity
+                        .status(HttpStatus.OK)
+                        .body(h)
+                ).orElseGet( () -> ResponseEntity
+                        .status(HttpStatus.NOT_FOUND)
+                        .build()
+                );
+    }
+
     @GetMapping("/{heistId}/eligible_members")
     @JsonView(View.EligibleMembers.class)
     public ResponseEntity<HeistDTO> getEligibleHeistMembers(@PathVariable Integer heistId){

@@ -28,7 +28,7 @@ public class HeistDTO {
     @JsonView(View.EligibleMembers.class)
     private Set<MemberDTO> members;
 
-    @JsonView(View.BasicHeistInfo.class)
+    @JsonView({View.BasicHeistInfo.class, View.HeistStatus.class})
     private HeistStatus status;
 
     public HeistDTO(String name, String location, Date startTime, Date endTime, List<HeistRequirementDTO> skills, Set<MemberDTO> members, HeistStatus status) {

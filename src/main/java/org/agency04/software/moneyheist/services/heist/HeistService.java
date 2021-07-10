@@ -15,6 +15,8 @@ public interface HeistService extends FieldValueExists, MemberIsValid {
 
     List<HeistDTO> findAll();
 
+    Optional<HeistDTO> findHeist(Integer id);
+
     Integer saveHeist(HeistCommand heist) throws ParseException;
 
     Integer updateHeistSkills(HeistCommand heist, Integer heistId);

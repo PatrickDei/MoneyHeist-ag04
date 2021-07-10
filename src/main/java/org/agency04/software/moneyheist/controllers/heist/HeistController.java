@@ -35,6 +35,31 @@ public class HeistController {
         return ResponseEntity.ok(heistService.findAll());
     }
 
+    @GetMapping("/{heistId}")
+    @JsonView(View.BasicHeistInfo.class)
+    public ResponseEntity<HeistDTO> getHeistById(@PathVariable Integer heistId){
+        return heistService.findHeist(heistId)
+                .map( h -> ResponseEntity
+                        .status(HttpStatus.OK)
+                        .body(h)
+                ).orElseGet( () -> ResponseEntity
+                        .status(HttpStatus.NOT_FOUND)
+                        .build()
+                );
+    }
+
+    @GetMapping("/{heistId}/eligible_members")
+    @JsonView(View.EligibleMembers.class)
+    public ResponseEntity<HeistDTO> getEligibleHeistMembers(@PathVariable Integer heistId){
+
+        HeistDTO returnValue = heistService.getEligibleHeistMembers(heistId);
+
+        if(returnValue == null)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        return ResponseEntity.ok(returnValue);
+    }
+
     @PostMapping
     public ResponseEntity<?> saveHeist(@Validated({Group.WholeObjectRequired.class}) @RequestBody HeistCommand heist) throws ParseException {
         Integer id = this.heistService.saveHeist(heist);
@@ -57,18 +82,6 @@ public class HeistController {
         headers.add("Content-Location", "/heist/" + id.toString() + "/skills");
 
         return new ResponseEntity<>(headers, HttpStatus.NO_CONTENT);
-    }
-
-    @GetMapping("/{heistId}/eligible_members")
-    @JsonView(View.EligibleMembers.class)
-    public ResponseEntity<HeistDTO> getEligibleHeistMembers(@PathVariable Integer heistId){
-
-        HeistDTO returnValue = heistService.getEligibleHeistMembers(heistId);
-
-        if(returnValue == null)
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
-        return ResponseEntity.ok(returnValue);
     }
 
     @PutMapping("/{heistId}/members")

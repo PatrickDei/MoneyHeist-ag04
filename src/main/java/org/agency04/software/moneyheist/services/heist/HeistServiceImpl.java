@@ -35,6 +35,11 @@ public class HeistServiceImpl implements HeistService {
     }
 
     @Override
+    public Optional<HeistDTO> findHeist(Integer id){
+        return heistRepository.findById(id).map(Transformation::heistToDTO);
+    }
+
+    @Override
     public Optional<Heist> findHeistById(Integer id){
         return this.heistRepository.findById(id);
     }

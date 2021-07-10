@@ -11,9 +11,6 @@ import java.util.Set;
 public class HeistDTO {
 
     @JsonView(View.BasicHeistInfo.class)
-    private Integer id;
-
-    @JsonView(View.BasicHeistInfo.class)
     private String name;
 
     @JsonView(View.BasicHeistInfo.class)
@@ -34,8 +31,7 @@ public class HeistDTO {
     @JsonView(View.BasicHeistInfo.class)
     private HeistStatus status;
 
-    public HeistDTO(Integer id, String name, String location, Date startTime, Date endTime, List<HeistRequirementDTO> skills, Set<MemberDTO> members, HeistStatus status) {
-        this.id = id;
+    public HeistDTO(String name, String location, Date startTime, Date endTime, List<HeistRequirementDTO> skills, Set<MemberDTO> members, HeistStatus status) {
         this.name = name;
         this.location = location;
         this.startTime = startTime;
@@ -43,14 +39,6 @@ public class HeistDTO {
         this.skills = skills;
         this.members = members;
         this.status = status;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getName() {

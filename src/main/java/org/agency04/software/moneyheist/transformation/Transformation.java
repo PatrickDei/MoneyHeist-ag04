@@ -61,14 +61,15 @@ public final class Transformation {
 
     // Heists
     public static HeistDTO heistToDTO(Heist heist){
-        return new HeistDTO(heist.getId(),
+        return new HeistDTO(
                 heist.getName(),
                 heist.getLocation(),
                 heist.getStartTime(),
                 heist.getEndTime(),
                 heist.getRequirements().stream().map(Transformation::requirementToDTO).collect(Collectors.toList()),
                 heist.getMembers().stream().map(Transformation::memberToDTO).collect(Collectors.toSet()),
-                heist.getStatus());
+                heist.getStatus()
+        );
     }
 
     public static HeistRequirementDTO requirementToDTO(HeistRequirement requirement){

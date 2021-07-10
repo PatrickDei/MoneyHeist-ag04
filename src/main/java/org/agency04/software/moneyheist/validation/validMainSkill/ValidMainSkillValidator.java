@@ -25,7 +25,7 @@ public class ValidMainSkillValidator implements ConstraintValidator<ValidMainSki
                 ||
                 memberRepository
                 .findById(
-                        interceptor.getMemberId()
+                        interceptor.getLastUrlId()
                 ).map(value -> value
                     .getSkills().stream()
                     .anyMatch(

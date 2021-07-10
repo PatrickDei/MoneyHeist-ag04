@@ -1,6 +1,6 @@
 package org.agency04.software.moneyheist.validation.requestEntities;
 
-import org.agency04.software.moneyheist.entities.member.Status;
+import org.agency04.software.moneyheist.entities.member.MemberStatus;
 import org.agency04.software.moneyheist.groups.OnlySkillsRequired;
 import org.agency04.software.moneyheist.groups.WholeObjectRequired;
 import org.agency04.software.moneyheist.repositories.member.MemberRepository;
@@ -44,10 +44,10 @@ public class MemberCommand {
             groups = {WholeObjectRequired.class})
     private String email;
 
-    @StatusPattern(anyOf = {Status.AVAILABLE, Status.EXPIRED, Status.INCARCERATED, Status.RETIRED},
+    @StatusPattern(anyOf = {MemberStatus.AVAILABLE, MemberStatus.EXPIRED, MemberStatus.INCARCERATED, MemberStatus.RETIRED},
             groups = {WholeObjectRequired.class})
     @Null(groups = {OnlySkillsRequired.class})
-    private Status status;
+    private MemberStatus memberStatus;
 
 
     // skill section
@@ -76,11 +76,11 @@ public class MemberCommand {
         return skills == null || skills.stream().map(s -> (s.getName() != null) ? s.getName().toLowerCase() : null).collect(Collectors.toSet()).size() == skills.size();
     }
 
-    public MemberCommand(String name, String sex, String email, Status status, List<@Valid SkillCommand> skills, String mainSkill) {
+    public MemberCommand(String name, String sex, String email, MemberStatus memberStatus, List<@Valid SkillCommand> skills, String mainSkill) {
         this.name = name;
         this.sex = sex;
         this.email = email;
-        this.status = status;
+        this.memberStatus = memberStatus;
         this.skills = skills;
         this.mainSkill = mainSkill;
     }
@@ -100,8 +100,8 @@ public class MemberCommand {
     }
 
 
-    public Status getStatus() {
-        return status;
+    public MemberStatus getStatus() {
+        return memberStatus;
     }
 
     public List<SkillCommand> getSkills() {

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface MemberRepository extends CrudRepository<Member, Integer> {
@@ -26,4 +27,10 @@ public interface MemberRepository extends CrudRepository<Member, Integer> {
             "(SELECT id FROM Skill WHERE name LIKE :name AND level >= :level))" +
             "AND status IN ('AVAILABLE', 'RETIRED')", nativeQuery = true)
     List<Member> findEligibleMembers(@Param("name") String name, @Param("level") Integer level);
+
+    Optional<Member> findFirstByNameIgnoreCase(String name);
+
+    @Query(value = "SELECT CASE WHEN (COUNT(*) > 0) THEN TRUE ELSE FALSE END " +
+            "FROM Heist_Heist_Member WHERE Heist_Heist_Member.Member_id = :id", nativeQuery = true)
+    boolean isParticipatingInAnotherHeist(@Param("id") Integer id);
 }

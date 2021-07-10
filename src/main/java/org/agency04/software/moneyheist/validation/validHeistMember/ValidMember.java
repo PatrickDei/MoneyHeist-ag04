@@ -1,6 +1,4 @@
-package org.agency04.software.moneyheist.validation.enumeration.status;
-
-import org.agency04.software.moneyheist.entities.member.MemberStatus;
+package org.agency04.software.moneyheist.validation.validHeistMember;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -11,14 +9,14 @@ import java.lang.annotation.Target;
 import static java.lang.annotation.ElementType.*;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
-@Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE})
+@Target({ METHOD, FIELD, ANNOTATION_TYPE })
 @Retention(RUNTIME)
+@Constraint(validatedBy = ValidMemberValidator.class)
 @Documented
-@Constraint(validatedBy = StatusPatternValidator.class)
-public @interface StatusPattern {
-    MemberStatus[] anyOf();
-    String message() default "must be any of {anyOf}";
-
+public @interface ValidMember {
+    String message() default "{valid.member.violation}";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
+    Class<? extends MemberIsValid> service();
+    String serviceQualifier() default "";
 }

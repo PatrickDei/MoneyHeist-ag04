@@ -31,24 +31,3 @@ CREATE TABLE IF NOT EXISTS Heist_Heist_requirement (
     FOREIGN KEY (Heist_requirement_id)
     REFERENCES Heist_requirement (id)
 );
-
-
-INSERT INTO Heist (name, location, start_Time, end_Time) VALUES
-    ('First heist', 'France', NOW() + INTERVAL 5 MINUTE, NOW() + INTERVAL 1 DAY),
-    ('Second heist', 'Spain', NOW() + INTERVAL 5 MINUTE, NOW() + INTERVAL 1 DAY),
-    ('Third heist', 'Belgium', NOW() + INTERVAL 5 MINUTE, NOW() + INTERVAL 1 DAY),
-    ('Fourth heist', 'United Kingdom', NOW() + INTERVAL 5 MINUTE, NOW() + INTERVAL 1 DAY),
-    ('Fifth heist', 'USA', NOW() + INTERVAL 5 MINUTE, NOW() + INTERVAL 1 DAY);
-
-INSERT INTO Heist_requirement (number_of_members, skill_id) VALUES
-    (3, 1),
-    (2, 2),
-    (1, 3),
-    (4, 3);
-
-INSERT INTO Heist_Heist_requirement (Heist_id, Heist_requirement_id) VALUES
-    (1, 1),
-    (2, 2),
-    (3, 3),
-    (4, 4),
-    (5, 2);

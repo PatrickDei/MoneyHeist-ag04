@@ -1,6 +1,7 @@
 package org.agency04.software.moneyheist.entities.heist;
 
 
+import org.agency04.software.moneyheist.entities.member.Member;
 import org.agency04.software.moneyheist.entities.requirement.HeistRequirement;
 
 import javax.persistence.*;
@@ -37,14 +38,27 @@ public class Heist {
     )
     private Set<HeistRequirement> requirements;
 
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private HeistStatus status;
+
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(
+            name = "Heist_Heist_member",
+            joinColumns = @JoinColumn(name = "Heist_id"),
+            inverseJoinColumns = @JoinColumn(name = "Member_id")
+    )
+    private Set<Member> members;
+
     public Heist(){}
 
-    public Heist(String name, String location, Date startTime, Date endTime, Set<HeistRequirement> requirements) {
+    public Heist(String name, String location, Date startTime, Date endTime, Set<HeistRequirement> requirements, HeistStatus status) {
         this.name = name;
         this.location = location;
         this.startTime = startTime;
         this.endTime = endTime;
         this.requirements = requirements;
+        this.status = status;
     }
 
     public Integer getId() {
@@ -93,6 +107,22 @@ public class Heist {
 
     public void setRequirements(Set<HeistRequirement> requirements) {
         this.requirements = requirements;
+    }
+
+    public HeistStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(HeistStatus status) {
+        this.status = status;
+    }
+
+    public Set<Member> getMembers() {
+        return members;
+    }
+
+    public void setMembers(Set<Member> members) {
+        this.members = members;
     }
 
     public void updateRequirements(Set<HeistRequirement> newRequirements){

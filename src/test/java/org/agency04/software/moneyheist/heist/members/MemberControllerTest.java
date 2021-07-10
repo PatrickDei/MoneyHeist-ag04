@@ -1,7 +1,7 @@
 package org.agency04.software.moneyheist.heist.members;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.agency04.software.moneyheist.entities.member.Status;
+import org.agency04.software.moneyheist.entities.member.MemberStatus;
 import org.agency04.software.moneyheist.repositories.member.MemberRepository;
 import org.agency04.software.moneyheist.services.member.MemberService;
 import org.agency04.software.moneyheist.validation.requestEntities.MemberCommand;
@@ -47,7 +47,7 @@ class MemberControllerTest {
 
     @Test
     void saveNewMember() throws Exception {
-        MemberCommand member = new MemberCommand("NewName", "F", "new@ag04.com", Status.AVAILABLE, Arrays.asList(new SkillCommand("deception", "*****"), new SkillCommand("hacking", "*")), "deception");
+        MemberCommand member = new MemberCommand("NewName", "F", "new@ag04.com", MemberStatus.AVAILABLE, Arrays.asList(new SkillCommand("deception", "*****"), new SkillCommand("hacking", "*")), "deception");
 
         mockMvc.perform(
                 post("/member")

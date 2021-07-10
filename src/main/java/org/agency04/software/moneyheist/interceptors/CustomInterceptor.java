@@ -1,6 +1,5 @@
 package org.agency04.software.moneyheist.interceptors;
 
-import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,7 +20,7 @@ public class CustomInterceptor implements HandlerInterceptor {
         return true;
     }
 
-    public Integer getMemberId(){
-        return (this.lastUrl.startsWith("/member/")) ? Integer.valueOf(this.lastUrl.split("/")[2]) : null;
+    public Integer getLastUrlId(){
+        return (this.lastUrl.startsWith("/member/") || this.lastUrl.startsWith("/heist/")) ? Integer.valueOf(this.lastUrl.split("/")[2]) : null;
     }
 }

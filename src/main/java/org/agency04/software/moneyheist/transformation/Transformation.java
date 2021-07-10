@@ -3,6 +3,7 @@ package org.agency04.software.moneyheist.transformation;
 
 import org.agency04.software.moneyheist.dto.*;
 import org.agency04.software.moneyheist.entities.heist.Heist;
+import org.agency04.software.moneyheist.entities.heist.HeistStatus;
 import org.agency04.software.moneyheist.entities.member.Member;
 import org.agency04.software.moneyheist.entities.requirement.HeistRequirement;
 import org.agency04.software.moneyheist.entities.skill.Skill;
@@ -32,7 +33,14 @@ public final class Transformation {
     }
 
     public static MemberDTO memberToDTO(Member member){
-        return new MemberDTO(member.getId(), member.getName(), member.getSkills().stream().map(Transformation::skillToDTO).collect(Collectors.toSet()), member.getMainSkill(), member.getEmail());
+        return new MemberDTO(member.getId(),
+                member.getName(),
+                member.getSkills().stream()
+                        .map(Transformation::skillToDTO)
+                        .collect(Collectors.toSet()),
+                member.getMainSkill(),
+                member.getEmail(),
+                member.getStatus());
     }
 
     public static EligibleMemberDTO memberToEligibleMemberDTO(Member member){
@@ -68,8 +76,8 @@ public final class Transformation {
                 heist.getLocation(),
                 heist.getStartTime(),
                 heist.getEndTime(),
-                heist.getRequirements().stream().map(Transformation::requirementToDTO).collect(Collectors.toList())
-        );
+                heist.getRequirements().stream().map(Transformation::requirementToDTO).collect(Collectors.toList()),
+                heist.getStatus());
     }
 
     public static HeistRequirementDTO requirementToDTO(HeistRequirement requirement){
@@ -89,8 +97,8 @@ public final class Transformation {
                 heist.getLocation(),
                 heist.getStartTime(),
                 heist.getEndTime(),
-                heist.getSkills().stream().map(Transformation::commandToRequirement).collect(Collectors.toSet())
-        );
+                heist.getSkills().stream().map(Transformation::commandToRequirement).collect(Collectors.toSet()),
+                HeistStatus.PLANNING);
     }
 
     public static HeistRequirement commandToRequirement(HeistRequirementCommand requirement){

@@ -3,7 +3,9 @@ package org.agency04.software.moneyheist.services.heist;
 import org.agency04.software.moneyheist.dto.EligibleHeistMembersDTO;
 import org.agency04.software.moneyheist.dto.HeistDTO;
 import org.agency04.software.moneyheist.entities.heist.Heist;
+import org.agency04.software.moneyheist.entities.heist.HeistStatus;
 import org.agency04.software.moneyheist.entities.member.Member;
+import org.agency04.software.moneyheist.entities.member.MemberStatus;
 import org.agency04.software.moneyheist.entities.requirement.HeistRequirement;
 import org.agency04.software.moneyheist.entities.skill.Skill;
 import org.agency04.software.moneyheist.repositories.heist.HeistRepository;
@@ -15,8 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -68,6 +69,27 @@ public class HeistServiceImpl implements HeistService {
     }
 
     @Override
+    public Integer confirmHeistMembers(Integer heistId, List<String> memberNames){
+        Heist heist = heistRepository.findById(heistId).orElse(null);
+        if(heist == null)
+            return null;
+
+        // they have been validated
+        Set<Member> members = new HashSet<>();
+        for(String memberName : memberNames)
+            members.add(memberRepository.findFirstByNameIgnoreCase(memberName).orElse(null));
+
+        heist.setMembers(members);
+        return heistRepository.save(heist).getId();
+    }
+
+    @Override
+    public HeistStatus getHeistStatus(Integer heistId){
+        Heist heist = this.heistRepository.findById(heistId).orElse(null);
+        return (heist != null) ? heist.getStatus() : null;
+    }
+
+    @Override
     public boolean fieldValueExists(Object value, String fieldName) throws UnsupportedOperationException {
         Assert.assertNotNull(fieldName);
 
@@ -78,5 +100,25 @@ public class HeistServiceImpl implements HeistService {
             return false;
 
         return this.heistRepository.existsByName(value.toString());
+    }
+
+    @Override
+    public boolean memberIsValid(String name, Integer heistId) {
+        Heist heist = heistRepository.findById(heistId).orElse(null);
+        // we do this so confirmHeistMember can return null and return Bad Request
+        if(heist == null)
+            return true;
+
+        for(HeistRequirement r : heist.getRequirements()) {
+            Skill skill = r.getSkill();
+            Member member = memberRepository.findFirstByNameIgnoreCase(name).orElse(null);
+
+            if(member == null
+                || !Arrays.asList(MemberStatus.AVAILABLE, MemberStatus.RETIRED).contains(member.getStatus())
+                || !memberRepository.findEligibleMembers(skill.getName(), skill.getSkillLevel()).contains(member)
+                || memberRepository.isParticipatingInAnotherHeist(member.getId()))
+                return false;
+        }
+        return true;
     }
 }

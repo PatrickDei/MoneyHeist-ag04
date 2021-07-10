@@ -1,5 +1,7 @@
 package org.agency04.software.moneyheist.dto;
 
+import org.agency04.software.moneyheist.entities.heist.HeistStatus;
+
 import java.util.Date;
 import java.util.List;
 
@@ -17,13 +19,16 @@ public class HeistDTO {
 
     private List<HeistRequirementDTO> skills;
 
-    public HeistDTO(Integer id, String name, String location, Date startTime, Date endTime, List<HeistRequirementDTO> skills) {
+    private HeistStatus status;
+
+    public HeistDTO(Integer id, String name, String location, Date startTime, Date endTime, List<HeistRequirementDTO> skills, HeistStatus status) {
         this.id = id;
         this.name = name;
         this.location = location;
         this.startTime = startTime;
         this.endTime = endTime;
         this.skills = skills;
+        this.status = status;
     }
 
     public Integer getId() {
@@ -72,5 +77,13 @@ public class HeistDTO {
 
     public void setSkills(List<HeistRequirementDTO> skills) {
         this.skills = skills;
+    }
+
+    public HeistStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(HeistStatus status) {
+        this.status = status;
     }
 }

@@ -39,17 +39,17 @@ public class Member {
 
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
-    private Status status;
+    private MemberStatus memberStatus;
 
     public Member(){}
 
-    public Member(String name, String sex, String email, Set<Skill> skills, String mainSkill, Status status) {
+    public Member(String name, String sex, String email, Set<Skill> skills, String mainSkill, MemberStatus memberStatus) {
         this.name = name;
         this.sex = sex;
         this.email = email;
         this.mainSkill = mainSkill;
         this.skills = skills;
-        this.status = status;
+        this.memberStatus = memberStatus;
     }
 
     public Integer getId() {
@@ -96,12 +96,12 @@ public class Member {
         this.skills = skills;
     }
 
-    public Status getStatus() {
-        return status;
+    public MemberStatus getStatus() {
+        return memberStatus;
     }
 
-    public void setStatus(Status status) {
-        this.status = status;
+    public void setStatus(MemberStatus memberStatus) {
+        this.memberStatus = memberStatus;
     }
 
     @Override

@@ -1,7 +1,7 @@
 package org.agency04.software.moneyheist.heist.members;
 
 import org.agency04.software.moneyheist.dto.MemberDTO;
-import org.agency04.software.moneyheist.entities.member.Status;
+import org.agency04.software.moneyheist.entities.member.MemberStatus;
 import org.agency04.software.moneyheist.repositories.member.MemberRepository;
 import org.agency04.software.moneyheist.services.member.MemberService;
 import org.agency04.software.moneyheist.validation.requestEntities.MemberCommand;
@@ -34,7 +34,7 @@ class MemberServiceImplTest {
 
     @Test
     void saveMember() {
-        MemberCommand member = new MemberCommand("Helsinki", "F", "newemail@ag04", Status.EXPIRED, Arrays.asList(new SkillCommand("counting", "****"), new SkillCommand("hacking", "**")), "counting");
+        MemberCommand member = new MemberCommand("Helsinki", "F", "newemail@ag04", MemberStatus.EXPIRED, Arrays.asList(new SkillCommand("counting", "****"), new SkillCommand("hacking", "**")), "counting");
 
         Integer id = memberService.saveMember(member);
         Assertions.assertNotNull(id);

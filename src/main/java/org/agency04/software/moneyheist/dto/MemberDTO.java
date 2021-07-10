@@ -1,5 +1,7 @@
 package org.agency04.software.moneyheist.dto;
 
+import org.agency04.software.moneyheist.entities.member.MemberStatus;
+
 import java.util.Set;
 
 public class MemberDTO {
@@ -14,12 +16,15 @@ public class MemberDTO {
 
     private String email;
 
-    public MemberDTO(Integer id, String name, Set<SkillDTO> skills, String mainSkill, String email) {
+    private MemberStatus status;
+
+    public MemberDTO(Integer id, String name, Set<SkillDTO> skills, String mainSkill, String email, MemberStatus status) {
         this.id = id;
         this.name = name;
         this.skills = skills;
         this.mainSkill = mainSkill;
         this.email = email;
+        this.status = status;
     }
 
     public Integer getId() {
@@ -60,5 +65,13 @@ public class MemberDTO {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public MemberStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(MemberStatus status) {
+        this.status = status;
     }
 }

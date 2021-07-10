@@ -3,6 +3,7 @@ package org.agency04.software.moneyheist.controllers.heist;
 import com.fasterxml.jackson.annotation.JsonView;
 import org.agency04.software.moneyheist.dto.HeistDTO;
 import org.agency04.software.moneyheist.dto.HeistMembersDTO;
+import org.agency04.software.moneyheist.dto.HeistRequirementDTO;
 import org.agency04.software.moneyheist.entities.heist.Heist;
 import org.agency04.software.moneyheist.entities.heist.HeistStatus;
 import org.agency04.software.moneyheist.groups_and_views.Group;
@@ -61,6 +62,15 @@ public class HeistController {
             return new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
 
         return ResponseEntity.ok(heistService.getHeistMembers(heistId));
+    }
+
+    @GetMapping("/{heistId}/skills")
+    public ResponseEntity<Set<HeistRequirementDTO>> getHeistRequirements(@PathVariable Integer heistId){
+        Heist heist = heistService.findHeistById(heistId).orElse(null);
+        if(heist == null)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        return ResponseEntity.ok(heistService.getHeistRequirements(heistId));
     }
 
     @GetMapping("/{heistId}/eligible_members")

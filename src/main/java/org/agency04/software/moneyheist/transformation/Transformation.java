@@ -13,7 +13,6 @@ import org.agency04.software.moneyheist.validation.request_entities.MemberComman
 import org.agency04.software.moneyheist.validation.request_entities.SkillCommand;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -91,8 +90,8 @@ public final class Transformation {
         );
     }
 
-    public static List<HeistRequirementDTO> requirementsToDTO(Set<HeistRequirement> requirements){
-        return requirements.stream().map(Transformation::requirementToDTO).collect(Collectors.toList());
+    public static Set<HeistRequirementDTO> requirementsToDTO(Set<HeistRequirement> requirements){
+        return requirements.stream().map(Transformation::requirementToDTO).collect(Collectors.toSet());
     }
 
     public static Heist commandToHeist(HeistCommand heist){

@@ -33,13 +33,14 @@ public final class Transformation {
     }
 
     public static MemberDTO memberToDTO(Member member){
-        return new MemberDTO(member.getId(),
+        return new MemberDTO(
                 member.getName(),
+                member.getSex(),
+                member.getEmail(),
                 member.getSkills().stream()
                         .map(Transformation::skillToDTO)
                         .collect(Collectors.toSet()),
                 member.getMainSkill(),
-                member.getEmail(),
                 member.getStatus());
     }
 

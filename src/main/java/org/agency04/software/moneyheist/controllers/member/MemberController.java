@@ -30,6 +30,18 @@ public class MemberController {
         return ResponseEntity.ok(members);
     }
 
+    @GetMapping("{memberId}")
+    public ResponseEntity<MemberDTO> getMember(@PathVariable Integer memberId){
+        return memberService.getMemberById(memberId)
+                .map( m -> ResponseEntity
+                        .status(HttpStatus.OK)
+                        .body(m)
+                ).orElseGet( () -> ResponseEntity
+                        .status(HttpStatus.NOT_FOUND)
+                        .build()
+                );
+    }
+
     @PostMapping
     public ResponseEntity<?> saveNewMember(@Validated({WholeObjectRequired.class}) @RequestBody final MemberCommand member){
         Integer id = this.memberService.saveMember(member);

@@ -6,33 +6,25 @@ import java.util.Set;
 
 public class MemberDTO {
 
-    private Integer id;
-
     private String name;
+
+    private String sex;
+
+    private String email;
 
     private Set<SkillDTO> skills;
 
     private String mainSkill;
 
-    private String email;
-
     private MemberStatus status;
 
-    public MemberDTO(Integer id, String name, Set<SkillDTO> skills, String mainSkill, String email, MemberStatus status) {
-        this.id = id;
+    public MemberDTO(String name, String sex, String email, Set<SkillDTO> skills, String mainSkill, MemberStatus status) {
         this.name = name;
+        this.sex = sex;
         this.skills = skills;
         this.mainSkill = mainSkill;
         this.email = email;
         this.status = status;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -41,6 +33,22 @@ public class MemberDTO {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public Set<SkillDTO> getSkills() {
@@ -57,14 +65,6 @@ public class MemberDTO {
 
     public void setMainSkill(String mainSkill) {
         this.mainSkill = mainSkill;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public MemberStatus getStatus() {

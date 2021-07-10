@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,6 +29,11 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public List<MemberDTO> findAll(){
         return this.memberRepository.findAll().stream().map(Transformation::memberToDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public Optional<MemberDTO> getMemberById(Integer id){
+        return this.memberRepository.findById(id).map(Transformation::memberToDTO);
     }
 
     @Override

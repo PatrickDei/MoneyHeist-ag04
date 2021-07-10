@@ -6,4 +6,6 @@ public class View {
     public interface EligibleMembers{}
 
     public interface BasicHeistInfo{}
+
+    public interface HeistMembersOnly{}
 }

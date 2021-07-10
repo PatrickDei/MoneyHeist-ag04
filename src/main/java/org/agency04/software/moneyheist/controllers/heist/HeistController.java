@@ -71,16 +71,32 @@ public class HeistController {
 
     @PutMapping("/{heistId}/members")
     public ResponseEntity<?> confirmHeistMembers(@RequestBody @Valid ConfirmedHeistMembersCommand members, @PathVariable Integer heistId){
+        if(this.heistService.findHeistById(heistId).isEmpty())
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
         if(this.heistService.getHeistStatus(heistId) != HeistStatus.PLANNING)
             return new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
 
         Integer id = this.heistService.confirmHeistMembers(heistId, members.getMembers());
 
-        if(id == null)
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Location", "/heist/" + id.toString() + "/members");
+
+        return new ResponseEntity<>(headers, HttpStatus.NO_CONTENT);
+    }
+
+    @PutMapping("/{heistId}/start")
+    public ResponseEntity<?> startHeist(@PathVariable Integer heistId){
+        if(this.heistService.findHeistById(heistId).isEmpty())
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        if(!this.heistService.heistCanBeStarted(heistId))
+            return new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
+
+        this.heistService.startHeist(heistId);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Location", "/heist/" + heistId.toString() + "/status");
 
         return new ResponseEntity<>(headers, HttpStatus.NO_CONTENT);
     }

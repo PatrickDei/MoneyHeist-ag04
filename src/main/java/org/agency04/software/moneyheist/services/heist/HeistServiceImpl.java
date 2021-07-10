@@ -36,6 +36,11 @@ public class HeistServiceImpl implements HeistService {
     }
 
     @Override
+    public Optional<Heist> findHeistById(Integer id){
+        return this.heistRepository.findById(id);
+    }
+
+    @Override
     public Integer saveHeist(HeistCommand heist) throws ParseException {
         return heistRepository.save(Transformation.commandToHeist(heist)).getId();
     }
@@ -80,6 +85,7 @@ public class HeistServiceImpl implements HeistService {
             members.add(memberRepository.findFirstByNameIgnoreCase(memberName).orElse(null));
 
         heist.setMembers(members);
+        heist.setStatus(HeistStatus.READY);
         return heistRepository.save(heist).getId();
     }
 
@@ -87,6 +93,19 @@ public class HeistServiceImpl implements HeistService {
     public HeistStatus getHeistStatus(Integer heistId){
         Heist heist = this.heistRepository.findById(heistId).orElse(null);
         return (heist != null) ? heist.getStatus() : null;
+    }
+
+    @Override
+    public boolean heistCanBeStarted(Integer heistId){
+        return Objects.requireNonNull(this.heistRepository.findById(heistId).orElse(null)).getStatus() == HeistStatus.READY;
+    }
+
+    @Override
+    public void startHeist(Integer id){
+        Heist h =this.heistRepository.findById(id).orElse(null);
+        assert h != null;
+        h.setStatus(HeistStatus.IN_PROGRESS);
+        this.heistRepository.save(h);
     }
 
     @Override

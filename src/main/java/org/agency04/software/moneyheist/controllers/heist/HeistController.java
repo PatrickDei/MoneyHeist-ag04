@@ -2,6 +2,8 @@ package org.agency04.software.moneyheist.controllers.heist;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import org.agency04.software.moneyheist.dto.HeistDTO;
+import org.agency04.software.moneyheist.dto.HeistMembersDTO;
+import org.agency04.software.moneyheist.entities.heist.Heist;
 import org.agency04.software.moneyheist.entities.heist.HeistStatus;
 import org.agency04.software.moneyheist.groups_and_views.Group;
 import org.agency04.software.moneyheist.groups_and_views.View;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.text.ParseException;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -49,19 +52,15 @@ public class HeistController {
     }
 
     @GetMapping("/{heistId}/members")
-    @JsonView(View.HeistMembersOnly.class)
-    public ResponseEntity<HeistDTO> getHeistMembers(@PathVariable Integer heistId){
-        if(heistService.getHeistStatus(heistId) == HeistStatus.PLANNING)
+    public ResponseEntity<Set<HeistMembersDTO>> getHeistMembers(@PathVariable Integer heistId){
+        Heist heist = heistService.findHeistById(heistId).orElse(null);
+        if(heist == null)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        if(heist.getStatus() == HeistStatus.PLANNING)
             return new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
 
-        return heistService.findHeist(heistId)
-                .map( h -> ResponseEntity
-                        .status(HttpStatus.OK)
-                        .body(h)
-                ).orElseGet( () -> ResponseEntity
-                        .status(HttpStatus.NOT_FOUND)
-                        .build()
-                );
+        return ResponseEntity.ok(heistService.getHeistMembers(heistId));
     }
 
     @GetMapping("/{heistId}/eligible_members")

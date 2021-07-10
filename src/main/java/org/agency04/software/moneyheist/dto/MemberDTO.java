@@ -8,14 +8,14 @@ import java.util.Set;
 
 public class MemberDTO {
 
-    @JsonView({View.EligibleMembers.class, View.HeistMembersOnly.class})
+    @JsonView(View.EligibleMembers.class)
     private String name;
 
     private String sex;
 
     private String email;
 
-    @JsonView({View.MemberSkills.class, View.EligibleMembers.class, View.HeistMembersOnly.class})
+    @JsonView({View.MemberSkills.class, View.EligibleMembers.class})
     private Set<SkillDTO> skills;
 
     @JsonView(View.MemberSkills.class)

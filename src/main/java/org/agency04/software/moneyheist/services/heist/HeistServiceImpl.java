@@ -1,6 +1,7 @@
 package org.agency04.software.moneyheist.services.heist;
 
 import org.agency04.software.moneyheist.dto.HeistDTO;
+import org.agency04.software.moneyheist.dto.HeistMembersDTO;
 import org.agency04.software.moneyheist.entities.heist.Heist;
 import org.agency04.software.moneyheist.entities.heist.HeistStatus;
 import org.agency04.software.moneyheist.entities.member.Member;
@@ -42,6 +43,11 @@ public class HeistServiceImpl implements HeistService {
     @Override
     public Optional<Heist> findHeistById(Integer id){
         return this.heistRepository.findById(id);
+    }
+
+    @Override
+    public Set<HeistMembersDTO> getHeistMembers(Integer heistId){
+        return Transformation.membersToHeistMembersDTO(heistRepository.findById(heistId).get().getMembers());
     }
 
     @Override

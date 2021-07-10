@@ -44,6 +44,18 @@ public final class Transformation {
                 member.getStatus());
     }
 
+    public static Set<HeistMembersDTO> membersToHeistMembersDTO(Set<Member> members){
+        return members.stream()
+                .map( m -> {
+                    String name = m.getName();
+                    Set<SkillDTO> skills = m.getSkills().stream()
+                            .map(Transformation::skillToDTO)
+                            .collect(Collectors.toSet());
+                    return new HeistMembersDTO(name, skills);
+                })
+                .collect(Collectors.toSet());
+    }
+
 
     // Skills
     public static Skill commandToSkill(SkillCommand skillCommand) {

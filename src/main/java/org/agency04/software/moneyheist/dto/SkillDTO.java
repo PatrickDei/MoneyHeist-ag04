@@ -5,10 +5,10 @@ import org.agency04.software.moneyheist.groups_and_views.View;
 
 public class SkillDTO {
 
-    @JsonView({View.MemberSkills.class, View.EligibleMembers.class, View.HeistMembersOnly.class})
+    @JsonView({View.MemberSkills.class, View.EligibleMembers.class})
     private String name;
 
-    @JsonView({View.MemberSkills.class, View.EligibleMembers.class, View.HeistMembersOnly.class})
+    @JsonView({View.MemberSkills.class, View.EligibleMembers.class})
     private String level;
 
     public SkillDTO(String name, String level) {

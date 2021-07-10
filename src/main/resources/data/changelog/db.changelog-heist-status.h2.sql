@@ -13,7 +13,7 @@ CREATE TABLE Heist_Heist_Member(
 );
 
 INSERT INTO Heist (name, location, start_Time, end_Time, status) VALUES
-    ('First heist', 'France', NOW() + INTERVAL 5 MINUTE, NOW() + INTERVAL 1 DAY, 'PLANNING'),
+    ('First heist', 'France', NOW() + INTERVAL 1 MINUTE, NOW() + INTERVAL 2 MINUTE, 'PLANNING'),
     ('Second heist', 'Spain', NOW() + INTERVAL 5 MINUTE, NOW() + INTERVAL 1 DAY, 'PLANNING'),
     ('Third heist', 'Belgium', NOW() + INTERVAL 5 MINUTE, NOW() + INTERVAL 1 DAY, 'PLANNING'),
     ('Fourth heist', 'United Kingdom', NOW() + INTERVAL 5 MINUTE, NOW() + INTERVAL 1 DAY, 'PLANNING'),

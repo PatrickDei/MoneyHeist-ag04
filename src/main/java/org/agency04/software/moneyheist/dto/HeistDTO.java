@@ -1,6 +1,7 @@
 package org.agency04.software.moneyheist.dto;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import org.agency04.software.moneyheist.entities.heist.HeistOutcome;
 import org.agency04.software.moneyheist.entities.heist.HeistStatus;
 import org.agency04.software.moneyheist.groups_and_views.View;
 
@@ -31,7 +32,10 @@ public class HeistDTO {
     @JsonView({View.BasicHeistInfo.class, View.HeistStatus.class})
     private HeistStatus status;
 
-    public HeistDTO(String name, String location, Date startTime, Date endTime, List<HeistRequirementDTO> skills, Set<MemberDTO> members, HeistStatus status) {
+    @JsonView(View.HeistOutcome.class)
+    private HeistOutcome outcome;
+
+    public HeistDTO(String name, String location, Date startTime, Date endTime, List<HeistRequirementDTO> skills, Set<MemberDTO> members, HeistStatus status, HeistOutcome outcome) {
         this.name = name;
         this.location = location;
         this.startTime = startTime;
@@ -39,6 +43,7 @@ public class HeistDTO {
         this.skills = skills;
         this.members = members;
         this.status = status;
+        this.outcome = outcome;
     }
 
     public String getName() {
@@ -95,5 +100,13 @@ public class HeistDTO {
 
     public void setMembers(Set<MemberDTO> members) {
         this.members = members;
+    }
+
+    public HeistOutcome getOutcome() {
+        return outcome;
+    }
+
+    public void setOutcome(HeistOutcome outcome) {
+        this.outcome = outcome;
     }
 }

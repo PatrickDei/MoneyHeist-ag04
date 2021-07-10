@@ -86,6 +86,20 @@ public class HeistController {
                 );
     }
 
+    @GetMapping("/{heistId}/outcome")
+    @JsonView(View.HeistOutcome.class)
+    public ResponseEntity<HeistDTO> getHeistOutcome(@PathVariable Integer heistId){
+        HeistDTO heist = heistService.findHeist(heistId).orElse(null);
+
+        if(heist == null)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        if(heist.getOutcome() == null)
+            return new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
+
+        return ResponseEntity.ok(heist);
+    }
+
     @GetMapping("/{heistId}/eligible_members")
     @JsonView(View.EligibleMembers.class)
     public ResponseEntity<HeistDTO> getEligibleHeistMembers(@PathVariable Integer heistId){

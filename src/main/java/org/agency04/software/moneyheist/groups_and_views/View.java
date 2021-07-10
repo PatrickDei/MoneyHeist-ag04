@@ -8,4 +8,6 @@ public class View {
     public interface BasicHeistInfo{}
 
     public interface HeistStatus{}
+
+    public interface HeistOutcome{}
 }

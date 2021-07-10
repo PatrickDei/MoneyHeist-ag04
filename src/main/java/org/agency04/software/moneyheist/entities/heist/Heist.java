@@ -30,7 +30,7 @@ public class Heist {
     @Column(name = "end_time")
     private Date endTime;
 
-    @ManyToMany( cascade = {CascadeType.ALL})
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     @JoinTable(
             name = "Heist_Heist_requirement",
             joinColumns = @JoinColumn(name = "heist_id"),
@@ -42,7 +42,7 @@ public class Heist {
     @Enumerated(EnumType.STRING)
     private HeistStatus status;
 
-    @ManyToMany(cascade = {CascadeType.ALL})
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     @JoinTable(
             name = "Heist_Heist_member",
             joinColumns = @JoinColumn(name = "Heist_id"),
@@ -50,15 +50,19 @@ public class Heist {
     )
     private Set<Member> members;
 
+    @Column(name = "outcome")
+    private HeistOutcome outcome;
+
     public Heist(){}
 
-    public Heist(String name, String location, Date startTime, Date endTime, Set<HeistRequirement> requirements, HeistStatus status) {
+    public Heist(String name, String location, Date startTime, Date endTime, Set<HeistRequirement> requirements, HeistStatus status, HeistOutcome outcome) {
         this.name = name;
         this.location = location;
         this.startTime = startTime;
         this.endTime = endTime;
         this.requirements = requirements;
         this.status = status;
+        this.outcome = outcome;
     }
 
     public Integer getId() {
@@ -123,6 +127,14 @@ public class Heist {
 
     public void setMembers(Set<Member> members) {
         this.members = members;
+    }
+
+    public HeistOutcome getOutcome() {
+        return outcome;
+    }
+
+    public void setOutcome(HeistOutcome outcome) {
+        this.outcome = outcome;
     }
 
     public void updateRequirements(Set<HeistRequirement> newRequirements){

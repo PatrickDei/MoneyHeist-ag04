@@ -79,8 +79,8 @@ public final class Transformation {
                 heist.getEndTime(),
                 heist.getRequirements().stream().map(Transformation::requirementToDTO).collect(Collectors.toList()),
                 heist.getMembers().stream().map(Transformation::memberToDTO).collect(Collectors.toSet()),
-                heist.getStatus()
-        );
+                heist.getStatus(),
+                heist.getOutcome());
     }
 
     public static HeistRequirementDTO requirementToDTO(HeistRequirement requirement){
@@ -101,7 +101,8 @@ public final class Transformation {
                 heist.getStartTime(),
                 heist.getEndTime(),
                 heist.getSkills().stream().map(Transformation::commandToRequirement).collect(Collectors.toSet()),
-                HeistStatus.PLANNING);
+                HeistStatus.PLANNING,
+                null);
     }
 
     public static HeistRequirement commandToRequirement(HeistRequirementCommand requirement){

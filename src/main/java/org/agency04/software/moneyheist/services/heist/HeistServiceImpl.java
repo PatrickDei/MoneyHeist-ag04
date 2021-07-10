@@ -4,6 +4,7 @@ import org.agency04.software.moneyheist.dto.HeistDTO;
 import org.agency04.software.moneyheist.dto.HeistMembersDTO;
 import org.agency04.software.moneyheist.dto.HeistRequirementDTO;
 import org.agency04.software.moneyheist.entities.heist.Heist;
+import org.agency04.software.moneyheist.entities.heist.HeistOutcome;
 import org.agency04.software.moneyheist.entities.heist.HeistStatus;
 import org.agency04.software.moneyheist.entities.member.Member;
 import org.agency04.software.moneyheist.entities.member.MemberStatus;
@@ -119,11 +120,60 @@ public class HeistServiceImpl implements HeistService {
     }
 
     @Override
-    public void startHeist(Integer id){
-        Heist h =this.heistRepository.findById(id).orElse(null);
+    public void startHeist(Integer id) {
+        Heist h = this.heistRepository.findById(id).orElse(null);
         assert h != null;
         h.setStatus(HeistStatus.IN_PROGRESS);
         this.heistRepository.save(h);
+    }
+
+    @Override
+    public void finishHeist(Integer id){
+        Heist heist = heistRepository.findById(id).orElse(null);
+
+        final Random random = new Random();
+
+        assert heist != null;
+        for(Member m : heist.getMembers()){
+            m.setStatus( (random.nextBoolean()) ? MemberStatus.EXPIRED : MemberStatus.INCARCERATED);
+            memberRepository.save(m);
+        }
+
+        boolean heistSucceded = false;
+
+        Integer numberOfMembersRequired = heist.getRequirements().stream()
+                .map(HeistRequirement::getNumberOfMembers)
+                .collect(Collectors.toList()).stream()
+                .mapToInt(Integer::intValue)
+                .sum();
+
+        Integer numberOfMembersExpired = Math.toIntExact(
+                heist.getMembers().stream()
+                        .filter(
+                                m -> m.getStatus().equals(MemberStatus.EXPIRED)
+                        ).count());
+
+        Integer numberOfMembersIncarcerated = Math.toIntExact(
+                heist.getMembers().stream()
+                        .filter(
+                                m -> m.getStatus().equals(MemberStatus.INCARCERATED)
+                        ).count());
+
+        if(heist.getMembers().size() >= numberOfMembersRequired / 2
+            && (numberOfMembersExpired + numberOfMembersIncarcerated) / numberOfMembersRequired >= 1 / 3)
+            heistSucceded = true;
+
+        if(heist.getMembers().size() >= numberOfMembersRequired * 3 / 4
+                && numberOfMembersIncarcerated / numberOfMembersRequired >= 1 / 3)
+            heistSucceded = true;
+
+        if(heist.getMembers().size() == numberOfMembersRequired)
+            heistSucceded = true;
+
+        heist.setStatus(HeistStatus.FINISHED);
+        heist.setOutcome( (heistSucceded) ? HeistOutcome.SUCCEEDED : HeistOutcome.FAILED);
+
+        heistRepository.save(heist);
     }
 
     @Override

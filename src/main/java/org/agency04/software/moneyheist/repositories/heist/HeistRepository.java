@@ -14,6 +14,8 @@ public interface HeistRepository extends CrudRepository<Heist, Integer> {
 
     List<Heist> findAll();
 
+    List<Heist> findByOutcomeIsNull();
+
     boolean existsByName(String name);
 
     @Transactional

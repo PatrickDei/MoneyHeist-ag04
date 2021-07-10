@@ -46,7 +46,7 @@ public class MemberCommand {
     @StatusPattern(anyOf = {MemberStatus.AVAILABLE, MemberStatus.EXPIRED, MemberStatus.INCARCERATED, MemberStatus.RETIRED},
             groups = {Group.WholeObjectRequired.class})
     @Null(groups = {Group.OnlySkillsRequired.class})
-    private MemberStatus memberStatus;
+    private MemberStatus status;
 
 
     // skill section
@@ -55,7 +55,6 @@ public class MemberCommand {
     private List<@Valid SkillCommand> skills;
 
     private String mainSkill;
-
 
     @AssertTrue(groups = {Group.OnlySkillsRequired.class})
     private boolean isAtLeastOneFieldEntered(){
@@ -79,7 +78,7 @@ public class MemberCommand {
         this.name = name;
         this.sex = sex;
         this.email = email;
-        this.memberStatus = memberStatus;
+        this.status = memberStatus;
         this.skills = skills;
         this.mainSkill = mainSkill;
     }
@@ -100,7 +99,7 @@ public class MemberCommand {
 
 
     public MemberStatus getStatus() {
-        return memberStatus;
+        return status;
     }
 
     public List<SkillCommand> getSkills() {

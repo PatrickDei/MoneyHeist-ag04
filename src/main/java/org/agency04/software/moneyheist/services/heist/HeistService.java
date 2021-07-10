@@ -39,4 +39,6 @@ public interface HeistService extends FieldValueExists, MemberIsValid {
     boolean heistCanBeStarted(Integer heistId);
 
     void startHeist(Integer id);
+
+    void finishHeist(Integer id);
 }

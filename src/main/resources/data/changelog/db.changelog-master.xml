@@ -8,4 +8,5 @@
     <include file="data/changelog/db.changelog-initial-data.h2.sql" />
     <include file="data/changelog/db.changelog-heists.h2.sql" />
     <include file="data/changelog/db.changelog-heist-status.h2.sql" />
+    <include file="data/changelog/db.changelog-heist-outcome.h2.sql" />
 </databaseChangeLog>

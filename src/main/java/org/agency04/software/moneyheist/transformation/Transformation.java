@@ -7,10 +7,10 @@ import org.agency04.software.moneyheist.entities.heist.HeistStatus;
 import org.agency04.software.moneyheist.entities.member.Member;
 import org.agency04.software.moneyheist.entities.requirement.HeistRequirement;
 import org.agency04.software.moneyheist.entities.skill.Skill;
-import org.agency04.software.moneyheist.validation.requestEntities.HeistCommand;
-import org.agency04.software.moneyheist.validation.requestEntities.HeistRequirementCommand;
-import org.agency04.software.moneyheist.validation.requestEntities.MemberCommand;
-import org.agency04.software.moneyheist.validation.requestEntities.SkillCommand;
+import org.agency04.software.moneyheist.validation.request_entities.HeistCommand;
+import org.agency04.software.moneyheist.validation.request_entities.HeistRequirementCommand;
+import org.agency04.software.moneyheist.validation.request_entities.MemberCommand;
+import org.agency04.software.moneyheist.validation.request_entities.SkillCommand;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -44,17 +44,6 @@ public final class Transformation {
                 member.getStatus());
     }
 
-    public static EligibleMemberDTO memberToEligibleMemberDTO(Member member){
-        return new EligibleMemberDTO(member.getName(),
-                member.getSkills().stream()
-                        .map(Transformation::skillToDTO)
-                        .collect(Collectors.toSet()));
-    }
-
-    public static List<EligibleMemberDTO> membersToEligibleMembersDTO(List<Member> members){
-        return members.stream().map(Transformation::memberToEligibleMemberDTO).collect(Collectors.toList());
-    }
-
 
     // Skills
     public static Skill commandToSkill(SkillCommand skillCommand) {
@@ -78,6 +67,7 @@ public final class Transformation {
                 heist.getStartTime(),
                 heist.getEndTime(),
                 heist.getRequirements().stream().map(Transformation::requirementToDTO).collect(Collectors.toList()),
+                heist.getMembers().stream().map(Transformation::memberToDTO).collect(Collectors.toSet()),
                 heist.getStatus());
     }
 

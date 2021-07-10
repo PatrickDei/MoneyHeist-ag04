@@ -1,13 +1,13 @@
 package org.agency04.software.moneyheist.controllers.heist;
 
-import org.agency04.software.moneyheist.dto.EligibleHeistMembersDTO;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.agency04.software.moneyheist.dto.HeistDTO;
 import org.agency04.software.moneyheist.entities.heist.HeistStatus;
-import org.agency04.software.moneyheist.groups.OnlySkillsRequired;
-import org.agency04.software.moneyheist.groups.WholeObjectRequired;
+import org.agency04.software.moneyheist.groups_and_views.Group;
+import org.agency04.software.moneyheist.groups_and_views.View;
 import org.agency04.software.moneyheist.services.heist.HeistService;
-import org.agency04.software.moneyheist.validation.requestEntities.ConfirmedHeistMembersCommand;
-import org.agency04.software.moneyheist.validation.requestEntities.HeistCommand;
+import org.agency04.software.moneyheist.validation.request_entities.ConfirmedHeistMembersCommand;
+import org.agency04.software.moneyheist.validation.request_entities.HeistCommand;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,12 +30,13 @@ public class HeistController {
     }
 
     @GetMapping
+    @JsonView(View.BasicHeistInfo.class)
     public ResponseEntity<List<HeistDTO>> getAllHeists(){
         return ResponseEntity.ok(heistService.findAll());
     }
 
     @PostMapping
-    public ResponseEntity<?> saveHeist(@Validated({WholeObjectRequired.class}) @RequestBody HeistCommand heist) throws ParseException {
+    public ResponseEntity<?> saveHeist(@Validated({Group.WholeObjectRequired.class}) @RequestBody HeistCommand heist) throws ParseException {
         Integer id = this.heistService.saveHeist(heist);
 
         HttpHeaders headers = new HttpHeaders();
@@ -45,7 +46,7 @@ public class HeistController {
     }
 
     @PatchMapping("/{heistId}/skills")
-    public ResponseEntity<?> updateHeistSkills(@Validated({OnlySkillsRequired.class}) @RequestBody HeistCommand heist,
+    public ResponseEntity<?> updateHeistSkills(@Validated({Group.OnlySkillsRequired.class}) @RequestBody HeistCommand heist,
                                                @PathVariable Integer heistId){
         Integer id = heistService.updateHeistSkills(heist, heistId);
 
@@ -59,9 +60,10 @@ public class HeistController {
     }
 
     @GetMapping("/{heistId}/eligible_members")
-    public ResponseEntity<EligibleHeistMembersDTO> getEligibleHeistMembers(@PathVariable Integer heistId){
+    @JsonView(View.EligibleMembers.class)
+    public ResponseEntity<HeistDTO> getEligibleHeistMembers(@PathVariable Integer heistId){
 
-        EligibleHeistMembersDTO returnValue = heistService.getEligibleHeistMembers(heistId);
+        HeistDTO returnValue = heistService.getEligibleHeistMembers(heistId);
 
         if(returnValue == null)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

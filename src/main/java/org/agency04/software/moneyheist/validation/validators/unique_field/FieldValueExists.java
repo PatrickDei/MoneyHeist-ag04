@@ -1,4 +1,4 @@
-package org.agency04.software.moneyheist.validation.uniqueField;
+package org.agency04.software.moneyheist.validation.validators.unique_field;
 
 public interface FieldValueExists {
 

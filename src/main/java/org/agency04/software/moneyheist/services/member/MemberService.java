@@ -1,8 +1,8 @@
 package org.agency04.software.moneyheist.services.member;
 
 import org.agency04.software.moneyheist.dto.MemberDTO;
-import org.agency04.software.moneyheist.validation.requestEntities.MemberCommand;
-import org.agency04.software.moneyheist.validation.uniqueField.FieldValueExists;
+import org.agency04.software.moneyheist.validation.request_entities.MemberCommand;
+import org.agency04.software.moneyheist.validation.validators.unique_field.FieldValueExists;
 
 import java.util.List;
 import java.util.Optional;

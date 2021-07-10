@@ -1,6 +1,5 @@
 package org.agency04.software.moneyheist.services.heist;
 
-import org.agency04.software.moneyheist.dto.EligibleHeistMembersDTO;
 import org.agency04.software.moneyheist.dto.HeistDTO;
 import org.agency04.software.moneyheist.entities.heist.Heist;
 import org.agency04.software.moneyheist.entities.heist.HeistStatus;
@@ -11,7 +10,7 @@ import org.agency04.software.moneyheist.entities.skill.Skill;
 import org.agency04.software.moneyheist.repositories.heist.HeistRepository;
 import org.agency04.software.moneyheist.repositories.member.MemberRepository;
 import org.agency04.software.moneyheist.transformation.Transformation;
-import org.agency04.software.moneyheist.validation.requestEntities.HeistCommand;
+import org.agency04.software.moneyheist.validation.request_entities.HeistCommand;
 import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -58,19 +57,21 @@ public class HeistServiceImpl implements HeistService {
     }
 
     @Override
-    public EligibleHeistMembersDTO getEligibleHeistMembers(Integer heistId){
+    public HeistDTO getEligibleHeistMembers(Integer heistId){
         Heist heist = this.heistRepository.findById(heistId).orElse(null);
 
         if(heist == null)
             return null;
 
-        List<Member> member = new ArrayList<>();
+        Set<Member> member = new HashSet<>();
         for(HeistRequirement r : heist.getRequirements()) {
             Skill skill = r.getSkill();
             member.addAll(memberRepository.findEligibleMembers(skill.getName(), skill.getSkillLevel()));
         }
 
-        return new EligibleHeistMembersDTO(Transformation.requirementsToDTO(heist.getRequirements()), Transformation.membersToEligibleMembersDTO(member));
+        heist.setMembers(member);
+
+        return Transformation.heistToDTO(heist);
     }
 
     @Override

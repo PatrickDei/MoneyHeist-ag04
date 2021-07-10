@@ -1,23 +1,22 @@
-package org.agency04.software.moneyheist.validation.requestEntities;
+package org.agency04.software.moneyheist.validation.request_entities;
 
-import org.agency04.software.moneyheist.groups.OnlySkillsRequired;
-import org.agency04.software.moneyheist.groups.WholeObjectRequired;
+import org.agency04.software.moneyheist.groups_and_views.Group;
 
 import javax.validation.constraints.*;
 
 public class HeistRequirementCommand {
 
-    @NotEmpty(groups = {WholeObjectRequired.class, OnlySkillsRequired.class})
-    @NotBlank(groups = {WholeObjectRequired.class, OnlySkillsRequired.class})
+    @NotEmpty(groups = {Group.WholeObjectRequired.class, Group.OnlySkillsRequired.class})
+    @NotBlank(groups = {Group.WholeObjectRequired.class, Group.OnlySkillsRequired.class})
     private String name;
 
-    @NotEmpty(groups = {WholeObjectRequired.class, OnlySkillsRequired.class})
-    @NotBlank(groups = {WholeObjectRequired.class, OnlySkillsRequired.class})
-    @Pattern(message = "Level must be expressed though stars and be between 1 and 10", regexp = "[*]{1,10}", groups = {WholeObjectRequired.class, OnlySkillsRequired.class})
+    @NotEmpty(groups = {Group.WholeObjectRequired.class, Group.OnlySkillsRequired.class})
+    @NotBlank(groups = {Group.WholeObjectRequired.class, Group.OnlySkillsRequired.class})
+    @Pattern(message = "Level must be expressed though stars and be between 1 and 10", regexp = "[*]{1,10}", groups = {Group.WholeObjectRequired.class, Group.OnlySkillsRequired.class})
     private String level;
 
-    @NotNull(groups = {WholeObjectRequired.class, OnlySkillsRequired.class})
-    @Positive(groups = {WholeObjectRequired.class, OnlySkillsRequired.class})
+    @NotNull(groups = {Group.WholeObjectRequired.class, Group.OnlySkillsRequired.class})
+    @Positive(groups = {Group.WholeObjectRequired.class, Group.OnlySkillsRequired.class})
     private Integer members;
 
     public HeistRequirementCommand(String name, String level, Integer members) {

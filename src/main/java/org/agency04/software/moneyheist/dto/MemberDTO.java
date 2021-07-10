@@ -1,19 +1,24 @@
 package org.agency04.software.moneyheist.dto;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import org.agency04.software.moneyheist.entities.member.MemberStatus;
+import org.agency04.software.moneyheist.groups_and_views.View;
 
 import java.util.Set;
 
 public class MemberDTO {
 
+    @JsonView(View.EligibleMembers.class)
     private String name;
 
     private String sex;
 
     private String email;
 
+    @JsonView({View.MemberSkills.class, View.EligibleMembers.class})
     private Set<SkillDTO> skills;
 
+    @JsonView(View.MemberSkills.class)
     private String mainSkill;
 
     private MemberStatus status;

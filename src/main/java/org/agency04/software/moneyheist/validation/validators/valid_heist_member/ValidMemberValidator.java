@@ -1,4 +1,4 @@
-package org.agency04.software.moneyheist.validation.validHeistMember;
+package org.agency04.software.moneyheist.validation.validators.valid_heist_member;
 
 import org.agency04.software.moneyheist.interceptors.CustomInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;

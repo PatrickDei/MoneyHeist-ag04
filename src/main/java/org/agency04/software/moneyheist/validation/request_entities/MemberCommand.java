@@ -1,13 +1,12 @@
-package org.agency04.software.moneyheist.validation.requestEntities;
+package org.agency04.software.moneyheist.validation.request_entities;
 
 import org.agency04.software.moneyheist.entities.member.MemberStatus;
-import org.agency04.software.moneyheist.groups.OnlySkillsRequired;
-import org.agency04.software.moneyheist.groups.WholeObjectRequired;
+import org.agency04.software.moneyheist.groups_and_views.Group;
 import org.agency04.software.moneyheist.repositories.member.MemberRepository;
 import org.agency04.software.moneyheist.services.member.MemberService;
-import org.agency04.software.moneyheist.validation.enumeration.status.StatusPattern;
-import org.agency04.software.moneyheist.validation.uniqueField.Unique;
-import org.agency04.software.moneyheist.validation.validMainSkill.ValidMainSkill;
+import org.agency04.software.moneyheist.validation.validators.enumeration.status.StatusPattern;
+import org.agency04.software.moneyheist.validation.validators.unique_field.Unique;
+import org.agency04.software.moneyheist.validation.validators.valid_main_skill.ValidMainSkill;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.validation.Valid;
@@ -17,61 +16,61 @@ import java.util.stream.Collectors;
 
 
 // members are validated upon entry into the API
-@ValidMainSkill(groups = {OnlySkillsRequired.class}, message = "The member must contain the defined main skill")
+@ValidMainSkill(groups = {Group.OnlySkillsRequired.class}, message = "The member must contain the defined main skill")
 public class MemberCommand {
     @Autowired
     private MemberRepository memberRepository;
 
-    @NotEmpty(groups = {WholeObjectRequired.class})
-    @NotBlank(groups = {WholeObjectRequired.class})
-    @Null(groups = {OnlySkillsRequired.class})
+    @NotEmpty(groups = {Group.WholeObjectRequired.class})
+    @NotBlank(groups = {Group.WholeObjectRequired.class})
+    @Null(groups = {Group.OnlySkillsRequired.class})
     private String name;
 
-    @NotNull(groups = {WholeObjectRequired.class})
+    @NotNull(groups = {Group.WholeObjectRequired.class})
     @Size(min = 1, max = 1,
-            groups = {WholeObjectRequired.class})
+            groups = {Group.WholeObjectRequired.class})
     @Pattern(message = "Sex can either be M or F", regexp = "M|F",
-            groups = {WholeObjectRequired.class})
-    @Null(groups = {OnlySkillsRequired.class})
+            groups = {Group.WholeObjectRequired.class})
+    @Null(groups = {Group.OnlySkillsRequired.class})
     private String sex;
 
-    @NotNull(groups = {WholeObjectRequired.class})
-    @Email(groups = {WholeObjectRequired.class})
-    @Null(groups = {OnlySkillsRequired.class})
+    @NotNull(groups = {Group.WholeObjectRequired.class})
+    @Email(groups = {Group.WholeObjectRequired.class})
+    @Null(groups = {Group.OnlySkillsRequired.class})
     @Unique(service = MemberService.class,
             fieldName = "email",
             message = "Email already exists",
-            groups = {WholeObjectRequired.class})
+            groups = {Group.WholeObjectRequired.class})
     private String email;
 
     @StatusPattern(anyOf = {MemberStatus.AVAILABLE, MemberStatus.EXPIRED, MemberStatus.INCARCERATED, MemberStatus.RETIRED},
-            groups = {WholeObjectRequired.class})
-    @Null(groups = {OnlySkillsRequired.class})
+            groups = {Group.WholeObjectRequired.class})
+    @Null(groups = {Group.OnlySkillsRequired.class})
     private MemberStatus memberStatus;
 
 
     // skill section
-    @NotEmpty(groups = {WholeObjectRequired.class},
+    @NotEmpty(groups = {Group.WholeObjectRequired.class},
             message = "There must be a list of skills")
     private List<@Valid SkillCommand> skills;
 
     private String mainSkill;
 
 
-    @AssertTrue(groups = {OnlySkillsRequired.class})
+    @AssertTrue(groups = {Group.OnlySkillsRequired.class})
     private boolean isAtLeastOneFieldEntered(){
         return skills != null || !mainSkill.isEmpty();
     }
 
     @AssertTrue(message = "Make sure the list of skills contains the mainSkill!",
-            groups = {WholeObjectRequired.class})
+            groups = {Group.WholeObjectRequired.class})
     private boolean isValidMainSkill(){
         return mainSkill == null || skills == null || skills.stream().anyMatch( s -> s.getName().equalsIgnoreCase(mainSkill));
     }
 
     @AssertTrue(message = "There shouldn't be duplicated skill names",
-            groups = {OnlySkillsRequired.class,
-                    WholeObjectRequired.class})
+            groups = {Group.OnlySkillsRequired.class,
+                    Group.WholeObjectRequired.class})
     private boolean isSkillRepeated(){
         return skills == null || skills.stream().map(s -> (s.getName() != null) ? s.getName().toLowerCase() : null).collect(Collectors.toSet()).size() == skills.size();
     }

@@ -1,4 +1,4 @@
-package org.agency04.software.moneyheist.validation.validMainSkill;
+package org.agency04.software.moneyheist.validation.validators.valid_heist_member;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -9,12 +9,14 @@ import java.lang.annotation.Target;
 import static java.lang.annotation.ElementType.*;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
-@Target({TYPE})
+@Target({ METHOD, FIELD, ANNOTATION_TYPE })
 @Retention(RUNTIME)
-@Constraint(validatedBy = ValidMainSkillValidator.class)
+@Constraint(validatedBy = ValidMemberValidator.class)
 @Documented
-public @interface ValidMainSkill {
-    String message() default "{valid.value.violation}";
+public @interface ValidMember {
+    String message() default "{valid.member.violation}";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
+    Class<? extends MemberIsValid> service();
+    String serviceQualifier() default "";
 }

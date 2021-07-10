@@ -1,7 +1,7 @@
-package org.agency04.software.moneyheist.validation.requestEntities;
+package org.agency04.software.moneyheist.validation.request_entities;
 
 import org.agency04.software.moneyheist.services.heist.HeistService;
-import org.agency04.software.moneyheist.validation.validHeistMember.ValidMember;
+import org.agency04.software.moneyheist.validation.validators.valid_heist_member.ValidMember;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;

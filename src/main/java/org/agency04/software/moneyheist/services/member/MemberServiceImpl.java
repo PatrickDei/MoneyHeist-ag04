@@ -6,7 +6,7 @@ import org.agency04.software.moneyheist.entities.member.Member;
 import org.agency04.software.moneyheist.repositories.member.MemberRepository;
 import org.agency04.software.moneyheist.services.skill.SkillService;
 import org.agency04.software.moneyheist.transformation.Transformation;
-import org.agency04.software.moneyheist.validation.requestEntities.MemberCommand;
+import org.agency04.software.moneyheist.validation.request_entities.MemberCommand;
 import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

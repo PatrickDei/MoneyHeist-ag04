@@ -1,9 +1,8 @@
-package org.agency04.software.moneyheist.validation.requestEntities;
+package org.agency04.software.moneyheist.validation.request_entities;
 
-import org.agency04.software.moneyheist.groups.OnlySkillsRequired;
-import org.agency04.software.moneyheist.groups.WholeObjectRequired;
+import org.agency04.software.moneyheist.groups_and_views.Group;
 import org.agency04.software.moneyheist.services.heist.HeistService;
-import org.agency04.software.moneyheist.validation.uniqueField.Unique;
+import org.agency04.software.moneyheist.validation.validators.unique_field.Unique;
 
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -14,41 +13,41 @@ import java.util.stream.Collectors;
 // heists are validated upon entry into the API but some extra checks need to be performed later (the ones that require data from db)
 public class HeistCommand {
 
-    @NotEmpty(groups = {WholeObjectRequired.class})
-    @NotBlank(groups = {WholeObjectRequired.class})
-    @Null(groups = {OnlySkillsRequired.class})
+    @NotEmpty(groups = {Group.WholeObjectRequired.class})
+    @NotBlank(groups = {Group.WholeObjectRequired.class})
+    @Null(groups = {Group.OnlySkillsRequired.class})
     @Unique(service = HeistService.class,
             fieldName = "name",
             message = "Heist name already exists",
-            groups = WholeObjectRequired.class)
+            groups = Group.WholeObjectRequired.class)
     private String name;
 
-    @NotEmpty(groups = {WholeObjectRequired.class})
-    @NotBlank(groups = {WholeObjectRequired.class})
-    @Null(groups = {OnlySkillsRequired.class})
+    @NotEmpty(groups = {Group.WholeObjectRequired.class})
+    @NotBlank(groups = {Group.WholeObjectRequired.class})
+    @Null(groups = {Group.OnlySkillsRequired.class})
     private String location;
 
-    @NotNull(groups = {WholeObjectRequired.class})
-    @Null(groups = {OnlySkillsRequired.class})
+    @NotNull(groups = {Group.WholeObjectRequired.class})
+    @Null(groups = {Group.OnlySkillsRequired.class})
     private Date startTime;
 
-    @NotNull(groups = {WholeObjectRequired.class})
-    @Future(groups = {WholeObjectRequired.class})
-    @Null(groups = {OnlySkillsRequired.class})
+    @NotNull(groups = {Group.WholeObjectRequired.class})
+    @Future(groups = {Group.WholeObjectRequired.class})
+    @Null(groups = {Group.OnlySkillsRequired.class})
     private Date endTime;
 
     @AssertTrue(message = "startTime must be before endTime",
-            groups = {WholeObjectRequired.class})
+            groups = {Group.WholeObjectRequired.class})
     public boolean isValidTimeDifference(){
         return startTime.before(endTime);
     }
 
     @NotNull(message = "There must exist a list of requirements",
-            groups = {WholeObjectRequired.class, OnlySkillsRequired.class})
+            groups = {Group.WholeObjectRequired.class, Group.OnlySkillsRequired.class})
     private List<@Valid HeistRequirementCommand> skills;
 
     @AssertTrue(message = "There shouldn't be duplicated skill names and levels simultaneously",
-            groups = {WholeObjectRequired.class, OnlySkillsRequired.class})
+            groups = {Group.WholeObjectRequired.class, Group.OnlySkillsRequired.class})
     public boolean isValidSkillList(){
         return skills != null && skills.stream().map(HeistRequirementCommand::getSkill).collect(Collectors.toSet()).size() == skills.size();
     }

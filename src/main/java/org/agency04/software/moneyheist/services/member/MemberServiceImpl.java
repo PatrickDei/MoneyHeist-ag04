@@ -4,6 +4,7 @@ package org.agency04.software.moneyheist.services.member;
 import org.agency04.software.moneyheist.dto.MemberDTO;
 import org.agency04.software.moneyheist.entities.member.Member;
 import org.agency04.software.moneyheist.repositories.member.MemberRepository;
+import org.agency04.software.moneyheist.services.email.EmailService;
 import org.agency04.software.moneyheist.services.skill.SkillService;
 import org.agency04.software.moneyheist.transformation.Transformation;
 import org.agency04.software.moneyheist.validation.request_entities.MemberCommand;
@@ -24,7 +25,8 @@ public class MemberServiceImpl implements MemberService {
     private SkillService skillService;
     @Autowired
     private MemberRepository memberRepository;
-
+    @Autowired
+    private EmailService emailService;
 
     @Override
     public List<MemberDTO> findAll(){
@@ -39,6 +41,8 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public Integer saveMember(MemberCommand member){
         Member memberToAdd = Transformation.commandToMember(member);
+        
+        emailService.sendSimpleMessage(memberToAdd.getEmail(), "Money heist confirmation", "You have successfully created a member");
 
         return memberRepository.save(memberToAdd).getId();
     }

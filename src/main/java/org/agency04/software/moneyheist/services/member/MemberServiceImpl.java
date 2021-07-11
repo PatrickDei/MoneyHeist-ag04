@@ -41,7 +41,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public Integer saveMember(MemberCommand member){
         Member memberToAdd = Transformation.commandToMember(member);
-        
+
         emailService.sendSimpleMessage(memberToAdd.getEmail(), "Money heist confirmation", "You have successfully created a member");
 
         return memberRepository.save(memberToAdd).getId();

@@ -12,6 +12,7 @@ import org.agency04.software.moneyheist.entities.requirement.HeistRequirement;
 import org.agency04.software.moneyheist.entities.skill.Skill;
 import org.agency04.software.moneyheist.repositories.heist.HeistRepository;
 import org.agency04.software.moneyheist.repositories.member.MemberRepository;
+import org.agency04.software.moneyheist.services.email.EmailService;
 import org.agency04.software.moneyheist.transformation.Transformation;
 import org.agency04.software.moneyheist.validation.request_entities.HeistCommand;
 import org.junit.Assert;
@@ -31,6 +32,8 @@ public class HeistServiceImpl implements HeistService {
     private HeistRepository heistRepository;
     @Autowired
     private MemberRepository memberRepository;
+    @Autowired
+    private EmailService emailService;
 
     @Override
     public List<HeistDTO> findAll() {
@@ -103,6 +106,9 @@ public class HeistServiceImpl implements HeistService {
         for(String memberName : memberNames)
             members.add(memberRepository.findFirstByNameIgnoreCase(memberName).orElse(null));
 
+        for(Member m : members)
+            emailService.sendSimpleMessage(m.getEmail(), "Money heist update", "You have been added to a heist: " + heist.getName());
+
         heist.setMembers(members);
         heist.setStatus(HeistStatus.READY);
         return heistRepository.save(heist).getId();
@@ -125,6 +131,9 @@ public class HeistServiceImpl implements HeistService {
         assert h != null;
         h.setStatus(HeistStatus.IN_PROGRESS);
         this.heistRepository.save(h);
+
+        for(Member m : h.getMembers())
+            emailService.sendSimpleMessage(m.getEmail(), "Money heist update", "The heist" + h.getName() + " has started");
     }
 
     @Override
@@ -174,6 +183,9 @@ public class HeistServiceImpl implements HeistService {
         heist.setOutcome( (heistSucceded) ? HeistOutcome.SUCCEEDED : HeistOutcome.FAILED);
 
         heistRepository.save(heist);
+
+        for(Member m : heist.getMembers())
+            emailService.sendSimpleMessage(m.getEmail(), "Money heist update", "The heist " + heist.getName() + " has finished");
     }
 
     @Override

@@ -38,6 +38,8 @@ public class Skill {
     }
 
     public void setSkillLevel(Integer level) {
+        if(level > 10)
+            level = 10;
         this.level = level;
     }
 

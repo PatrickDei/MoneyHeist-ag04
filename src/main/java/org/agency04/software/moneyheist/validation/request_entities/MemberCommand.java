@@ -2,7 +2,7 @@ package org.agency04.software.moneyheist.validation.request_entities;
 
 import org.agency04.software.moneyheist.entities.member.MemberStatus;
 import org.agency04.software.moneyheist.groups_and_views.Group;
-import org.agency04.software.moneyheist.repositories.member.MemberRepository;
+import org.agency04.software.moneyheist.repositories.MemberRepository;
 import org.agency04.software.moneyheist.services.member.MemberService;
 import org.agency04.software.moneyheist.validation.validators.enumeration.status.StatusPattern;
 import org.agency04.software.moneyheist.validation.validators.unique_field.Unique;

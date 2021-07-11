@@ -1,7 +1,7 @@
 package org.agency04.software.moneyheist.services.requirements;
 
 import org.agency04.software.moneyheist.entities.requirement.HeistRequirement;
-import org.agency04.software.moneyheist.repositories.requirement.RequirementRepository;
+import org.agency04.software.moneyheist.repositories.RequirementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

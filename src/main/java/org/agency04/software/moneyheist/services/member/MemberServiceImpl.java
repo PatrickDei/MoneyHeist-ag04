@@ -3,7 +3,8 @@ package org.agency04.software.moneyheist.services.member;
 
 import org.agency04.software.moneyheist.dto.MemberDTO;
 import org.agency04.software.moneyheist.entities.member.Member;
-import org.agency04.software.moneyheist.repositories.member.MemberRepository;
+import org.agency04.software.moneyheist.repositories.MemberRepository;
+import org.agency04.software.moneyheist.repositories.RoleRepository;
 import org.agency04.software.moneyheist.services.email.EmailService;
 import org.agency04.software.moneyheist.services.skill.SkillService;
 import org.agency04.software.moneyheist.transformation.Transformation;
@@ -27,6 +28,8 @@ public class MemberServiceImpl implements MemberService {
     private MemberRepository memberRepository;
     @Autowired
     private EmailService emailService;
+    @Autowired
+    private RoleRepository roleRepository;
 
     @Override
     public List<MemberDTO> findAll(){
@@ -41,6 +44,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public Integer saveMember(MemberCommand member){
         Member memberToAdd = Transformation.commandToMember(member);
+        memberToAdd.setRole(roleRepository.findById(2).orElse(null));
 
         emailService.sendSimpleMessage(memberToAdd.getEmail(), "Money heist confirmation", "You have successfully created a member");
 

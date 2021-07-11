@@ -34,11 +34,11 @@ public interface HeistService extends FieldValueExists, MemberIsValid {
 
     HeistStatus getHeistStatus(Integer heistId);
 
-    Optional<Heist> findHeistById(Integer id);
-
     boolean heistCanBeStarted(Integer heistId);
 
     void startHeist(Integer id);
 
     void finishHeist(Integer id);
+
+    void upgradeMemberSkills(Heist heist);
 }

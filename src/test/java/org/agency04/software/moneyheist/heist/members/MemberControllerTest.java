@@ -2,7 +2,7 @@ package org.agency04.software.moneyheist.heist.members;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.agency04.software.moneyheist.entities.member.MemberStatus;
-import org.agency04.software.moneyheist.repositories.member.MemberRepository;
+import org.agency04.software.moneyheist.repositories.MemberRepository;
 import org.agency04.software.moneyheist.services.member.MemberService;
 import org.agency04.software.moneyheist.validation.request_entities.MemberCommand;
 import org.agency04.software.moneyheist.validation.request_entities.SkillCommand;

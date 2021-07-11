@@ -1,4 +1,4 @@
-package org.agency04.software.moneyheist.repositories.requirement;
+package org.agency04.software.moneyheist.repositories;
 
 import org.agency04.software.moneyheist.entities.requirement.HeistRequirement;
 import org.springframework.data.repository.CrudRepository;

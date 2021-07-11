@@ -1,4 +1,4 @@
-package org.agency04.software.moneyheist.controllers.member;
+package org.agency04.software.moneyheist.controllers;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import org.agency04.software.moneyheist.dto.MemberDTO;

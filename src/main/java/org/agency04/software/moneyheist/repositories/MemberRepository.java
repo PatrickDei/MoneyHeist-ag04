@@ -1,4 +1,4 @@
-package org.agency04.software.moneyheist.repositories.member;
+package org.agency04.software.moneyheist.repositories;
 
 import org.agency04.software.moneyheist.entities.member.Member;
 import org.springframework.data.jpa.repository.Modifying;
@@ -33,4 +33,6 @@ public interface MemberRepository extends CrudRepository<Member, Integer> {
     @Query(value = "SELECT CASE WHEN (COUNT(*) > 0) THEN TRUE ELSE FALSE END " +
             "FROM Heist_Heist_Member WHERE Heist_Heist_Member.Member_id = :id", nativeQuery = true)
     boolean isParticipatingInAnotherHeist(@Param("id") Integer id);
+
+    Optional<Member> findOneByEmail(String email);
 }

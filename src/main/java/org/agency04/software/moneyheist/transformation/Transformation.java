@@ -27,8 +27,9 @@ public final class Transformation {
                 memberCommand.getEmail().toLowerCase(),
                 memberCommand.getSkills().stream().map(Transformation::commandToSkill).collect(Collectors.toSet()),
                 normalizeString(memberCommand.getMainSkill()),
-                memberCommand.getStatus()
-        );
+                memberCommand.getStatus(),
+                null,
+                null);
     }
 
     public static MemberDTO memberToDTO(Member member){

@@ -1,4 +1,4 @@
-package org.agency04.software.moneyheist.repositories.heist;
+package org.agency04.software.moneyheist.repositories;
 
 import org.agency04.software.moneyheist.entities.heist.Heist;
 import org.springframework.data.jpa.repository.Query;

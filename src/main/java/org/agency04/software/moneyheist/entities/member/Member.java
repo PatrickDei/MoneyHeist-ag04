@@ -29,7 +29,7 @@ public class Member {
     @JoinColumn(name = "main_Skill")
     private String mainSkill;
 
-    @ManyToMany( cascade = {CascadeType.ALL})
+    @ManyToMany( cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     @JoinTable(
             name = "Heist_Member_Skill",
             joinColumns = @JoinColumn(name = "heist_Member_Id"),
@@ -41,15 +41,24 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private MemberStatus memberStatus;
 
+    @Column(name = "password")
+    private String password;
+
+    @ManyToOne( cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+    @JoinColumn(name = "role_id")
+    private Role role;
+
     public Member(){}
 
-    public Member(String name, String sex, String email, Set<Skill> skills, String mainSkill, MemberStatus memberStatus) {
+    public Member(String name, String sex, String email, Set<Skill> skills, String mainSkill, MemberStatus memberStatus, String password, Role role) {
         this.name = name;
         this.sex = sex;
         this.email = email;
         this.mainSkill = mainSkill;
         this.skills = skills;
         this.memberStatus = memberStatus;
+        this.password = password;
+        this.role = role;
     }
 
     public Integer getId() {
@@ -102,6 +111,22 @@ public class Member {
 
     public void setStatus(MemberStatus memberStatus) {
         this.memberStatus = memberStatus;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     @Override

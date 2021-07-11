@@ -2,7 +2,7 @@ package org.agency04.software.moneyheist.configuration;
 
 import org.agency04.software.moneyheist.entities.heist.Heist;
 import org.agency04.software.moneyheist.entities.heist.HeistStatus;
-import org.agency04.software.moneyheist.repositories.heist.HeistRepository;
+import org.agency04.software.moneyheist.repositories.HeistRepository;
 import org.agency04.software.moneyheist.services.heist.HeistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;

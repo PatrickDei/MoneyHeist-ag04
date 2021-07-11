@@ -1,7 +1,7 @@
 package org.agency04.software.moneyheist.validation.validators.valid_main_skill;
 
 import org.agency04.software.moneyheist.interceptors.CustomInterceptor;
-import org.agency04.software.moneyheist.repositories.member.MemberRepository;
+import org.agency04.software.moneyheist.repositories.MemberRepository;
 import org.agency04.software.moneyheist.validation.request_entities.MemberCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 

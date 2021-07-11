@@ -1,10 +1,9 @@
-package org.agency04.software.moneyheist.controllers.heist;
+package org.agency04.software.moneyheist.controllers;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import org.agency04.software.moneyheist.dto.HeistDTO;
 import org.agency04.software.moneyheist.dto.HeistMembersDTO;
 import org.agency04.software.moneyheist.dto.HeistRequirementDTO;
-import org.agency04.software.moneyheist.entities.heist.Heist;
 import org.agency04.software.moneyheist.entities.heist.HeistStatus;
 import org.agency04.software.moneyheist.groups_and_views.Group;
 import org.agency04.software.moneyheist.groups_and_views.View;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.text.ParseException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -54,7 +54,7 @@ public class HeistController {
 
     @GetMapping("/{heistId}/members")
     public ResponseEntity<Set<HeistMembersDTO>> getHeistMembers(@PathVariable Integer heistId){
-        Heist heist = heistService.findHeistById(heistId).orElse(null);
+        HeistDTO heist = heistService.findHeist(heistId).orElse(null);
         if(heist == null)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
@@ -66,7 +66,7 @@ public class HeistController {
 
     @GetMapping("/{heistId}/skills")
     public ResponseEntity<Set<HeistRequirementDTO>> getHeistRequirements(@PathVariable Integer heistId){
-        Heist heist = heistService.findHeistById(heistId).orElse(null);
+        HeistDTO heist = heistService.findHeist(heistId).orElse(null);
         if(heist == null)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
@@ -104,6 +104,9 @@ public class HeistController {
     @JsonView(View.EligibleMembers.class)
     public ResponseEntity<HeistDTO> getEligibleHeistMembers(@PathVariable Integer heistId){
 
+        if(heistService.getHeistStatus(heistId).equals(HeistStatus.READY))
+            return new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
+
         HeistDTO returnValue = heistService.getEligibleHeistMembers(heistId);
 
         if(returnValue == null)
@@ -125,6 +128,9 @@ public class HeistController {
     @PatchMapping("/{heistId}/skills")
     public ResponseEntity<?> updateHeistSkills(@Validated({Group.OnlySkillsRequired.class}) @RequestBody HeistCommand heist,
                                                @PathVariable Integer heistId){
+        if(!Arrays.asList(HeistStatus.PLANNING, HeistStatus.READY).contains(heistService.getHeistStatus(heistId)))
+            return new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
+
         Integer id = heistService.updateHeistSkills(heist, heistId);
 
         if(id == null)
@@ -138,7 +144,7 @@ public class HeistController {
 
     @PutMapping("/{heistId}/members")
     public ResponseEntity<?> confirmHeistMembers(@RequestBody @Valid ConfirmedHeistMembersCommand members, @PathVariable Integer heistId){
-        if(this.heistService.findHeistById(heistId).isEmpty())
+        if(this.heistService.findHeist(heistId).isEmpty())
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
         if(this.heistService.getHeistStatus(heistId) != HeistStatus.PLANNING)
@@ -154,7 +160,7 @@ public class HeistController {
 
     @PutMapping("/{heistId}/start")
     public ResponseEntity<?> startHeist(@PathVariable Integer heistId){
-        if(this.heistService.findHeistById(heistId).isEmpty())
+        if(this.heistService.findHeist(heistId).isEmpty())
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
         if(!this.heistService.heistCanBeStarted(heistId))

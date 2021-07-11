@@ -10,13 +10,14 @@ import org.agency04.software.moneyheist.entities.member.Member;
 import org.agency04.software.moneyheist.entities.member.MemberStatus;
 import org.agency04.software.moneyheist.entities.requirement.HeistRequirement;
 import org.agency04.software.moneyheist.entities.skill.Skill;
-import org.agency04.software.moneyheist.repositories.heist.HeistRepository;
-import org.agency04.software.moneyheist.repositories.member.MemberRepository;
+import org.agency04.software.moneyheist.repositories.HeistRepository;
+import org.agency04.software.moneyheist.repositories.MemberRepository;
 import org.agency04.software.moneyheist.services.email.EmailService;
 import org.agency04.software.moneyheist.transformation.Transformation;
 import org.agency04.software.moneyheist.validation.request_entities.HeistCommand;
 import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -35,6 +36,9 @@ public class HeistServiceImpl implements HeistService {
     @Autowired
     private EmailService emailService;
 
+    @Value("${levelUpTime}")
+    private String levelUpTime;
+
     @Override
     public List<HeistDTO> findAll() {
         return heistRepository.findAll().stream().map(Transformation::heistToDTO).collect(Collectors.toList());
@@ -43,11 +47,6 @@ public class HeistServiceImpl implements HeistService {
     @Override
     public Optional<HeistDTO> findHeist(Integer id){
         return heistRepository.findById(id).map(Transformation::heistToDTO);
-    }
-
-    @Override
-    public Optional<Heist> findHeistById(Integer id){
-        return this.heistRepository.findById(id);
     }
 
     @Override
@@ -130,6 +129,11 @@ public class HeistServiceImpl implements HeistService {
         Heist h = this.heistRepository.findById(id).orElse(null);
         assert h != null;
         h.setStatus(HeistStatus.IN_PROGRESS);
+
+        Date now = new Date();
+        if(now.before(h.getStartTime()))
+            h.setStartTime(now);
+
         this.heistRepository.save(h);
 
         for(Member m : h.getMembers())
@@ -182,10 +186,26 @@ public class HeistServiceImpl implements HeistService {
         heist.setStatus(HeistStatus.FINISHED);
         heist.setOutcome( (heistSucceded) ? HeistOutcome.SUCCEEDED : HeistOutcome.FAILED);
 
+        upgradeMemberSkills(heist);
+
         heistRepository.save(heist);
 
         for(Member m : heist.getMembers())
             emailService.sendSimpleMessage(m.getEmail(), "Money heist update", "The heist " + heist.getName() + " has finished");
+    }
+
+    @Override
+    public void upgradeMemberSkills(Heist heist){
+        for(Member m : heist.getMembers()) {
+            for (Skill s : m.getSkills())
+                if (heist.getRequirements().stream().map(HeistRequirement::getSkill).collect(Collectors.toSet()).contains(s)) {
+                    s.setSkillLevel(
+                            (int) (s.getSkillLevel() +
+                                    (heist.getEndTime().getTime() - heist.getStartTime().getTime()) / (1000 * Integer.parseInt(levelUpTime)))
+                    );
+                }
+            memberRepository.save(m);
+        }
     }
 
     @Override

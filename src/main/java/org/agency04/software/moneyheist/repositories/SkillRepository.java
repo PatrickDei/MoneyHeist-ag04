@@ -1,4 +1,4 @@
-package org.agency04.software.moneyheist.repositories.skill;
+package org.agency04.software.moneyheist.repositories;
 
 import org.agency04.software.moneyheist.entities.skill.Skill;
 import org.springframework.data.repository.CrudRepository;

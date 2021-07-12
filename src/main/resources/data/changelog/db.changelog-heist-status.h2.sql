@@ -1,6 +1,6 @@
 ALTER TABLE Heist ADD COLUMN Status VARCHAR(255) NOT NULL;
 
-CREATE TABLE Heist_Heist_Member(
+CREATE TABLE Heist_Member(
     Heist_id BIGINT NOT NULL,
     Member_id BIGINT NOT NULL,
     PRIMARY KEY (Heist_id, Member_id),
@@ -9,7 +9,7 @@ CREATE TABLE Heist_Heist_Member(
         REFERENCES Heist (id),
       CONSTRAINT fk_Heist_has_Heist_member_Heist_member1
         FOREIGN KEY (Member_id)
-        REFERENCES Heist_Member (id)
+        REFERENCES Member (id)
 );
 
 INSERT INTO Heist (name, location, start_Time, end_Time, status) VALUES
@@ -19,13 +19,18 @@ INSERT INTO Heist (name, location, start_Time, end_Time, status) VALUES
     ('Fourth heist', 'United Kingdom', NOW() + INTERVAL 5 MINUTE, NOW() + INTERVAL 1 DAY, 'PLANNING'),
     ('Fifth heist', 'USA', NOW() + INTERVAL 5 MINUTE, NOW() + INTERVAL 1 DAY, 'PLANNING');
 
-INSERT INTO Heist_requirement (number_of_members, skill_id) VALUES
-    (3, 1),
-    (2, 2),
-    (1, 3),
-    (4, 3);
+INSERT INTO Skill (name, level) VALUES ('Hacking', 1);
+INSERT INTO Skill (name, level) VALUES ('Deception', 2);
+INSERT INTO Skill (name, level) VALUES ('Stealing', 3);
+INSERT INTO Skill (name, level) VALUES ('Looting', 3);
 
-INSERT INTO Heist_Heist_requirement (Heist_id, Heist_requirement_id) VALUES
+INSERT INTO Requirement (number_of_members, skill_id) VALUES
+    (3, 6),
+    (2, 7),
+    (1, 8),
+    (4, 9);
+
+INSERT INTO Heist_Requirement (Heist_id, Requirement_id) VALUES
     (1, 1),
     (2, 2),
     (3, 3),

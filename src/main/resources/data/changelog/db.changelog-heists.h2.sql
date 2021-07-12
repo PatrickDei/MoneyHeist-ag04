@@ -9,25 +9,25 @@ CREATE TABLE IF NOT EXISTS Heist (
 );
 
 
-CREATE TABLE IF NOT EXISTS Heist_requirement (
+CREATE TABLE IF NOT EXISTS Requirement (
   id BIGINT NOT NULL AUTO_INCREMENT,
   number_of_members INT NOT NULL,
   skill_id INT NOT NULL,
   PRIMARY KEY (id),
-  CONSTRAINT fk_Heist_requirement_Skill1
+  CONSTRAINT fk_Requirement_Skill1
     FOREIGN KEY (skill_id)
     REFERENCES Skill (id)
 );
 
 
-CREATE TABLE IF NOT EXISTS Heist_Heist_requirement (
+CREATE TABLE IF NOT EXISTS Heist_Requirement (
   Heist_id BIGINT NOT NULL,
-  Heist_requirement_id BIGINT NOT NULL,
-  PRIMARY KEY (Heist_id, Heist_requirement_id),
-  CONSTRAINT fk_Heist_has_Heist_requirement_Heist1
+  Requirement_id BIGINT NOT NULL,
+  PRIMARY KEY (Heist_id, Requirement_id),
+  CONSTRAINT fk_Heist_has_Requirement_Heist1
     FOREIGN KEY (Heist_id)
     REFERENCES Heist (id),
-  CONSTRAINT fk_Heist_has_Heist_requirement_Heist_requirement1
-    FOREIGN KEY (Heist_requirement_id)
-    REFERENCES Heist_requirement (id)
+  CONSTRAINT fk_Heist_has_Requirement_Requirement1
+    FOREIGN KEY (Requirement_id)
+    REFERENCES Requirement (id)
 );

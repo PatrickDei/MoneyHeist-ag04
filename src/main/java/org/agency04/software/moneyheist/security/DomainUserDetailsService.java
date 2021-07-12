@@ -1,7 +1,7 @@
 package org.agency04.software.moneyheist.security;
 
-import org.agency04.software.moneyheist.entities.member.Member;
-import org.agency04.software.moneyheist.repositories.MemberRepository;
+import org.agency04.software.moneyheist.entity.member.Member;
+import org.agency04.software.moneyheist.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

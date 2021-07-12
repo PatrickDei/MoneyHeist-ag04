@@ -1,16 +1,16 @@
 package org.agency04.software.moneyheist.transformation;
 
 
-import org.agency04.software.moneyheist.dto.*;
-import org.agency04.software.moneyheist.entities.heist.Heist;
-import org.agency04.software.moneyheist.entities.heist.HeistStatus;
-import org.agency04.software.moneyheist.entities.member.Member;
-import org.agency04.software.moneyheist.entities.requirement.HeistRequirement;
-import org.agency04.software.moneyheist.entities.skill.Skill;
-import org.agency04.software.moneyheist.validation.request_entities.HeistCommand;
-import org.agency04.software.moneyheist.validation.request_entities.HeistRequirementCommand;
-import org.agency04.software.moneyheist.validation.request_entities.MemberCommand;
-import org.agency04.software.moneyheist.validation.request_entities.SkillCommand;
+import org.agency04.software.moneyheist.dto.response_entity.*;
+import org.agency04.software.moneyheist.entity.heist.Heist;
+import org.agency04.software.moneyheist.entity.heist.HeistStatus;
+import org.agency04.software.moneyheist.entity.member.Member;
+import org.agency04.software.moneyheist.entity.requirement.HeistRequirement;
+import org.agency04.software.moneyheist.entity.skill.Skill;
+import org.agency04.software.moneyheist.dto.request_entity.HeistCommand;
+import org.agency04.software.moneyheist.dto.request_entity.HeistRequirementCommand;
+import org.agency04.software.moneyheist.dto.request_entity.MemberCommand;
+import org.agency04.software.moneyheist.dto.request_entity.SkillCommand;
 import org.springframework.stereotype.Component;
 
 import java.util.Set;
@@ -84,17 +84,6 @@ public final class Transformation {
                 heist.getOutcome());
     }
 
-    public static HeistRequirementDTO requirementToDTO(HeistRequirement requirement){
-        return new HeistRequirementDTO(
-                Transformation.skillToDTO(requirement.getSkill()),
-                requirement.getNumberOfMembers()
-        );
-    }
-
-    public static Set<HeistRequirementDTO> requirementsToDTO(Set<HeistRequirement> requirements){
-        return requirements.stream().map(Transformation::requirementToDTO).collect(Collectors.toSet());
-    }
-
     public static Heist commandToHeist(HeistCommand heist){
         return new Heist(
                 heist.getName(),
@@ -104,6 +93,19 @@ public final class Transformation {
                 heist.getSkills().stream().map(Transformation::commandToRequirement).collect(Collectors.toSet()),
                 HeistStatus.PLANNING,
                 null);
+    }
+
+
+    // requirements
+    public static HeistRequirementDTO requirementToDTO(HeistRequirement requirement){
+        return new HeistRequirementDTO(
+                Transformation.skillToDTO(requirement.getSkill()),
+                requirement.getNumberOfMembers()
+        );
+    }
+
+    public static Set<HeistRequirementDTO> requirementsToDTO(Set<HeistRequirement> requirements){
+        return requirements.stream().map(Transformation::requirementToDTO).collect(Collectors.toSet());
     }
 
     public static HeistRequirement commandToRequirement(HeistRequirementCommand requirement){

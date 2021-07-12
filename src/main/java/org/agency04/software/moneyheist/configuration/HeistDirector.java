@@ -1,9 +1,9 @@
 package org.agency04.software.moneyheist.configuration;
 
-import org.agency04.software.moneyheist.entities.heist.Heist;
-import org.agency04.software.moneyheist.entities.heist.HeistStatus;
-import org.agency04.software.moneyheist.repositories.HeistRepository;
-import org.agency04.software.moneyheist.services.heist.HeistService;
+import org.agency04.software.moneyheist.entity.heist.Heist;
+import org.agency04.software.moneyheist.entity.heist.HeistStatus;
+import org.agency04.software.moneyheist.repository.HeistRepository;
+import org.agency04.software.moneyheist.service.heist.HeistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;

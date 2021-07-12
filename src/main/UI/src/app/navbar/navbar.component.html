@@ -1,0 +1,25 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container">
+    <a class="navbar-brand" [routerLink]="['/']">Money Heist</a>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" [routerLink]="['/heists']">Heists</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/members']">Members</a>
+        </li>
+      </ul>
+
+      <ul class="navbar-nav ml-auto pl-3 float-right">
+        <li class="nav-item" *ngIf="!isUserLoggedIn()">
+          <a class="nav-link" [routerLink]="['/login']">Login</a>
+        </li>
+        <li class="nav-item" *ngIf="isUserLoggedIn()">
+          <a class="nav-link" [routerLink]="['/logout']">Logout</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

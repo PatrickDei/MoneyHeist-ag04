@@ -1,6 +1,5 @@
 package org.agency04.software.moneyheist.controller;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -21,7 +20,7 @@ public class LoginController {
     }
 
     @PostMapping("/authenticate")
-    public ResponseEntity<?> authenticate(@RequestBody Login login) {
+    public ResponseEntity<Credentials> authenticate(@RequestBody Login login) {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                 login.getUsername(),
                 login.getPassword()
@@ -30,7 +29,9 @@ public class LoginController {
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        Credentials c = new Credentials(login.getUsername(), SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
+
+        return ResponseEntity.ok(c);
     }
 
     static class Login {
@@ -58,6 +59,34 @@ public class LoginController {
 
         public void setPassword(String password) {
             this.password = password;
+        }
+    }
+
+    static class Credentials{
+        private String username;
+        private String role;
+
+        public Credentials(){};
+
+        public Credentials(String username, String role) {
+            this.username = username;
+            this.role = role;
+        }
+
+        public String getUsername() {
+            return username;
+        }
+
+        public void setUsername(String username) {
+            this.username = username;
+        }
+
+        public String getRole() {
+            return role;
+        }
+
+        public void setRole(String role) {
+            this.role = role;
         }
     }
 }

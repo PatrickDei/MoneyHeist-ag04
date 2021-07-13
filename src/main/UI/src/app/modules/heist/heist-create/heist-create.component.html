@@ -1,0 +1,68 @@
+<div class="row">
+  <div class="col-6">
+    <form [formGroup]="form" class="form-signin" name="heistCreation">
+      <div class="text-center mb-4">
+        <h1 class="h3 mb-3 font-weight-normal">Create heist</h1>
+      </div>
+
+      <div class="form-label-group mb-3">
+        <label>Name</label>
+        <input class="form-control" name="name"
+               formControlName="name"
+               placeholder="name" required type="text">
+      </div>
+
+      <div class="form-label-group">
+        <label>Location</label>
+        <input class="form-control" name="location"
+               formControlName="location"
+               placeholder="location" required type="text">
+      </div>
+
+      <div class="form-label-group">
+        <label>Start time</label>
+        <input class="form-control" name="startTime"
+               formControlName="startTime" required type="datetime-local">
+      </div>
+
+      <div class="form-label-group">
+        <label>End time</label>
+        <input class="form-control" name="endTime"
+               formControlName="endTime" required type="datetime-local">
+      </div>
+
+      <div class="form-label-group">
+        <label>Skills</label>
+        <div class="form-control" formArrayName="skills">
+          <div *ngFor="let item of skills.controls; let i=index" [formGroupName]="i" class="form-signin">
+            <label>Name</label>
+            <input class="form-control" name="name"
+                   formControlName="name"
+                   placeholder="name" required type="text">
+
+            <label>Level</label>
+            <input class="form-control" name="level"
+                   formControlName="level"
+                   placeholder="***" required type="text">
+
+            <label>Number of members</label>
+            <input class="form-control" name="members"
+                   formControlName="members"
+                   placeholder="1, 2, 3..." required type="number">
+
+            <button type="button" class="btn btn-light" (click)="addSkill()">Add skill</button>
+            <button type="button" class="btn btn-danger" (click)="deleteSkill(i)">Remove skill</button>
+          </div>
+        </div>
+      </div>
+
+
+      <button (click)="create()"
+              [disabled]="!form.valid"
+              class="btn btn-lg btn-primary btn-block mt-3" type="submit">Create<!--<span
+        class="spinner-border spinner-border-sm" role="status" aria-hidden="true"
+        *ngIf="authenticating"></span>-->
+      </button>
+    </form>
+  </div>
+</div>

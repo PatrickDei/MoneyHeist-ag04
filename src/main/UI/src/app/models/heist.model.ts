@@ -6,8 +6,8 @@ export class Heist{
   location: string;
   startTime: Date;
   endTime: Date;
-  skills: Requirement[];
-  members: Member[];
-  status: string;
-  outcome: string;
+  skills?: Requirement[];
+  members?: Member[];
+  status?: string;
+  outcome?: string;
 }

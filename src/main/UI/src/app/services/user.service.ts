@@ -8,11 +8,13 @@ export class UserService {
 
   currentUser: User | null;
 
-  constructor() { }
+  constructor() {
+    this.currentUser = null;
+  }
 
   isRole(role: string): boolean{
     if (this.currentUser)
-      return this.currentUser.role === role;
+      return this.currentUser.role.some(r => r === role);
     return false;
   }
 }

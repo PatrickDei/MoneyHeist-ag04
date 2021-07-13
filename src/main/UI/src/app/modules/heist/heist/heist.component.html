@@ -1,1 +1,15 @@
-<p>heist works!</p>
+<div class="container">
+  <a class="btn btn-info" *ngIf="isOrganiser()" [routerLink]="['/heists', 'create']">Create new heist</a>
+
+  <div *ngFor="let h of heists">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">{{h.name}}</h5>
+        <h6 class="card-subtitle mb-2 text-muted">{{h.location}}</h6>
+        <p class="card-text">{{h.status}}</p>
+        <a class="btn btn-secondary" [routerLink]="['details', h.name]">Details</a>
+      </div>
+    </div>
+    <br>
+  </div>
+</div>

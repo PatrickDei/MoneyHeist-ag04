@@ -42,8 +42,6 @@ export class LoginComponent implements OnInit {
       this.userCredentials.username = this.form.get('username').value;
       this.userCredentials.password = this.form.get('password').value;
 
-      console.log(this.userCredentials);
-
       this.loginService.authenticate(this.userCredentials).subscribe(
         (user: User) => this.onLoginSuccess(user),
         () => this.failedLogin = true

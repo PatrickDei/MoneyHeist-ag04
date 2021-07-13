@@ -4,8 +4,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -29,7 +33,11 @@ public class LoginController {
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        Credentials c = new Credentials(login.getUsername(), SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
+        Credentials c = new Credentials(login.getUsername(),
+                SecurityContextHolder.getContext().getAuthentication()
+                        .getAuthorities().stream()
+                        .map(GrantedAuthority::getAuthority)
+                        .collect(Collectors.toList()));
 
         return ResponseEntity.ok(c);
     }
@@ -64,11 +72,11 @@ public class LoginController {
 
     static class Credentials{
         private String username;
-        private String role;
+        private List<String> role;
 
         public Credentials(){};
 
-        public Credentials(String username, String role) {
+        public Credentials(String username, List<String> role) {
             this.username = username;
             this.role = role;
         }
@@ -81,11 +89,11 @@ public class LoginController {
             this.username = username;
         }
 
-        public String getRole() {
+        public List<String> getRole() {
             return role;
         }
 
-        public void setRole(String role) {
+        public void setRole(List<String> role) {
             this.role = role;
         }
     }

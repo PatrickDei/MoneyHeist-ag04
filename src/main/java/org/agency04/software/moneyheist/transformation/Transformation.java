@@ -1,22 +1,20 @@
 package org.agency04.software.moneyheist.transformation;
 
 
-import org.agency04.software.moneyheist.dto.response_entity.*;
+import org.agency04.software.moneyheist.dto.request.HeistCommand;
+import org.agency04.software.moneyheist.dto.request.HeistRequirementCommand;
+import org.agency04.software.moneyheist.dto.request.MemberCommand;
+import org.agency04.software.moneyheist.dto.request.SkillCommand;
+import org.agency04.software.moneyheist.dto.response.*;
 import org.agency04.software.moneyheist.entity.heist.Heist;
 import org.agency04.software.moneyheist.entity.heist.HeistStatus;
 import org.agency04.software.moneyheist.entity.member.Member;
 import org.agency04.software.moneyheist.entity.requirement.HeistRequirement;
 import org.agency04.software.moneyheist.entity.skill.Skill;
-import org.agency04.software.moneyheist.dto.request_entity.HeistCommand;
-import org.agency04.software.moneyheist.dto.request_entity.HeistRequirementCommand;
-import org.agency04.software.moneyheist.dto.request_entity.MemberCommand;
-import org.agency04.software.moneyheist.dto.request_entity.SkillCommand;
-import org.springframework.stereotype.Component;
 
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Component
 public final class Transformation {
 
     // Members
@@ -28,7 +26,7 @@ public final class Transformation {
                 memberCommand.getSkills().stream().map(Transformation::commandToSkill).collect(Collectors.toSet()),
                 normalizeString(memberCommand.getMainSkill()),
                 memberCommand.getStatus(),
-                null,
+                "pass",
                 null);
     }
 

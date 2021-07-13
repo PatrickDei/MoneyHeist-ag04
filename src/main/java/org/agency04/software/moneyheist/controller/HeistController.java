@@ -1,15 +1,14 @@
 package org.agency04.software.moneyheist.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import org.agency04.software.moneyheist.dto.response_entity.HeistDTO;
-import org.agency04.software.moneyheist.dto.response_entity.HeistMembersDTO;
-import org.agency04.software.moneyheist.dto.response_entity.HeistRequirementDTO;
+import org.agency04.software.moneyheist.dto.request.ConfirmedHeistMembersCommand;
+import org.agency04.software.moneyheist.dto.request.HeistCommand;
+import org.agency04.software.moneyheist.dto.response.HeistDTO;
+import org.agency04.software.moneyheist.dto.response.HeistMembersDTO;
+import org.agency04.software.moneyheist.dto.response.HeistRequirementDTO;
 import org.agency04.software.moneyheist.entity.heist.HeistStatus;
-import org.agency04.software.moneyheist.groups_and_views.Group;
-import org.agency04.software.moneyheist.groups_and_views.View;
-import org.agency04.software.moneyheist.service.heist.HeistService;
-import org.agency04.software.moneyheist.dto.request_entity.ConfirmedHeistMembersCommand;
-import org.agency04.software.moneyheist.dto.request_entity.HeistCommand;
+import org.agency04.software.moneyheist.group.Group;
+import org.agency04.software.moneyheist.service.HeistService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,13 +33,13 @@ public class HeistController {
     }
 
     @GetMapping
-    @JsonView(View.BasicHeistInfo.class)
+    @JsonView(Group.JsonViewGroup.BasicHeistInfo.class)
     public ResponseEntity<List<HeistDTO>> getAllHeists(){
         return ResponseEntity.ok(heistService.findAll());
     }
 
     @GetMapping("/{heistId}")
-    @JsonView(View.BasicHeistInfo.class)
+    @JsonView(Group.JsonViewGroup.BasicHeistInfo.class)
     public ResponseEntity<HeistDTO> getHeistById(@PathVariable Integer heistId){
         return heistService.findHeist(heistId)
                 .map( h -> ResponseEntity
@@ -76,7 +75,7 @@ public class HeistController {
     }
 
     @GetMapping("/{heistId}/status")
-    @JsonView(View.HeistStatus.class)
+    @JsonView(Group.JsonViewGroup.HeistStatus.class)
     public ResponseEntity<HeistDTO> getHeistStatus(@PathVariable Integer heistId){
         return heistService.findHeist(heistId)
                 .map( h -> ResponseEntity
@@ -89,7 +88,7 @@ public class HeistController {
     }
 
     @GetMapping("/{heistId}/outcome")
-    @JsonView(View.HeistOutcome.class)
+    @JsonView(Group.JsonViewGroup.HeistOutcome.class)
     public ResponseEntity<HeistDTO> getHeistOutcome(@PathVariable Integer heistId){
         HeistDTO heist = heistService.findHeist(heistId).orElse(null);
 
@@ -103,7 +102,7 @@ public class HeistController {
     }
 
     @GetMapping("/{heistId}/eligible_members")
-    @JsonView(View.EligibleMembers.class)
+    @JsonView(Group.JsonViewGroup.EligibleMembers.class)
     public ResponseEntity<HeistDTO> getEligibleHeistMembers(@PathVariable Integer heistId){
 
         if(!heistService.getHeistStatus(heistId).equals(HeistStatus.PLANNING))
@@ -118,7 +117,7 @@ public class HeistController {
     }
 
     @PostMapping
-    public ResponseEntity<?> saveHeist(@Validated({Group.WholeObjectRequired.class}) @RequestBody HeistCommand heist) throws ParseException {
+    public ResponseEntity<?> saveHeist(@Validated({Group.ValidationGroup.WholeObjectRequired.class}) @RequestBody HeistCommand heist) throws ParseException {
         Integer id = this.heistService.saveHeist(heist);
 
         HttpHeaders headers = new HttpHeaders();
@@ -128,7 +127,7 @@ public class HeistController {
     }
 
     @PatchMapping("/{heistId}/skills")
-    public ResponseEntity<?> updateHeistSkills(@Validated({Group.OnlySkillsRequired.class}) @RequestBody HeistCommand heist,
+    public ResponseEntity<?> updateHeistSkills(@Validated({Group.ValidationGroup.OnlySkillsRequired.class}) @RequestBody HeistCommand heist,
                                                @PathVariable Integer heistId){
         if(!Arrays.asList(HeistStatus.PLANNING, HeistStatus.READY).contains(heistService.getHeistStatus(heistId)))
             return new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);

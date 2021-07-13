@@ -1,6 +1,7 @@
 package org.agency04.software.moneyheist.repository;
 
 import org.agency04.software.moneyheist.entity.member.Member;
+import org.agency04.software.moneyheist.repository.constant.SQLConstants;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -19,22 +20,19 @@ public interface MemberRepository extends CrudRepository<Member, Integer> {
 
     Optional<Member> findFirstByNameIgnoreCase(String name);
 
-    @Query(value = "SELECT * FROM Member WHERE id IN (SELECT Member_id FROM Heist_Member WHERE Heist_id = :heistId)", nativeQuery = true)
+    @Query(value = SQLConstants.findMembersForHeist, nativeQuery = true)
     List<Member> findMembersForHeist(@Param("heistId") Integer heistId);
 
-    @Query(value = "SELECT * FROM Member WHERE id IN " +
-            "(SELECT Member_id FROM Member_skill WHERE Skill_id IN " +
-            "(SELECT id FROM Skill WHERE name LIKE :name AND level >= :level))", nativeQuery = true)
+    @Query(value = SQLConstants.findEligibleMembers, nativeQuery = true)
     List<Member> findEligibleMembers(@Param("name") String name, @Param("level") Integer level);
 
     boolean existsByEmail(String email);
 
-    @Query(value = "SELECT CASE WHEN (COUNT(*) > 0) THEN TRUE ELSE FALSE END " +
-            "FROM Heist_Member WHERE Heist_Member.Member_id = :id", nativeQuery = true)
+    @Query(value = SQLConstants.isMemberParticipatingInAnotherHeist, nativeQuery = true)
     boolean isParticipatingInAnotherHeist(@Param("id") Integer id);
 
     @Modifying
     @Transactional
-    @Query(value = "DELETE FROM Member_Skill WHERE Member_Id = :id AND Skill_id IN (SELECT id FROM Skill WHERE name = :name)", nativeQuery = true)
+    @Query(value = SQLConstants.removeSkillFromMember, nativeQuery = true)
     Integer removeSkillFromMember(@Param("id") Integer id, @Param("name") String name);
 }

@@ -1,11 +1,10 @@
 package org.agency04.software.moneyheist.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import org.agency04.software.moneyheist.dto.response_entity.MemberDTO;
-import org.agency04.software.moneyheist.groups_and_views.Group;
-import org.agency04.software.moneyheist.groups_and_views.View;
-import org.agency04.software.moneyheist.service.member.MemberService;
-import org.agency04.software.moneyheist.dto.request_entity.MemberCommand;
+import org.agency04.software.moneyheist.dto.request.MemberCommand;
+import org.agency04.software.moneyheist.dto.response.MemberDTO;
+import org.agency04.software.moneyheist.group.Group;
+import org.agency04.software.moneyheist.service.MemberService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +31,7 @@ public class MemberController {
 
     @GetMapping("/{memberId}")
     public ResponseEntity<MemberDTO> getMember(@PathVariable Integer memberId){
-        return memberService.getMemberById(memberId)
+        return memberService.getMemberDTOById(memberId)
                 .map( m -> ResponseEntity
                         .status(HttpStatus.OK)
                         .body(m)
@@ -43,9 +42,9 @@ public class MemberController {
     }
 
     @GetMapping("/{memberId}/skills")
-    @JsonView(View.MemberSkills.class)
+    @JsonView(Group.JsonViewGroup.MemberSkills.class)
     public ResponseEntity<MemberDTO> getMemberSkills(@PathVariable Integer memberId){
-        return memberService.getMemberById(memberId)
+        return memberService.getMemberDTOById(memberId)
                 .map( m -> ResponseEntity
                         .status(HttpStatus.OK)
                         .body(m)
@@ -56,7 +55,7 @@ public class MemberController {
     }
 
     @PostMapping
-    public ResponseEntity<?> saveNewMember(@Validated({Group.WholeObjectRequired.class}) @RequestBody final MemberCommand member){
+    public ResponseEntity<?> saveNewMember(@Validated({Group.ValidationGroup.WholeObjectRequired.class}) @RequestBody final MemberCommand member){
         Integer id = this.memberService.saveMember(member);
 
         if(id == null)
@@ -69,7 +68,7 @@ public class MemberController {
     }
 
     @PutMapping("/{memberId}/skills")
-    public ResponseEntity<?> updateMembersSkills(@Validated({Group.OnlySkillsRequired.class}) @RequestBody MemberCommand member, @PathVariable Integer memberId){
+    public ResponseEntity<?> updateMembersSkills(@Validated({Group.ValidationGroup.OnlySkillsRequired.class}) @RequestBody MemberCommand member, @PathVariable Integer memberId){
         Integer id = this.memberService.updateMemberSkills(memberId, member);
 
         if(id == null)

@@ -1,0 +1,69 @@
+<div *ngIf="heist" class="container">
+
+  <h2>Editing heist:</h2>
+  <ul class="list-group">
+    <li class="list-group-item">Name: {{heist.name}}</li>
+    <li class="list-group-item">Location: {{heist.location}}</li>
+    <li class="list-group-item">Start time: {{heist.startTime | date:'long'}}</li>
+    <li class="list-group-item">End time: {{heist.endTime | date:'long'}}</li>
+    <li class="list-group-item">Skills:
+      <ul class="list-group" *ngFor="let skill of heist.skills">
+        <li class="list-group-item">Name: {{skill.name}}</li>
+        <li class="list-group-item">Level: {{skill.level}}</li>
+        <li class="list-group-item">Number of members: {{skill.members}}</li>
+      </ul>
+    </li>
+  </ul>
+
+  <div *ngIf="eligibleMembers">
+    <p>These are eligible members for the heist:</p>
+    <div *ngFor="let member of eligibleMembers; let i = index">
+      <form [formGroup]="memberForm" (ngSubmit)="onSubmitMembers()">
+        <div class="form-group form-check">
+          <input type="checkbox" [value]="member.name" class="form-check-input" (change)="onCheckChange($event)" />
+          <p>{{member.name}}</p>
+          <div *ngFor="let skill of member.skills">
+            <p>{{skill.name}} {{skill.level}}</p>
+          </div>
+        </div>
+        <div>
+          <button class="btn btn-primary mr-1">Sign up members</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="row">
+    <p>Add requirements for the heist:</p>
+    <form [formGroup]="skillForm">
+      <div class="form-label-group">
+        <div class="form-control" formArrayName="skills">
+          <div *ngFor="let item of skills.controls; let i=index" [formGroupName]="i" class="form-signin">
+            <label>Name</label>
+            <input class="form-control" name="name"
+                   formControlName="name"
+                   placeholder="name" required type="text">
+
+            <label>Level</label>
+            <input class="form-control" name="level"
+                   formControlName="level"
+                   placeholder="***" required type="text">
+
+            <label>Number of members</label>
+            <input class="form-control" name="members"
+                   formControlName="members"
+                   placeholder="1, 2, 3..." required type="number">
+
+            <button type="button" class="btn btn-light" (click)="addSkill()">Add skill</button>
+            <button type="button" class="btn btn-danger" (click)="deleteSkill(i)">Remove skill</button>
+          </div>
+        </div>
+        <button (click)="onSubmitRequirements()"
+                [disabled]="!skillForm.valid"
+                class="btn btn-lg btn-primary btn-block mt-3" type="submit">Submit
+        </button>
+      </div>
+    </form>
+  </div>
+
+</div>

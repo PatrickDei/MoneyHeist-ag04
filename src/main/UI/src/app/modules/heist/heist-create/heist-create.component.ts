@@ -31,14 +31,6 @@ export class HeistCreateComponent implements OnInit {
         members:  new FormControl(null, Validators.required),
       })])
     });
-
-
-    /*this.form = new FormGroup({
-      name: new FormControl(null, Validators.required),
-      location: new FormControl(null, Validators.required),
-      start: new FormControl(null, Validators.nullValidator),
-      end: new FormControl(null, Validators.nullValidator)
-    });*/
   }
 
   get skills(){
@@ -48,7 +40,7 @@ export class HeistCreateComponent implements OnInit {
   addSkill() {
     this.skills.push(this.formBuilder.group({
       name:  new FormControl(null, Validators.required),
-      level:  new FormControl(null, [Validators.min(this.minSkillLevel), Validators.max(this.maxSkillLevel)]),
+      level:  new FormControl(null, Validators.pattern('[*]{1,10}')),
       members:  new FormControl(null, Validators.required),
     }));
   }
@@ -61,9 +53,9 @@ export class HeistCreateComponent implements OnInit {
   create(){
     const heist = this.form.getRawValue();
 
-    this.heistService.creteHeist(heist)
+    this.heistService.createHeist(heist)
       .subscribe(
-        () => this.router.navigate(['/heists'])
+        (res) => this.router.navigate([res.headers.get('Location')])
       );
   }
 

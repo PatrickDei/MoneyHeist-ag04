@@ -1,1 +1,20 @@
-<p>member works!</p>
+<div class="container">
+  <a class="btn btn-info" *ngIf="isOrganiser()" [routerLink]="['create']">Create new member</a>
+
+  <div *ngIf="members">
+    <div *ngFor="let m of members; let i=index">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">{{m.name}} | {{m.sex}}</h5>
+          <h6 class="card-subtitle mb-2 text-muted">{{m.email}}</h6>
+          <p class="card-text">{{m.status}}</p>
+
+            <div *ngFor="let s of m.skills" class="row">
+              <p class="card-text"><strong>{{s.name}}</strong> {{s.level}}</p>
+            </div>
+        </div>
+      </div>
+      <br>
+    </div>
+  </div>
+</div>

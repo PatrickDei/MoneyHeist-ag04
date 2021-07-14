@@ -1,15 +1,33 @@
 <div class="container">
-  <a class="btn btn-info" *ngIf="isOrganiser()" [routerLink]="['/heists', 'create']">Create new heist</a>
+  <a class="btn btn-info" *ngIf="isOrganiser()" [routerLink]="['create']">Create new heist</a>
 
-  <div *ngFor="let h of heists">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">{{h.name}}</h5>
-        <h6 class="card-subtitle mb-2 text-muted">{{h.location}}</h6>
-        <p class="card-text">{{h.status}}</p>
-        <a class="btn btn-secondary" [routerLink]="['details', h.name]">Details</a>
+  <div *ngIf="heists">
+    <div *ngFor="let h of heists; let i=index">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">{{h.name}}</h5>
+          <h6 class="card-subtitle mb-2 text-muted">{{h.location}}</h6>
+          <p class="card-text">{{h.status}}</p>
+
+          <div *ngIf="showingDetails[i]" class="container">
+            <p class="card-text">Starting: {{h.startTime | date:'long'}}</p>
+            <p class="card-text">Ending: {{h.endTime | date:'long'}}</p>
+
+            <div *ngFor="let s of h.skills" class="row">
+              <p class="card-text"><strong>{{s.name}}</strong></p>
+              <ul class="list-group col-6">
+                <li class="list-group-item">Skill level: {{s.level}}</li>
+                <li class="list-group-item">Number of members: {{s.members}}</li>
+              </ul>
+            </div>
+
+          </div>
+
+          <a class="btn btn-secondary" (click)="showDetails(i)" *ngIf="!showingDetails[i]">Show details</a>
+          <a class="btn btn-light" (click)="showDetails(i)" *ngIf="showingDetails[i]">Hide details</a>
+        </div>
       </div>
+      <br>
     </div>
-    <br>
   </div>
 </div>

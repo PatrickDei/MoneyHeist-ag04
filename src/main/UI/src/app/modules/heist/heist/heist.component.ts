@@ -11,14 +11,24 @@ import {UserService} from '../../../services/user.service';
 export class HeistComponent implements OnInit {
 
   heists: Heist[];
+  showingDetails: boolean[] = [];
 
   constructor(private heistService: HeistService,
               private userService: UserService) { }
 
   ngOnInit(): void {
-    this.heistService.getAllMembers().subscribe(
-      res => this.heists = res
+    this.heistService.getAllHeists().subscribe(
+      res => {
+        this.heists = res;
+        for (const h in this.heists)
+          this.showingDetails.push(false);
+      }
     );
+  }
+
+  showDetails(i){
+    this.showingDetails[i] = !this.showingDetails[i];
+    return this.showingDetails[i];
   }
 
   isOrganiser(): boolean{

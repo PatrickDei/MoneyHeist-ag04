@@ -7,20 +7,27 @@ import { NavbarComponent } from './navbar/navbar.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {AuthExpiredInterceptor} from './interceptors/auth-expired.inteceptor';
 import {AuthInterceptor} from './interceptors/auth.interceptor';
-import {LoginComponent} from './modules/login/login.component';
+import {LoginComponent} from './login/login.component';
 import {ReactiveFormsModule} from '@angular/forms';
+import { CountdownPipe } from './pipes/countdown.pipe';
+import { FrontpageComponent } from './frontpage/frontpage.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
-    LoginComponent
+    LoginComponent,
+    CountdownPipe,
+    FrontpageComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule
+  ],
+  exports: [
+    CountdownPipe
   ],
   providers: [
     Title,

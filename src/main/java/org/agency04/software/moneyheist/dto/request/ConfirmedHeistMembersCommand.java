@@ -10,7 +10,9 @@ public class ConfirmedHeistMembersCommand {
 
     @NotNull
     @ValidMember(message = "Some of the members cannot participate", service = HeistService.class)
-    private final List<String> members;
+    private List<String> members;
+
+    public ConfirmedHeistMembersCommand(){}
 
     public ConfirmedHeistMembersCommand(List<String> members) {
         this.members = members;

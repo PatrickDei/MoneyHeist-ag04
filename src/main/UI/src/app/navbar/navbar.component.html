@@ -5,10 +5,10 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-          <a class="nav-link" [routerLink]="['/heists']">Heists</a>
+          <a class="nav-link" [routerLink]="['/heist']">Heists</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" [routerLink]="['/members']">Members</a>
+          <a class="nav-link" [routerLink]="['/member']">Members</a>
         </li>
       </ul>
 
@@ -17,7 +17,7 @@
           <a class="nav-link" [routerLink]="['/login']">Login</a>
         </li>
         <li class="nav-item" *ngIf="isUserLoggedIn()">
-          <a class="nav-link" (click)="logout()">Logout</a>
+          <a class="nav-link" (click)="logout()" [routerLink]="['/login']">Logout</a>
         </li>
       </ul>
     </div>

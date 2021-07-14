@@ -15,7 +15,7 @@ export class NavbarComponent implements OnInit {
   }
 
   isUserLoggedIn(): boolean{
-    return !!this.userService.currentUser;
+    return !!this.userService.currentUser || !!localStorage.getItem('isOrganiser');
   }
 
   logout(): void{

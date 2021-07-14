@@ -1,0 +1,36 @@
+<div class="container">
+  <div class="card" *ngIf="heist">
+    <div class="card-body">
+      <h5 class="card-title">{{heist.name}}</h5>
+      <h6 class="card-subtitle mb-2 text-muted">{{heist.location}}</h6>
+      <p class="card-text">{{heist.status}}</p>
+
+      <p class="card-text">Starting: {{heist.startTime | date: 'long'}}</p>
+      <p class="card-text">Ending: {{heist.endTime | date:'long'}}</p>
+
+      <div *ngFor="let s of heist.skills" class="row">
+        <p class="card-text"><strong>{{s.name}}</strong></p>
+        <ul class="list-group col-6">
+          <li class="list-group-item">Skill level: {{s.level}}</li>
+          <li class="list-group-item">Number of members: {{s.members}}</li>
+        </ul>
+      </div>
+
+      <div class="row">
+        <p class="card-text"><strong>Members:</strong></p>
+        <ul class="list-group col-6">
+          <li class="list-group-item" *ngFor="let m of heist.members">{{m.name}} </li>
+        </ul>
+      </div>
+
+      <div *ngIf="heist.outcome">
+        <p class="card-text"><strong>{{heist.outcome}}</strong></p>
+      </div>
+
+      <div *ngIf="isOrganiser()">
+        <a class="btn btn-secondary" (click)="onEdit()">Edit</a>
+        <a class="btn btn-primary" (click)="onStart()">Start heist!</a>
+      </div>
+    </div>
+  </div>
+</div>

@@ -14,7 +14,7 @@ export class UserService {
 
   isRole(role: string): boolean{
     if (this.currentUser)
-      return this.currentUser.role.some(r => r === role);
-    return false;
+      return this.currentUser.roles.some(r => r === role);
+    return localStorage.getItem('isOrganiser') === 'ROLE_ORGANISER';
   }
 }

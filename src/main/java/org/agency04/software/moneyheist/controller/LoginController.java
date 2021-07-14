@@ -72,13 +72,13 @@ public class LoginController {
 
     static class Credentials{
         private String username;
-        private List<String> role;
+        private List<String> roles;
 
         public Credentials(){};
 
-        public Credentials(String username, List<String> role) {
+        public Credentials(String username, List<String> roles) {
             this.username = username;
-            this.role = role;
+            this.roles = roles;
         }
 
         public String getUsername() {
@@ -89,12 +89,12 @@ public class LoginController {
             this.username = username;
         }
 
-        public List<String> getRole() {
-            return role;
+        public List<String> getRoles() {
+            return roles;
         }
 
-        public void setRole(List<String> role) {
-            this.role = role;
+        public void setRoles(List<String> roles) {
+            this.roles = roles;
         }
     }
 }

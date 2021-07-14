@@ -27,5 +27,6 @@ export class LoginService {
   logout(): void{
     // tell server you're logging out, but for this simple auth just remove credentials from user service
     this.userService.currentUser = null;
+    localStorage.removeItem('isOrganiser');
   }
 }

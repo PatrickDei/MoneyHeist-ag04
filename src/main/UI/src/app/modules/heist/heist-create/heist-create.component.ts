@@ -12,9 +12,6 @@ export class HeistCreateComponent implements OnInit {
 
   form: FormGroup;
 
-  minSkillLevel = 1;
-  maxSkillLevel = 10;
-
   constructor(private heistService: HeistService,
               private router: Router,
               private formBuilder: FormBuilder) { }

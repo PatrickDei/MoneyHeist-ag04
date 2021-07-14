@@ -1,1 +1,73 @@
-<p>member-create works!</p>
+<div class="row">
+  <div class="col-6">
+    <form [formGroup]="form" class="form-signin" name="heistCreation">
+      <div class="text-center mb-4">
+        <h1 class="h3 mb-3 font-weight-normal">Create heist</h1>
+      </div>
+
+      <div class="form-label-group mb-3">
+        <label>Name</label>
+        <input class="form-control" name="name"
+               formControlName="name"
+               placeholder="name" required type="text">
+      </div>
+
+      <div class="form-label-group mb-3">
+        <label>Sex</label>
+        <input class="form-control" name="sex"
+               formControlName="sex"
+               placeholder="M or F" required type="text">
+      </div>
+
+      <div class="form-label-group mb-3">
+        <label>Email</label>
+        <input class="form-control" name="email"
+               formControlName="email"
+               placeholder="email" required type="email">
+      </div>
+
+
+      <div class="form-label-group">
+        <label>Skills</label>
+        <div class="form-control" formArrayName="skills">
+          <div *ngFor="let item of skills.controls; let i=index" [formGroupName]="i" class="form-signin">
+            <label>Name</label>
+            <input class="form-control" name="name"
+                   formControlName="name"
+                   placeholder="name" required type="text">
+
+            <label>Level</label>
+            <input class="form-control" name="level"
+                   formControlName="level"
+                   placeholder="*" required type="text">
+
+            <button type="button" class="btn btn-light" (click)="addSkill()">Add skill</button>
+            <button type="button" class="btn btn-danger" (click)="deleteSkill(i)">Remove skill</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-label-group mb-3">
+        <label>Main skill</label>
+        <input class="form-control" name="mainSkill"
+               formControlName="mainSkill"
+               placeholder="main skill" type="text">
+      </div>
+
+      <div class="form-label-group mb-3">
+        <label>Status</label>
+        <input class="form-control" name="status"
+               formControlName="status"
+               placeholder="AVAILABLE" required type="text">
+      </div>
+
+
+      <button (click)="onCreate()"
+              [disabled]="!form.valid"
+              class="btn btn-lg btn-primary btn-block mt-3" type="submit">Create<!--<span
+        class="spinner-border spinner-border-sm" role="status" aria-hidden="true"
+        *ngIf="authenticating"></span>-->
+      </button>
+    </form>
+  </div>
+</div>

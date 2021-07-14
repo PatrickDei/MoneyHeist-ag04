@@ -1,1 +1,46 @@
-<p>member-edit works!</p>
+<div *ngIf="member" class="container">
+
+  <h2>Editing member:</h2>
+  <ul class="list-group">
+    <li class="list-group-item">Name: {{member.name}}</li>
+    <li class="list-group-item">Sex: {{member.sex}}</li>
+    <li class="list-group-item">Email: {{member.email}}</li>
+    <li class="list-group-item">Status: {{member.status}}</li>
+    <li class="list-group-item">Skills:
+      <ul class="list-group" *ngFor="let skill of member.skills">
+        <li class="list-group-item">Name: {{skill.name}}</li>
+        <li class="list-group-item">Level: {{skill.level}}</li>
+        <button class="btn btn-secondary" (click)="onRemoveSkill(skill.name)">Remove</button>
+      </ul>
+    </li>
+  </ul>
+
+  <div class="row">
+    <p>Add skillsto the member:</p>
+    <form [formGroup]="skillForm">
+      <div class="form-label-group">
+        <div class="form-control" formArrayName="skills">
+          <div *ngFor="let item of skills.controls; let i=index" [formGroupName]="i" class="form-signin">
+            <label>Name</label>
+            <input class="form-control" name="name"
+                   formControlName="name"
+                   placeholder="name" required type="text">
+
+            <label>Level</label>
+            <input class="form-control" name="level"
+                   formControlName="level"
+                   placeholder="***" required type="text">
+
+            <button type="button" class="btn btn-light" (click)="addSkill()">Add skill</button>
+            <button type="button" class="btn btn-danger" (click)="deleteSkill(i)">Remove skill</button>
+          </div>
+        </div>
+        <button (click)="onSubmitSkills()"
+                [disabled]="!skillForm.valid"
+                class="btn btn-lg btn-primary btn-block mt-3" type="submit">Submit
+        </button>
+      </div>
+    </form>
+  </div>
+
+</div>

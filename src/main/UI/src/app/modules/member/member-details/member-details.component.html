@@ -1,1 +1,21 @@
-<p>member-details works!</p>
+<div class="container">
+  <div class="card" *ngIf="member">
+    <div class="card-body">
+      <h5 class="card-title">{{member.name}}</h5>
+      <h6 class="card-subtitle mb-2 text-muted">Sex: {{member.sex}}</h6>
+      <p class="card-text">Status: {{member.status}}</p>
+
+      <div *ngFor="let s of member.skills" class="row">
+        <p class="card-text">{{s.name}} - {{s.level}}</p>
+      </div>
+
+      <div *ngIf="member.mainSkill">
+        <p class="card-text"><strong>Main skill: {{member.mainSkill}}</strong></p>
+      </div>
+
+      <div *ngIf="isOrganiser()">
+        <a class="btn btn-secondary" (click)="onEdit()">Edit</a>
+      </div>
+    </div>
+  </div>
+</div>

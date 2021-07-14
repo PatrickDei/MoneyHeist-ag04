@@ -5,14 +5,16 @@ import {MemberRoutingModule} from './member-routing.module';
 import { MemberCreateComponent } from './member-create/member-create.component';
 import { MemberDetailsComponent } from './member-details/member-details.component';
 import { MemberEditComponent } from './member-edit/member-edit.component';
+import {ReactiveFormsModule} from '@angular/forms';
 
 
 
 @NgModule({
   declarations: [MemberComponent, MemberCreateComponent, MemberDetailsComponent, MemberEditComponent],
-  imports: [
-    CommonModule,
-    MemberRoutingModule
-  ]
+    imports: [
+        CommonModule,
+        MemberRoutingModule,
+        ReactiveFormsModule
+    ]
 })
 export class MemberModule { }

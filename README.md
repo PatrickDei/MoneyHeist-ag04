@@ -12,4 +12,4 @@ In-memory h2 database - liquibase changelogs (also include data for initializati
 MVC architecture and layered model (repo, service, controller)
 
 ### Schema
-(src/main/resources/data/schema.png)
+![moneyheistdb](src/main/resources/data/schema.png)

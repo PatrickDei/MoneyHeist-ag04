@@ -55,7 +55,10 @@ export class HeistDetailsComponent implements OnInit {
     this.heistService.startHeist(this.heistId)
       .subscribe(
         // ignored redirection header - no inspiration what to make that url into
-        res => console.log(res)
+        res => {
+          console.log(res);
+          this.router.navigate(['/heist']);
+        }
       );
   }
 }

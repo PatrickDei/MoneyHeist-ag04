@@ -17,9 +17,8 @@
 
   <div *ngIf="eligibleMembers">
     <p>These are eligible members for the heist:</p>
-    <div *ngFor="let member of eligibleMembers; let i = index">
       <form [formGroup]="memberForm" (ngSubmit)="onSubmitMembers()">
-        <div class="form-group form-check">
+        <div class="form-group form-check" *ngFor="let member of eligibleMembers; let i = index">
           <input type="checkbox" [value]="member.name" class="form-check-input" (change)="onCheckChange($event)" />
           <p>{{member.name}}</p>
           <div *ngFor="let skill of member.skills">
@@ -30,9 +29,9 @@
           <button class="btn btn-primary mr-1">Sign up members</button>
         </div>
       </form>
-    </div>
   </div>
 
+  <hr>
   <div class="row">
     <p>Add requirements for the heist:</p>
     <form [formGroup]="skillForm">

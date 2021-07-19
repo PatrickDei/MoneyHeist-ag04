@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {Credentials} from '../models/credentials.model';
+import {Credentials} from '../../models/credentials.model';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {LoginService} from '../services/login.service';
-import {UserService} from '../services/user.service';
+import {LoginService} from '../../services/login.service';
+import {UserService} from '../../services/user.service';
 import {Router} from '@angular/router';
-import {User} from '../models/user.model';
+import {User} from '../../models/user.model';
 
 @Component({
   selector: 'app-login',

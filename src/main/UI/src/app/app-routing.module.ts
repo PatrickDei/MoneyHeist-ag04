@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {LoginComponent} from './login/login.component';
+import {LoginComponent} from './navigation/login/login.component';
 import {FrontpageComponent} from './frontpage/frontpage.component';
 
 // lazy load the member & heist modules

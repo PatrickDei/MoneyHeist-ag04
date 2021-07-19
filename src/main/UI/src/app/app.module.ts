@@ -3,11 +3,11 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NavbarComponent } from './navbar/navbar.component';
+import { NavbarComponent } from './navigation/navbar/navbar.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {AuthExpiredInterceptor} from './interceptors/auth-expired.inteceptor';
 import {AuthInterceptor} from './interceptors/auth.interceptor';
-import {LoginComponent} from './login/login.component';
+import {LoginComponent} from './navigation/login/login.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import { CountdownPipe } from './pipes/countdown.pipe';
 import { FrontpageComponent } from './frontpage/frontpage.component';
